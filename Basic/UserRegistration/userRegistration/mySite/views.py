@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth import logout, get_user_model
 from django.contrib.auth.decorators import  login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView
+from django.contrib.auth.views import LoginView
+from django.contrib import messages
 from .models import User
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, LoginForm
 # Create your views here.
 
 def index(request):
@@ -18,27 +20,14 @@ class UserRegistrationView(CreateView):
     form_class = UserRegistrationForm
     success_url = reverse_lazy('mySite:index')
 
-def user_login(request):
-    login_result = 'login'
-    if request.method=='POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+class UserLoginView(LoginView):
+    authentication_form = LoginForm
+    template_name = 'mySite/login_form.html'
 
-        user = authenticate(username=username, password=password)
-
-        if user:
-            if user.is_active:
-                login(request, user)
-                return HttpResponseRedirect(reverse('index'))
-            else:
-                login_result = 'not_active'
-                print('not active')
-        else:
-            login_result = 'no_user'
-            print('no user')
-        return render(request, 'mySite/login.html', {'login_result': login_result})
-    else:
-        return render(request, 'mySite/login.html', {'login_result': login_result})
+    # # form_invalid를 오버라이드해서 실패할경우 메시지 출력
+    # def form_invalid(self, form):
+    #     messages.error(self.request, 'login failed', extra_tags='danger')
+    #     return super().form_invalid(form)
 
 @login_required
 def user_logout(request):

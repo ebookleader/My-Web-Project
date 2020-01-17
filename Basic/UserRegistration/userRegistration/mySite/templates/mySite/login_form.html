@@ -1,0 +1,15 @@
+{% extends 'mySite/base.html' %}
+{% block body_block %}
+    <h1>Login</h1>
+        <form method="POST" action=".">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group {% if field.errors|length > 0 %}has-error{%endif %}">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <input name="{{ field.html_name }}" id="{{ field.id_for_lable }}" class="form-control" type="{{ field.field.widget.input_type }}" value="{{ field.value|default_if_none:'' }}">
+                </div>
+            {% endfor %}
+            <input type="submit" class="btn btn-primary" value="Login">
+        </form>
+
+{% endblock %}
