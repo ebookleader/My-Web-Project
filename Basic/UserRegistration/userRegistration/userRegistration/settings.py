@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'mySite',
 ]
 
+# 현재 사용자 모델이 무엇인지 설정 가능
+AUTH_USER_MODEL = 'mySite.User'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -105,9 +108,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
+# LANGUAGE_CODE = 'ko-KR'
 TIME_ZONE = 'UTC'
-
+# TIME_ZONE = 'Asia/Seoul'
 USE_I18N = True
 
 USE_L10N = True
@@ -119,3 +122,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# gmail SMTP
+#
+EMAIL_BACKEND = 'django.core.email.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'hemslje@gmail.com'
+EMAIL_HOST_PASSWORD = 'wjddms97'
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_MAIL = EMAIL_HOST_USER

@@ -1,4 +1,24 @@
 {% extends 'mySite/base.html' %}
 {% block body_block %}
-
+    {% if registered %}
+        <h1>Please verify your email to use out site</h1>
+    {% else %}
+        <h1>Registration Form</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            <input type="submit" value="Submit">
+        </form>
+    {% endif %}
+<!--    <form method="POST">-->
+<!--      <div class="form-group">-->
+<!--        <label for="exampleInputEmail1">Email address</label>-->
+<!--        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">-->
+<!--      </div>-->
+<!--      <div class="form-group">-->
+<!--        <label for="exampleInputPassword1">Password</label>-->
+<!--        <input type="password" class="form-control" id="exampleInputPassword1">-->
+<!--      </div>-->
+<!--      <button type="submit" class="btn btn-primary">Submit</button>-->
+<!--    </form>-->
 {% endblock %}

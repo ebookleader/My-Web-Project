@@ -1,0 +1,15 @@
+{% extends 'mySite/base.html' %}
+{% block body_block %}
+        <h1>Registration Form!</h1>
+        <form method="POST" action=".">
+            {% csrf_token %}
+            {% for field in form %}
+                {{ field.errors }}         <! -- 필드 상단에 오류 메시지 출력 -->
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <input type="submit" class="btn btn-primary" value="Submit">
+        </form>
+{% endblock %}
