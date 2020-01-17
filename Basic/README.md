@@ -7,4 +7,4 @@
 #
 #
 --------------
-I will add more later
+Reference. https://github.com/ebookleader/Django-study/tree/master/Django_note
