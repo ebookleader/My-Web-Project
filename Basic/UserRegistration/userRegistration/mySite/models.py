@@ -4,6 +4,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import auth
+from django.core.mail import send_mail
 
 # Create your models here.
 class UserManager(BaseUserManager):
@@ -64,10 +65,10 @@ class UserManager(BaseUserManager):
         return self.none()
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField('email', unique=True)
+    email = models.EmailField('email', unique=True, blank=False)
     name = models.CharField('name', max_length=30)
     is_staff = models.BooleanField('is_staff', default=False)
-    is_active = models.BooleanField('is_active', default=True)
+    is_active = models.BooleanField('is_active', default=False)
     date_joined = models.DateTimeField('date_joined', default=timezone.now)
 
     object = UserManager()
@@ -84,8 +85,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _('users')
         swappable = 'AUTH_USER_MODEL'
 
-    # 이메일 발송 메서드
-    # def email_user(self, subject, message, from_email=None, **kwargs):
-    #     send_email(subject, message, from_email, [self.email], **kwargs)
+    def email_user(self, subject, message, from_email=None, **kwargs):
+        send_mail(subject, message, from_email, [self.email], **kwargs)
 
 

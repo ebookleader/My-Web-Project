@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from mySite import views
+from mySite.views import UserLoginView, UserVerificationView, ResendVerifyEmailView
 from django.urls import path, include
 
 urlpatterns = [
@@ -22,4 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('mySite/', include('mySite.urls')),
     path('logout/', views.user_logout, name='logout'),
+    path('mySite/login/', UserLoginView.as_view()),
+    path('mySite/<pk>/verify/<token>/', UserVerificationView.as_view()),
+    path('mySite/resend_verify_email', ResendVerifyEmailView.as_view(), name='resend'),
+
 ]

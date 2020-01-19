@@ -17,6 +17,7 @@
             <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
         {% else %}
             <a class="nav-item nav-link" href="{% url 'mySite:user_login' %}">Login</a>
+            <a class="nav-item nav-link" href="{% url 'resend' %}">Email Verify</a>
         {% endif %}
     </nav>
 

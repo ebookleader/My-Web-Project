@@ -2,13 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import EmailField
-# from django.contrib.auth.models import User
-#
-# class UserForm(forms.ModelForm):
-#     password = forms.CharField(widget=forms.PasswordInput())
-#     class Meta:
-#         model = User
-#         fields = ['username', 'email', 'password']
+from .validators import RegisteredEmailValidator
 
 class UserRegistrationForm(UserCreationForm):
     class Meta:
@@ -20,3 +14,8 @@ class UserRegistrationForm(UserCreationForm):
 
 class LoginForm(AuthenticationForm):
     username = EmailField()
+
+class VerificationEmailForm(forms.Form):
+    class VerificationEmailForm(forms.Form):
+        email = EmailField(widget=forms.EmailInput(attrs={'autofocus': True}),
+                           validators=(EmailField.default_validators + [RegisteredEmailValidator()]))
