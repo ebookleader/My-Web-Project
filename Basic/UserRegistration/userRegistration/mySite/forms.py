@@ -16,6 +16,4 @@ class LoginForm(AuthenticationForm):
     username = EmailField()
 
 class VerificationEmailForm(forms.Form):
-    class VerificationEmailForm(forms.Form):
-        email = EmailField(widget=forms.EmailInput(attrs={'autofocus': True}),
-                           validators=(EmailField.default_validators + [RegisteredEmailValidator()]))
+        email = EmailField(widget=forms.EmailInput(attrs={'autofocus': True}), validators=(EmailField.default_validators + [RegisteredEmailValidator()]))

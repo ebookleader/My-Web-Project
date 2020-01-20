@@ -8,7 +8,7 @@ class RegisteredEmailValidator:
 
     def __call__(self, email):
         try:
-            user = self.user_model.objects.get(email=email)
+            user = self.user_model.object.get(email=email)
         except self.user_model.DoesNotExist:
             raise ValidationError('가입되지 않은 이메일입니다.', code=self.code)
         else:

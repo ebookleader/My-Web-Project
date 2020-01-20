@@ -9,10 +9,7 @@ from django.contrib.auth.views import LoginView
 from .forms import UserRegistrationForm, LoginForm, VerificationEmailForm
 from django.contrib import messages
 from django.contrib.auth.tokens import default_token_generator
-from userRegistration import settings
-
 from django.shortcuts import render
-# Create your views here.
 from .mixins import VerifyEmailMixin
 
 
@@ -73,15 +70,16 @@ class UserVerificationView(TemplateView):
 class ResendVerifyEmailView(VerifyEmailMixin, FormView):
     model = get_user_model()
     form_class = VerificationEmailForm
-    success_url = reverse_lazy('mySite:index')
-    email_template_name = 'mySite/registration_verification.html'
+    success_url = 'login'
+    # 해당 페이지로 자동 렌더링
+    template_name = 'mySite/resend_verify_email.html'
 
     def form_valid(self, form):
         email = form.cleaned_data['email']
         try:
             user = self.model.object.get(email=email)
         except self.model.DoesNotExist:
-            messages.error(self.request, 'no user')
+            messages.error(self.request, '알 수 없는 사용자 입니다.')
         else:
             self.send_verification_email(user)
         return super().form_valid(form)
