@@ -1,0 +1,22 @@
+{% extends 'mySite/base.html' %}
+{% block body_block %}
+
+    <div style="width: 30%; float:none; margin:10% auto">
+        <h2 class="text-center">Registration</h2><br>
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                <input name="{{ field.html_name }}" id="{{ field.id_for_label }}" class="form-control" type="{{ field.field.widget.input_type }}" value="{{ field.value|default_if_none:'' }}">
+            </div>
+            {% endfor %}
+            <br>
+            <div class="text-center">
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}
