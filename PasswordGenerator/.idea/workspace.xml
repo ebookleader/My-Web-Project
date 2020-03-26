@@ -2,36 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ccad787d-4f08-412d-8358-1a55302bb018" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/.idea/MyRegistration1.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/db.sqlite3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/manage.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/myRegistration1/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/myRegistration1/asgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/myRegistration1/settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/myRegistration1/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/myRegistration1/wsgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/mySite/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/mySite/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/mySite/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/mySite/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/mySite/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/mySite/templates/mySite/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/mySite/templates/mySite/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/mySite/templates/mySite/registration_success.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/mySite/templates/mySite/user_form.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/mySite/templates/mySite/verification_email.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/mySite/tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/mySite/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Basic/MyRegistration1/myRegistration1/mySite/views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/password_generator/generator/templates/generator/about.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/password_generator/generator/templates/generator/home.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/password_generator/generator/templates/generator/password.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Basic/UserRegistration/userRegistration/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/../Basic/UserRegistration/userRegistration/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +32,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PersonalPortfolio" />
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -85,7 +56,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1585131822420</updated>
-      <workItem from="1585131829440" duration="8549000" />
+      <workItem from="1585131829440" duration="8788000" />
+      <workItem from="1585200493938" duration="245000" />
     </task>
     <servers />
   </component>
@@ -97,5 +69,13 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="518" y="215" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1585132604296" />
+    <state x="549" y="168" key="FileChooserDialogImpl" timestamp="1585200741165">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="168" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1585200741165" />
+    <state x="459" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1585200631895">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="459" y="237" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1585200631895" />
   </component>
 </project>
