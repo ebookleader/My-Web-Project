@@ -1,0 +1,47 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% block content %}
+<div class="row justify-content-center my-5">
+    <div class="col-6 text-center">
+        <h1>Portfolio Archive</h1>
+    </div>
+</div>
+<div class="row justify-content-center my-4">
+    <div class="col-6">
+        <img src="{% static 'portfolio/coding1.jpg' %}" height="350" width="600">
+    </div>
+</div>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <blockquote class="blockquote text-center">
+            <p class="mb-3">
+                This is my personal portfolio archive site. Here you can see my finished and ongoing portfolio below.<br>
+            </p>
+            <p class="mb-3">
+                A representative image is a  picture of my web application's main site and there is a brief description underneath the pic.<br>
+            </p>
+            <p class="mb-3">
+                The program's github address is at the bottom, so if you're interested, click on it. Thank you  &#128516;
+            </p>
+        </blockquote>
+    </div>
+</div>
+
+<div class="card-deck">
+    {% for project in projects %}
+    <div class="card">
+        <img src="{{project.image.url}}" class="card-img-top" alt="pimage" width="400" height="250">
+        <div class="card-body">
+            <h5 class="card-title">{{project.title}}</h5>
+            <p class="card-text">{{project.description}}</p>
+        </div>
+        <div class="card-footer">
+            {% if project.url %}
+            <small class="text-muted"><a href="{{project.url}}">Here is the Link</a></small>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
