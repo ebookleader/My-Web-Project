@@ -3,11 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-# from .models import CustomUser
-# from django.contrib.auth.hashers import make_password
-# from django.views.generic import View, TemplateView, CreateView
-# from django.contrib import messages
-# from django.contrib.auth.tokens import default_token_generator
 from .forms import UserSignUpForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -46,24 +41,6 @@ def signupuser(request):
             email.send()
             return HttpResponse('we have sent you an email')
     return render(request,'todoapp/signup.html',{'form':form})
-
-    # if request.method == 'GET':
-    #     return render(request, 'todoapp/signup.html')
-    # elif request.method == 'POST':
-    #     username = request.POST.get('username', None)
-    #     email = request.POST.get('email',None)
-    #     password = request.POST.get('password', None)
-    #     password_confirm = request.POST.get('password_confirm', None)
-    #
-    #     res_data = {}
-    #     if not(username and password and password_confirm):
-    #         res_data['error'] = '모든 값을 입력해야합니다. 다시 시도해주세요'
-    #     elif password != password_confirm:
-    #         res_data['error'] = '비밀번호가 일치하지 않습니다. 다시 시도해주세요'
-    #     else:
-    #         cuser = CustomUser(username=username, email=email, password=make_password(password))
-    #         cuser.save()
-    #     return render(request, 'todoapp/signup.html', res_data)
 
 def activate_account(request, uidb64, token):
     try:
