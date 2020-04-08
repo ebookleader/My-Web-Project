@@ -1,9 +1,26 @@
 {% extends 'todoapp/base.html' %}
 {% block content %}
-<h1>Login</h1>
+<div class="jumbotron jumbotron-fluid mt-5">
+  <div class="container">
+      {% if message %}
+      <h3>Email Authentication Complete! </h3>
+      <h3>Login your account below.</h3>
+      {% else %}
+      <h2>Login</h2>
+      {% endif %}
+  </div>
+</div>
 <form method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
+<!--    {{ form.as_p }}-->
+     <p style="color: red;">{{ error }}</p>
+    {% for field in form %}
+    <div class="form-group">
+        {{ field.label_tag }}
+        {{ field }}
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Login</button>
 </form>
+
 {% endblock %}

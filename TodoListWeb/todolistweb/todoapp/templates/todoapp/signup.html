@@ -1,23 +1,19 @@
 {% extends 'todoapp/base.html' %}
 {% block content %}
-{{ error }}
-<h1>회원가입</h1>
-<!--<form method="POST" >-->
-<!--    {% csrf_token %}-->
-<!--    <label for="username">아이디</label>-->
-<!--    <input type="text" id="username" name="username" placeholder="아이디"><br>-->
-<!--    <label for="email">이메일</label>-->
-<!--    <input type="email" id="email" name="email" placeholder="이메일"><br>-->
-<!--    <label for="password">비밀번호</label>-->
-<!--    <input type="password"id="password" name="password" placeholder="비밀번호"><br>-->
-<!--    <label for="password_confirm">비밀번호 확인</label>-->
-<!--    <input type="password" id="password_confirm" name="password_confirm" placeholder="비밀번호 확인"><br>-->
-<!--    <button type="submit">SignUp</button>-->
-<!--</form>-->
+{% if form %}
+<div class="jumbotron jumbotron-fluid mt-5">
+    <div class="container">
+        {% if message %}
+        <h2 style="color: red;">Sorry, Your activation link is invalid. Please sign up again.</h2>
+        {% endif %}
+        <h2>Sign Up Now!</h2>
+        <p class="lead">You can manage your daily to-do work free by signing up</p>
+    </div>
+</div>
 <form method="POST">
     {% csrf_token %}
     {% for field in form %}
-    <p>
+    <div class="form-group">
         {{ field.label_tag }}<br>
         {{ field }}
         {% if field.help_text %}
@@ -26,8 +22,17 @@
         {% for error in field.errors %}
         <p>{{ error }}</p>
         {% endfor %}
-    </p>
+    </div>
     {% endfor %}
-    <button type="submit">Sign Up</button>
+    <button type="submit" class="btn btn-primary">Sign Up</button>
 </form>
+{% else %}
+<div class="jumbotron jumbotron-fluid mt-5">
+    <div class="container">
+        <h4>Thank you! Your registration will be completed by doing one more thing.</h4>
+        <h4>We have sent you an authentication email to the email address you wrote when you signed up.</h4>
+        <h4>Go to your mail and please click the link inside it!</h4>
+    </div>
+</div>
+{% endif %}
 {% endblock %}

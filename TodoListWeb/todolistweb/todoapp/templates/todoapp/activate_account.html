@@ -1,5 +1,7 @@
 {% autoescape off %}
-Hi {{user.username}}
-Click below.
+Hi {{ user.username }}, thank you for siging up for MeToDo!
+You can use your personal todo app by click the link below
+If you have never registered this site, just ignore mail. Thank you.
+
 http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
 {% endautoescape %}

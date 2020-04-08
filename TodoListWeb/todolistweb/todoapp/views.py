@@ -36,10 +36,11 @@ def signupuser(request):
                                            'token':account_activation_token.make_token(user),
                                         }
                                        )
+            print(message)
             to_email = form.cleaned_data.get('email')
-            email = EmailMessage(email_subject,message,to=[to_email])
+            email = EmailMessage(email_subject, message, to=[to_email])
             email.send()
-            return HttpResponse('we have sent you an email')
+            return render(request, 'todoapp/signup.html')
     return render(request,'todoapp/signup.html',{'form':form})
 
 def activate_account(request, uidb64, token):
@@ -48,27 +49,37 @@ def activate_account(request, uidb64, token):
         user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
+
+    form = AuthenticationForm()
+    form.fields['username'].widget.attrs['class'] = 'form-control'
+    form.fields['password'].widget.attrs['class'] = 'form-control'
+
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return HttpResponse('your account has been avtivate')
+        return render(request, 'todoapp/login.html', {'form': form, 'message':'yes'})
     else:
-        return HttpResponse('activation link is invalid')
+        return render(request, 'todoapp/signup.html', {'form': form, 'message':'yes'})
 
 # Login & Logout
 def loginuser(request):
+    form = AuthenticationForm()
+    form.fields['username'].widget.attrs['class'] = 'form-control'
+    form.fields['password'].widget.attrs['class'] = 'form-control'
     if request.method == 'GET':
-        return render(request, 'todoapp/login.html', {'form':AuthenticationForm()})
+        return render(request, 'todoapp/login.html', {'form':form})
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
-            return render(request, 'todoapp/login.html', {'form': AuthenticationForm()})
+            return render(request, 'todoapp/login.html', {'form': form, 'error':'The account does not exist or the password does not match. please check your account again.'})
         else:
             login(request, user)
             return redirect('index')
 
 @login_required
 def logoutuser(request):
-    if request.method == 'POST':
-        logout(request)
-        return redirect('index')
+    # if request.method == 'POST':
+    #     logout(request)
+    #     return redirect('index')
+    logout(request)
+    return redirect('index')
