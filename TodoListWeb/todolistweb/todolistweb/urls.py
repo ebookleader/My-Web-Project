@@ -18,10 +18,11 @@ from django.urls import path, include
 from todoapp import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     path('', views.index, name='index'),
     # signup
     path('signup/', include('todoapp.urls')),
+    path('resend_mail/', views.resend_mail, name='resend'),
     # login & logout
     path('login/', views.loginuser, name='loginuser'),
     path('logout/', views.logoutuser, name='logoutuser'),

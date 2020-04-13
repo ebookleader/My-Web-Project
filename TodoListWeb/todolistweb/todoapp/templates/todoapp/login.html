@@ -5,6 +5,9 @@
       {% if message %}
       <h3>Email Authentication Complete! </h3>
       <h3>Login your account below.</h3>
+      {% elif message1 %}
+      <h3>Your email authentication is already completed. </h3>
+      <h3>Login your account below.</h3>
       {% else %}
       <h2>Login</h2>
       {% endif %}

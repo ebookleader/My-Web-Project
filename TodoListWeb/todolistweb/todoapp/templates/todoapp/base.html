@@ -22,13 +22,12 @@
                     <span class="sr-only">(current)</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./admin/">Admin</a>
+            </li>
             {% if user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'logoutuser' %}">Logout</a>
-<!--                <form action="{% url 'logoutuser' %}" method="POST">-->
-<!--                    {% csrf_token %}-->
-<!--                    <button type="submit">Logout</button>-->
-<!--                </form>-->
             </li>
             {% else %}
             <li class="nav-item">

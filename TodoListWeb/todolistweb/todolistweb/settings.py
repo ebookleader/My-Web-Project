@@ -126,3 +126,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+PASSWORD_RESET_TIMEOUT_DAYS = 1

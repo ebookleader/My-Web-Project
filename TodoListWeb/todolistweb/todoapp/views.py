@@ -1,9 +1,9 @@
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from .forms import UserSignUpForm
+from .forms import UserSignUpForm, ResendEmailForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -43,6 +43,19 @@ def signupuser(request):
             return render(request, 'todoapp/signup.html')
     return render(request,'todoapp/signup.html',{'form':form})
 
+def resend_mail(request):
+    if request.method == 'GET':
+        form = ResendEmailForm()
+    else:
+        form = ResendEmailForm(request.POST)
+        mail = form.cleaned_data.get('email')
+        user = get_user_model().objects.get(email = mail)
+        print(user)
+        if user:
+            pass
+        else:
+            return render(request, 'todoapp/resend_mail.html', {'form': form, 'msg':'yes'})
+    return render(request, 'todoapp/resend_mail.html', {'form':form})
 def activate_account(request, uidb64, token):
     try:
         uid = force_bytes(urlsafe_base64_decode(uidb64))
@@ -54,10 +67,17 @@ def activate_account(request, uidb64, token):
     form.fields['username'].widget.attrs['class'] = 'form-control'
     form.fields['password'].widget.attrs['class'] = 'form-control'
 
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-        return render(request, 'todoapp/login.html', {'form': form, 'message':'yes'})
+    if user is not None:
+        if user.is_active:
+            return render(request, 'todoapp/login.html', {'form': form, 'message1':'yes'})
+        elif account_activation_token.check_token(user, token):
+            user.is_active = True
+            user.save()
+            return render(request, 'todoapp/login.html', {'form': form, 'message':'yes'})
+    # if user is not None and account_activation_token.check_token(user, token):
+    #     user.is_active = True
+    #     user.save()
+    #     return render(request, 'todoapp/login.html', {'form': form, 'message':'yes'})
     else:
         return render(request, 'todoapp/signup.html', {'form': form, 'message':'yes'})
 
