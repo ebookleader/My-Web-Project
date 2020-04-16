@@ -12,6 +12,9 @@
     </div>
 </div>
 <form method="POST">
+    {% if email_error %}
+    <h5 style="color: red;">That email is already exists. Please sign up with another email.</h5>
+    {% endif %}
     {% csrf_token %}
     {% for field in form %}
     <div class="form-group">
