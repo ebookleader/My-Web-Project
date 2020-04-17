@@ -3,11 +3,8 @@
 {% if form %}
 <div class="jumbotron jumbotron-fluid mt-5">
     <div class="container">
-        {% if message %}
-        <h2 style="color: red;">Sorry, Your activation link is invalid. Please sign up again.</h2>
-        {% endif %}
+        <h2 style="color: red;">{{ invalid_link_msg }}</h2>
         <h2>Sign Up Now!</h2>
-        <h4><a href="{% url 'resend' %}">If you want to resend verification mail, click this.</a></h4>
         <p class="lead">You can manage your daily to-do work free by signing up</p>
     </div>
 </div>

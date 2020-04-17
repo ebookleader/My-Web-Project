@@ -24,7 +24,6 @@ def signupuser(request):
         form = UserSignUpForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data.get('email')
-            print(User.objects.filter(email=email).count())
             if email and User.objects.filter(email=email).count() > 0:
                 return render(request, 'todoapp/signup.html', {'form': form, 'email_error':'y'})
             else:
@@ -41,12 +40,11 @@ def signupuser(request):
                                                'token':account_activation_token.make_token(user),
                                             }
                                            )
-                print(message)
                 to_email = form.cleaned_data.get('email')
                 email = EmailMessage(email_subject, message, to=[to_email])
                 email.send()
                 return render(request, 'todoapp/signup.html')
-    return render(request,'todoapp/signup.html',{'form':form})
+    return render(request, 'todoapp/signup.html', {'form':form})
 
 def resend_mail(request):
     if request.method == 'GET':
@@ -56,12 +54,27 @@ def resend_mail(request):
         if form.is_valid():
             email = form.cleaned_data['email']
             try:
-               User.objects.get(email=email)
-               return HttpResponse('yes')
+               user = User.objects.get(email=email)
+               print(user.pk)
+               if user.is_active:
+                   return redirect('loginuser')
+               else:
+                   current_site = get_current_site(request)
+                   email_subject = 'Activate your account'
+                   message = render_to_string('todoapp/activate_account.html',
+                                              {
+                                                  'user': user,
+                                                  'domain': current_site.domain,
+                                                  'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                                                  'token': account_activation_token.make_token(user),
+                                              }
+                                              )
+                   to_email = form.cleaned_data.get('email')
+                   email = EmailMessage(email_subject, message, to=[to_email])
+                   email.send()
+                   return render(request, 'todoapp/signup.html')
             except User.DoesNotExist:
                 return render(request, 'todoapp/resend_mail.html', {'form': form, 'msg': 'yes'})
-        else:
-            return HttpResponse('no')
 
     return render(request, 'todoapp/resend_mail.html', {'form':form})
 
@@ -78,13 +91,14 @@ def activate_account(request, uidb64, token):
 
     if user is not None:
         if user.is_active:
-            return render(request, 'todoapp/login.html', {'form': form, 'message1':'yes'})
+            return render(request, 'todoapp/index.html', {'auth_already_done_msg':'Your email authentication is already completed. Please Login.'})
         elif account_activation_token.check_token(user, token):
             user.is_active = True
             user.save()
-            return render(request, 'todoapp/login.html', {'form': form, 'message':'yes'})
+            return render(request, 'todoapp/index.html', {'auth_complete_msg':'Email Authentication Complete! Please Login.'})
+            # return render(request, 'todoapp/login.html', {'form': form, 'auth_complete_msg':'Email Authentication Complete!'})
     else:
-        return render(request, 'todoapp/signup.html', {'form': form, 'message':'yes'})
+        return render(request, 'todoapp/signup.html', {'form': form, 'invalid_link_msg':'Sorry, Your activation link is invalid. Please sign up again.'})
 
 # Login & Logout
 def loginuser(request):
