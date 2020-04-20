@@ -24,6 +24,9 @@ urlpatterns = [
     # signup
     path('signup/', include('todoapp.urls')),
     path('resend_mail/', views.resend_mail, name='resend'),
+    # mypage
+    path('mypage/', views.mypage, name='mypage'),
+    path('password_change/', views.password_change, name='password_change'),
     # login & logout
     path('login/', views.loginuser, name='loginuser'),
     path('logout/', views.logoutuser, name='logoutuser'),

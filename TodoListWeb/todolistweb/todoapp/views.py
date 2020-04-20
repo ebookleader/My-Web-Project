@@ -2,6 +2,7 @@ from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .forms import UserSignUpForm, ResendEmailForm
 from django.contrib.sites.shortcuts import get_current_site
@@ -99,6 +100,31 @@ def activate_account(request, uidb64, token):
             # return render(request, 'todoapp/login.html', {'form': form, 'auth_complete_msg':'Email Authentication Complete!'})
     else:
         return render(request, 'todoapp/signup.html', {'form': form, 'invalid_link_msg':'Sorry, Your activation link is invalid. Please sign up again.'})
+
+# mypage
+def mypage(request):
+    return render(request, 'todoapp/mypage.html')
+
+def password_change(request):
+    if request.method == 'GET':
+        return render(request, 'todoapp/password_change_form.html')
+    else:
+        current_password = request.POST.get('origin_password')
+        user = request.user
+        error = ''
+        if check_password(current_password, user.password):
+            new_password = request.POST.get('new_password')
+            confirm_password = request.POST.get('confirm_password')
+            if new_password == confirm_password:
+                user.set_password(new_password)
+                user.save()
+                login(request, user)
+                return render(request, 'todoapp/index.html')
+            else:
+                error = 'new password & confirm password did not match'
+        else:
+            error = 'current password did not match'
+        return render(request, 'todoapp/password_change_form.html', {'error':error})
 
 # Login & Logout
 def loginuser(request):
