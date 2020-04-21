@@ -12,6 +12,7 @@ from django.utils.encoding import force_bytes, force_text
 from .token_generator import account_activation_token
 from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
+from .forms import TodoForm
 
 # Create your views here.
 def index(request):
@@ -148,3 +149,21 @@ def logoutuser(request):
     #     return redirect('index')
     logout(request)
     return redirect('index')
+
+
+#################
+
+# TodoApp
+@login_required
+def create_todo(request):
+    if request.method == 'GET':
+        return render(request, 'todo/createTodo.html')
+    else:
+        try:
+            form = TodoForm(request.POST)
+            new_todo = form.save(commit=False)
+            new_todo.user = request.user
+            new_todo.save()
+            return redirect('index')
+        except ValueError:
+            return render(request, 'todo/createTodo.html', {'form': TodoForm(), 'error':'Value Error. Try again.'})

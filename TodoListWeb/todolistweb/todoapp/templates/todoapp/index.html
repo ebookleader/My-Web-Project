@@ -3,4 +3,24 @@
 {{ txt }}
 {{ auth_already_done_msg }}
 {{ auth_complete_msg }}
+<div class="card-deck mt-5 ml-5">
+  <div class="card bg-light mb-3" style="max-width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title"><a href="{% url 'create_todo' %}">Create Todo</a></h5>
+      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+  </div>
+  <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title"><a href="">Current Todo</a></h5>
+      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+  </div>
+  <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title"><a href="">Completed Todo</a></h5>
+      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+  </div>
+</div>
 {% endblock %}

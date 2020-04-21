@@ -1,6 +1,8 @@
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import Todo
 
 class UserSignUpForm(UserCreationForm):
     email = forms.EmailField(max_length=128, required=True)
@@ -26,3 +28,11 @@ class ResendEmailForm(forms.Form):
         super(ResendEmailForm, self).__init__(*args, **kwargs)
         self.fields['email'].widget.attrs['class'] = 'form-control'
         self.fields['email'].help_text = None
+
+
+class TodoForm(ModelForm):
+    class Meta:
+        model = Todo
+        fields = ['title','memo','important']
+
+
