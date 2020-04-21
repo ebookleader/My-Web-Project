@@ -1,18 +1,19 @@
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .forms import UserSignUpForm, ResendEmailForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
+from django.utils import timezone
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from .token_generator import account_activation_token
 from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
 from .forms import TodoForm
+from .models import Todo
 
 # Create your views here.
 def index(request):
@@ -167,3 +168,44 @@ def create_todo(request):
             return redirect('index')
         except ValueError:
             return render(request, 'todo/createTodo.html', {'form': TodoForm(), 'error':'Value Error. Try again.'})
+
+
+@login_required
+def current_todo(request):
+    todo_list = Todo.objects.filter(user=request.user, date_completed__isnull=True)
+    return render(request, 'todo/currentTodo.html', {'todo_list':todo_list})
+
+@login_required
+def completed_todo(request):
+    todo_list = Todo.objects.filter(user=request.user, date_completed__isnull=False).order_by('-date_completed')
+    return render(request, 'todo/completedTodo.html',{'todo_list':todo_list})
+
+@login_required
+def todo_detail(request, todo_pk):
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    if request.method == 'GET':
+        form = TodoForm(instance=todo)
+        return render(request, 'todo/todoDetail.html', {'todo':todo, 'form':form})
+    else:
+        try:
+            form = TodoForm(request.POST, instance=todo)
+            form.save()
+            return redirect('current_todo')
+        except ValueError:
+            return render(request, 'todo/todoDetail.html', {'todo':todo, 'form':form, 'error':'ValueError. Try again.'})
+
+
+@login_required
+def delete_todo(request, todo_pk):
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    if request.method == 'POST':
+        todo.delete()
+        return redirect('current_todo')
+
+@login_required
+def complete_todo(request, todo_pk):
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    if request.method == 'POST':
+        todo.date_completed = timezone.now()
+        todo.save()
+        return redirect('current_todo')

@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.fields import Field
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -12,7 +13,7 @@ class UserSignUpForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super(UserSignUpForm, self).__init__(*args, **kwargs)
-
+        self.label_suffix = ""
         self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['email'].widget.attrs['class'] = 'form-control'
         self.fields['password1'].widget.attrs['class'] = 'form-control'
@@ -26,6 +27,7 @@ class ResendEmailForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(ResendEmailForm, self).__init__(*args, **kwargs)
+        self.label_suffix = ""
         self.fields['email'].widget.attrs['class'] = 'form-control'
         self.fields['email'].help_text = None
 
@@ -33,6 +35,15 @@ class ResendEmailForm(forms.Form):
 class TodoForm(ModelForm):
     class Meta:
         model = Todo
-        fields = ['title','memo','important']
+        fields = ['title', 'memo', 'important']
+
+    def __init__(self, *args, **kwargs):
+        super(TodoForm, self).__init__(*args, **kwargs)
+        self.label_suffix = ""
+        self.fields['title'].widget.attrs['class'] = 'form-control'
+        self.fields['memo'].widget.attrs['class'] = 'form-control'
+        self.fields['important'].widget.attrs['class'] = 'form-check-input'
+
+    setattr(Field, 'is_checkbox', lambda self:isinstance(self.widget, forms.CheckboxInput))
 
 

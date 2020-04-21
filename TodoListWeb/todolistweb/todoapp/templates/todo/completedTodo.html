@@ -1,0 +1,21 @@
+{% extends 'todoapp/base.html' %}
+{% block content %}
+<div class="jumbotron jumbotron-fluid mt-5">
+    <div class="container">
+        <h2>Completed Todo</h2>
+    </div>
+</div>
+<ul class="list-group mt-5">
+    {% for todo in todo_list %}
+  <li class="list-group-item">
+      {{ todo.title }}
+      <br>
+      {% if todo.memo %}
+      - {{ todo.memo }}
+      {% endif %}
+      <br>
+      {{ todo.date_completed|date:'Y년 n월 j일 a h:i' }}
+  </li>
+    {% endfor %}
+</ul>
+{% endblock %}
