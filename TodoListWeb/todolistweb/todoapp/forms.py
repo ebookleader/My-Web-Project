@@ -15,9 +15,13 @@ class UserSignUpForm(UserCreationForm):
         super(UserSignUpForm, self).__init__(*args, **kwargs)
         self.label_suffix = ""
         self.fields['username'].widget.attrs['class'] = 'form-control'
+        self.fields['username'].widget.attrs['placeholder'] = 'Username'
         self.fields['email'].widget.attrs['class'] = 'form-control'
+        self.fields['email'].widget.attrs['placeholder'] = 'Email'
         self.fields['password1'].widget.attrs['class'] = 'form-control'
+        self.fields['password1'].widget.attrs['placeholder'] = 'Password'
         self.fields['password2'].widget.attrs['class'] = 'form-control'
+        self.fields['password2'].widget.attrs['placeholder'] = 'Password confirm'
 
         for fieldname in ['username', 'email', 'password1', 'password2']:
             self.fields[fieldname].help_text = None

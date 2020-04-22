@@ -19,7 +19,10 @@ from .models import Todo
 def index(request):
     return render(request, 'todoapp/index.html')
 
-# Signup
+def bootindex(request):
+    return render(request, 'bootstrapTemplate/index.html')
+
+### Signup ###
 def signupuser(request):
     if request.method == 'GET':
         form = UserSignUpForm()
@@ -28,7 +31,7 @@ def signupuser(request):
         if form.is_valid():
             email = form.cleaned_data.get('email')
             if email and User.objects.filter(email=email).count() > 0:
-                return render(request, 'todoapp/signup.html', {'form': form, 'email_error':'y'})
+                return render(request, 'registration/page-register.html', {'form': form, 'email_error':'That email is already exists. Please sign up with another email.'})
             else:
                 user = form.save(commit=False)
                 user.is_active = False
@@ -46,8 +49,8 @@ def signupuser(request):
                 to_email = form.cleaned_data.get('email')
                 email = EmailMessage(email_subject, message, to=[to_email])
                 email.send()
-                return render(request, 'todoapp/signup.html')
-    return render(request, 'todoapp/signup.html', {'form':form})
+                return render(request, 'registration/page-register-complete.html', {'complete_msg':'y'})
+    return render(request, 'registration/page-register.html', {'form':form})
 
 def resend_mail(request):
     if request.method == 'GET':
@@ -75,7 +78,7 @@ def resend_mail(request):
                    to_email = form.cleaned_data.get('email')
                    email = EmailMessage(email_subject, message, to=[to_email])
                    email.send()
-                   return render(request, 'todoapp/signup.html')
+                   return render(request, 'todoapp/signup.html', {'send',''})
             except User.DoesNotExist:
                 return render(request, 'todoapp/resend_mail.html', {'form': form, 'msg': 'yes'})
 
@@ -87,21 +90,16 @@ def activate_account(request, uidb64, token):
         user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
-
-    form = AuthenticationForm()
-    form.fields['username'].widget.attrs['class'] = 'form-control'
-    form.fields['password'].widget.attrs['class'] = 'form-control'
-
     if user is not None:
         if user.is_active:
-            return render(request, 'todoapp/index.html', {'auth_already_done_msg':'Your email authentication is already completed. Please Login.'})
+            return render(request, 'registration/page-register-complete.html', {'auth_already_done_msg':'Your email authentication was already done.'})
         elif account_activation_token.check_token(user, token):
             user.is_active = True
             user.save()
-            return render(request, 'todoapp/index.html', {'auth_complete_msg':'Email Authentication Complete! Please Login.'})
+            return render(request, 'registration/page-register-complete.html', {'auth_complete_msg':'Your email authentication is Completed!'})
             # return render(request, 'todoapp/login.html', {'form': form, 'auth_complete_msg':'Email Authentication Complete!'})
     else:
-        return render(request, 'todoapp/signup.html', {'form': form, 'invalid_link_msg':'Sorry, Your activation link is invalid. Please sign up again.'})
+        return render(request, 'registration/page-register-complete.html', {'invalid_link_msg':'Sorry, Your email link is invalid. Please sign up again.'})
 
 # mypage
 def mypage(request):
@@ -132,13 +130,15 @@ def password_change(request):
 def loginuser(request):
     form = AuthenticationForm()
     form.fields['username'].widget.attrs['class'] = 'form-control'
+    form.fields['username'].widget.attrs['placeholder'] = 'Username'
     form.fields['password'].widget.attrs['class'] = 'form-control'
+    form.fields['password'].widget.attrs['placeholder'] = 'Password'
     if request.method == 'GET':
-        return render(request, 'todoapp/login.html', {'form':form})
+        return render(request, 'registration/page-login.html', {'form':form})
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
-            return render(request, 'todoapp/login.html', {'form': form, 'error':'The account does not exist or the password does not match. please check your account again.'})
+            return render(request, 'registration/page-login.html', {'form': form, 'error':'The account does not exist or the password does not match. <br>please check your account again.'})
         else:
             login(request, user)
             return redirect('index')

@@ -125,5 +125,6 @@ TIME_ZONE = 'Asia/Seoul'
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIR = [os.path.join(BASE_DIR, 'static')]
 
 PASSWORD_RESET_TIMEOUT_DAYS = 1

@@ -19,17 +19,26 @@ from django.urls import path, include
 from todoapp import views
 
 urlpatterns = [
+
+    # admin
     path('admin/', admin.site.urls, name='admin'),
-    path('', views.index, name='index'),
+
+    # 처음 페이지 방문시 바로 로그인 창으로 이동
+    path('', views.loginuser, name='loginuser'),
+    # 디버깅용 인덱스페이지 (후에삭제)
+    path('index/', views.bootindex, name='index'),
+
     # signup
     path('signup/', include('todoapp.urls')),
     path('resend_mail/', views.resend_mail, name='resend'),
+
     # mypage
     path('mypage/', views.mypage, name='mypage'),
     path('password_change/', views.password_change, name='password_change'),
+
     # login & logout
-    path('login/', views.loginuser, name='loginuser'),
     path('logout/', views.logoutuser, name='logoutuser'),
+
     # reset password
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
