@@ -7,22 +7,23 @@
                 <div class="form-input-content">
                     <div class="card login-form mb-0">
                         {% autoescape off %}
-                        <div class="card-body pt-5">
-                            <a class="text-center" href=""> <h4>STARTO</h4></a>
 
-                            <form class="mt-5 mb-5 login-input" method="POST">
+                        <div class="card-body pt-5">
+                            <a class="text-center" href=""> <h4>Resend confirmation mail</h4></a>
+
+                            <form class="mt-5 mb-3 login-input" method="POST" action="{% url 'resend' %}">
                                 {% csrf_token %}
                                 {% for field in form %}
                                 <div class="form-group">
                                     {{ field }}
                                 </div>
                                 {% endfor %}
-                                <p class="text-center text-danger font-weight-bold">{{ error }}</p>
-                                <button class="btn login-form__btn submit w-100">Sign in</button>
+                                {% if error %}
+                                <p class="text-danger font-weight-normal">Sorry, that mail address is not registered.</p>
+                                <p class="text-danger login-form__footer">Please try again or <a href="{% url 'signupuser' %}" class="text-primary">Sign up</a> now</p>
+                                {% endif %}
+                                <button class="btn login-form__btn submit w-100">Resend mail</button>
                             </form>
-                            <p class="mt-5 login-form__footer">Don't have account? <a href="{% url 'signupuser' %}" class="text-primary">Sign Up</a> now</p>
-                            <p class="login-form__footer">Do you want to receive the confirmation mail again? <a href="{% url 'resend' %}" class="text-primary">Resend verification mail</a></p>
-                            <p class="login-form__footer">Did you forget your password? <a href="{% url 'password_reset' %}" class="text-primary">Reset your password</a></p>
                         </div>
                         {% endautoescape %}
                     </div>
@@ -33,9 +34,3 @@
 </div>
 
 {% endblock %}
-    
-
-
-
-
-

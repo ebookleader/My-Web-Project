@@ -34,6 +34,7 @@ class ResendEmailForm(forms.Form):
         self.label_suffix = ""
         self.fields['email'].widget.attrs['class'] = 'form-control'
         self.fields['email'].help_text = None
+        self.fields['email'].widget.attrs['placeholder'] = 'Enter your email address that you used to register.'
 
 
 class TodoForm(ModelForm):

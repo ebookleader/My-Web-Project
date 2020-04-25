@@ -20,9 +20,9 @@ def index(request):
     return render(request, 'todoapp/index.html')
 
 def bootindex(request):
-    return render(request, 'bootstrapTemplate/index.html')
+    return render(request, 'bootstrapTemplate/base.html')
 
-### Signup ###
+##### Signup #####
 def signupuser(request):
     if request.method == 'GET':
         form = UserSignUpForm()
@@ -38,7 +38,7 @@ def signupuser(request):
                 user.save()
                 current_site = get_current_site(request)
                 email_subject = 'Activate your account'
-                message = render_to_string('todoapp/activate_account.html',
+                message = render_to_string('registration/activate_account.html',
                                            {
                                                'user':user,
                                                'domain':current_site.domain,
@@ -61,13 +61,12 @@ def resend_mail(request):
             email = form.cleaned_data['email']
             try:
                user = User.objects.get(email=email)
-               print(user.pk)
                if user.is_active:
                    return redirect('loginuser')
                else:
                    current_site = get_current_site(request)
                    email_subject = 'Activate your account'
-                   message = render_to_string('todoapp/activate_account.html',
+                   message = render_to_string('registration/activate_account.html',
                                               {
                                                   'user': user,
                                                   'domain': current_site.domain,
@@ -78,11 +77,11 @@ def resend_mail(request):
                    to_email = form.cleaned_data.get('email')
                    email = EmailMessage(email_subject, message, to=[to_email])
                    email.send()
-                   return render(request, 'todoapp/signup.html', {'send',''})
+                   return render(request, 'registration/page-register-complete.html', {'complete_msg':'yes'})
             except User.DoesNotExist:
-                return render(request, 'todoapp/resend_mail.html', {'form': form, 'msg': 'yes'})
+                return render(request, 'registration/resend_mail.html', {'form': form, 'error': 'y'})
 
-    return render(request, 'todoapp/resend_mail.html', {'form':form})
+    return render(request, 'registration/resend_mail.html', {'form':form})
 
 def activate_account(request, uidb64, token):
     try:
@@ -101,32 +100,8 @@ def activate_account(request, uidb64, token):
     else:
         return render(request, 'registration/page-register-complete.html', {'invalid_link_msg':'Sorry, Your email link is invalid. Please sign up again.'})
 
-# mypage
-def mypage(request):
-    return render(request, 'todoapp/mypage.html')
 
-def password_change(request):
-    if request.method == 'GET':
-        return render(request, 'todoapp/password_change_form.html')
-    else:
-        current_password = request.POST.get('origin_password')
-        user = request.user
-        error = ''
-        if check_password(current_password, user.password):
-            new_password = request.POST.get('new_password')
-            confirm_password = request.POST.get('confirm_password')
-            if new_password == confirm_password:
-                user.set_password(new_password)
-                user.save()
-                login(request, user)
-                return render(request, 'todoapp/index.html')
-            else:
-                error = 'new password & confirm password did not match'
-        else:
-            error = 'current password did not match'
-        return render(request, 'todoapp/password_change_form.html', {'error':error})
-
-# Login & Logout
+##### Login & Logout #####
 def loginuser(request):
     form = AuthenticationForm()
     form.fields['username'].widget.attrs['class'] = 'form-control'
@@ -150,6 +125,39 @@ def logoutuser(request):
     #     return redirect('index')
     logout(request)
     return redirect('index')
+
+
+##### mypage #####
+def mypage(request):
+    return render(request, 'todoapp/mypage.html')
+
+def lock_screen(request):
+    if request.method == 'GET':
+        return render(request, 'bootstrapTemplate/page-lock.html')
+    else:
+        pass
+
+
+def password_change(request):
+    if request.method == 'GET':
+        return render(request, 'todoapp/password_change_form.html')
+    else:
+        current_password = request.POST.get('origin_password')
+        user = request.user
+        error = ''
+        if check_password(current_password, user.password):
+            new_password = request.POST.get('new_password')
+            confirm_password = request.POST.get('confirm_password')
+            if new_password == confirm_password:
+                user.set_password(new_password)
+                user.save()
+                login(request, user)
+                return render(request, 'todoapp/index.html')
+            else:
+                error = 'new password & confirm password did not match'
+        else:
+            error = 'current password did not match'
+        return render(request, 'todoapp/password_change_form.html', {'error':error})
 
 
 #################
