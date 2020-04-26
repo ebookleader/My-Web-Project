@@ -20,7 +20,7 @@ def index(request):
     return render(request, 'todoapp/index.html')
 
 def bootindex(request):
-    return render(request, 'bootstrapTemplate/base.html')
+    return render(request, 'bootstrapTemplate/ui-cards.html')
 
 ##### Signup #####
 def signupuser(request):
@@ -135,7 +135,12 @@ def lock_screen(request):
     if request.method == 'GET':
         return render(request, 'bootstrapTemplate/page-lock.html')
     else:
-        pass
+        user = request.user
+        input_password = request.POST.get('password')
+        if user.check_password(input_password):
+            return redirect('index')
+        else:
+            return render(request, 'bootstrapTemplate/page-lock.html', {'error':'Password does not match.'})
 
 
 def password_change(request):

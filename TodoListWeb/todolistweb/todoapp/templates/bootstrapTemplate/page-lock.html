@@ -1,37 +1,39 @@
-{% extends 'bootstrapTemplate/base.html' %}
+{% extends 'registration/base.html' %}
 {% block content %}
-    <div class="login-form-bg h-100">
-        <div class="container h-100">
-            <div class="row justify-content-center h-100">
-                <div class="col-xl-6">
-                    <div class="form-input-content">
-                        <div class="card login-form mb-0">
-                            <div class="card-body pt-5">
-                                <a class="text-center" href="index.html"> <h4>Rosella</h4></a>
-                                <form class="mt-5 mb-3 login-input">
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Password" required>
-                                    </div>
-                                    <button class="btn login-form__btn submit w-100">Unlock</button>
-                                </form>
+<div class="login-form-bg h-100">
+    <div class="container h-100">
+        <div class="row justify-content-center h-100">
+            <div class="col-xl-6">
+                <div class="form-input-content">
+                    <div class="card login-form mb-0">
+                        <div class="card-body pt-5">
+                            <a class="text-center" href="index.html"> <h4>STARTO</h4></a>
+                            <form class="mt-5 mb-3 login-input" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Password" name="password" required>
                                 </div>
-                            </div>
+                                <p class="text-danger font-weight-normal">{{ error }}</p>
+                                <button class="btn login-form__btn submit w-100">Unlock</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {% endblock %}
+</div>
+</div>
+{% endblock %}
 
-    
 
-    <!--**********************************
-        Scripts
-    ***********************************-->
-    <script src="plugins/common/common.min.js"></script>
-    <script src="js/custom.min.js"></script>
-    <script src="js/settings.js"></script>
+
+<!--**********************************
+    Scripts
+***********************************-->
+<script src="plugins/common/common.min.js"></script>
+<script src="js/custom.min.js"></script>
+<script src="js/settings.js"></script>
 </body>
 </html>
 
