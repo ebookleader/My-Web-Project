@@ -200,20 +200,6 @@ def password_change(request):
 
 # TodoApp
 @login_required
-def create_todo(request):
-    if request.method == 'GET':
-        return render(request, 'todo/createTodo.html')
-    else:
-        try:
-            form = TodoForm(request.POST)
-            print(form)
-            new_todo = form.save(commit=False)
-            new_todo.user = request.user
-            new_todo.save()
-            return redirect('index')
-        except ValueError:
-            return render(request, 'todo/createTodo.html', {'form': TodoForm(), 'error':'Value Error. Try again.'})
-
 def create_monday_todo(request):
     week = get7Date()
     month = get7dayMonth()

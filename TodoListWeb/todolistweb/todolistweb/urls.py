@@ -47,7 +47,6 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
     # crud_todo
-    path('create_todo/', views.create_todo, name='create_todo'),
     path('create_monday_todo/', views.create_monday_todo, name='create_monday_todo'),
     path('current_todo/', views.current_todo, name='current_todo'),
     path('todo/<int:todo_pk>', views.todo_detail, name='todo_detail'),

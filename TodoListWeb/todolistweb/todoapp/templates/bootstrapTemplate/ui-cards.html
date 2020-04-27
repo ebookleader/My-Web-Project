@@ -58,7 +58,7 @@
                                         </form>
                                     </div>
                                     {% else %}
-                                    <div class="basic-list-group">
+                                    <div class="card-body" style="overflow-y: scroll; height: 280px;">
                                             {% for todo in todo_list %}
                                             <p class="card-text mb-4">{{ todo.title }}<i class="fa fa-square-o float-right"></i></p>
                                             {% endfor %}
