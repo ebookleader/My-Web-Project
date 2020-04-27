@@ -14,13 +14,44 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
 from .forms import TodoForm
 from .models import Todo
+import datetime
+
+def get7Date():
+    day = datetime.datetime.now().weekday()
+    # 현재 년월일시분초
+    current_datetime = datetime.datetime.now()
+    dayofweek = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+    week = {}
+    for i in range(0, 7):
+        week[dayofweek[i]] = (current_datetime + datetime.timedelta(days=-day + i)).day
+    return week
+
+def get7dayMonth():
+    day = datetime.datetime.now().weekday()
+    # 현재 년월일시분초
+    current_datetime = datetime.datetime.now()
+    dayofweek = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+    month = {}
+    for i in range(0, 7):
+        month[dayofweek[i]] = (current_datetime + datetime.timedelta(days=-day + i)).strftime("%B")
+    return month
 
 # Create your views here.
 def index(request):
     return render(request, 'todoapp/index.html')
 
+@login_required()
 def bootindex(request):
-    return render(request, 'bootstrapTemplate/ui-cards.html')
+    week = get7Date()
+    month = get7dayMonth()
+    todo_list = Todo.objects.filter(user=request.user, date_completed__isnull=True)
+    return render(request, 'bootstrapTemplate/ui-cards.html',
+                  {
+                    'week':week,
+                    'month':month,
+                    'todo_list':todo_list
+                  }
+                  )
 
 ##### Signup #####
 def signupuser(request):
@@ -182,6 +213,28 @@ def create_todo(request):
         except ValueError:
             return render(request, 'todo/createTodo.html', {'form': TodoForm(), 'error':'Value Error. Try again.'})
 
+
+@login_required
+def create_monday_todo(request):
+    week = get7Date()
+    month = get7dayMonth()
+    if request.method == 'GET':
+        return render(request, 'bootstrapTemplate/ui-cards.html',
+                      {
+                          'week': week,
+                          'month': month,
+                          'add_monday_todo_form': 'yes'
+                      }
+                      )
+    else:
+        try:
+            form = TodoForm(request.POST)
+            new_todo = form.save(commit=False)
+            new_todo.user = request.user
+            new_todo.save()
+            return redirect('index')
+        except ValueError:
+            return redirect('index')
 
 @login_required
 def current_todo(request):

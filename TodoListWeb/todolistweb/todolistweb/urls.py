@@ -48,6 +48,7 @@ urlpatterns = [
 
     # abouttodo
     path('create_todo/', views.create_todo, name='create_todo'),
+    path('create_monday_todo/', views.create_monday_todo, name='create_monday_todo'),
     path('current_todo/', views.current_todo, name='current_todo'),
     path('todo/<int:todo_pk>', views.todo_detail, name='todo_detail'),
     path('completed_todo/', views.completed_todo, name='completed_todo'),

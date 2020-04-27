@@ -19,31 +19,74 @@
                 <!-- End Row -->
                 <div class="row">
                     <div class="col-12 m-b-30">
-                        <h4 class="d-inline">Cards With Header, Footer and Links</h4>
-                        <p class="text-muted">This is 3 column contents</p>
+                        <h4 class="d-inline">Weekly Schedule</h4>
+                        <p class="text-muted">Your weekly todo</p>
+
                         <div class="row">
                             <div class="col-md-6 col-lg-3">
                                 <div class="card">
                                     <div class="card-header bg-white">
-                                        <h5 class="card-title">Card title</h5>
-                                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.mon }}</h2></td>
+                                                <td class="font-weight-semi-bold">{{ month.mon }}</td>
+                                                <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">MONDAY</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-normal">2020</td>
+                                            </tr>
+                                        </table>
                                     </div>
-                                    <img class="img-fluid" src="/static/images/big/img1.jpg" alt="">
+                                    {% if add_monday_todo_form %}
                                     <div class="card-body">
-                                        <p class="card-text">This is a wider card with supporting text and below as a natural lead-in to the additional content. This content is a little bit longer.</p>
+                                        <form method="POST" action="{% url 'create_monday_todo' %}">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                <input type="text" class="form-control input-default" placeholder="Title" name="'title">
+                                            </div>
+                                            <div class="form-group">
+                                                <textarea class="form-control h-150px input-default" rows="6" placeholder="memo" name="memo"></textarea>
+                                            </div>
+                                            <div class="form-group form-check">
+                                                <input type="checkbox" class="form-check-input input-default" id="important" name="important">
+                                                <label class="form-check-label" for="important">important</label>
+                                            </div>
+                                            <div class="general-button ml-4">
+                                                <a class="btn mb-1 btn-flat btn-dark text-white" href="{% url 'index' %}">Cancel</a>
+                                                <button type="submit" class="btn mb-1 btn-flat btn-secondary text-white">Add Todo</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    {% else %}
+                                    <div class="basic-list-group">
+                                            {% for todo in todo_list %}
+                                            <p class="card-text mb-4">{{ todo.title }}<i class="fa fa-square-o float-right"></i></p>
+                                            {% endfor %}
                                     </div>
                                     <div class="card-footer">
-                                        <p class="card-text d-inline"><small class="text-muted">Last updated 3 mins ago</small>
-                                        </p><a href="#" class="card-link float-right"><small>Card link</small></a>
+                                        <form action="{% url 'create_monday_todo' %}" method="GET">
+                                            <button type="submit" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary">
+                                                Add Todo <span class="btn-icon-right"><i class="fa fa-plus"></i></span>
+                                            </button>
+                                        </form>
                                     </div>
+                                    {% endif %}
                                 </div>
                             </div>
                             <!-- End Col -->
                             <div class="col-md-6 col-lg-3">
                                 <div class="card">
                                     <div class="card-header bg-white">
-                                        <h5 class="card-title">Card title</h5>
-                                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.tue }}</h2></td>
+                                                <td class="font-weight-semi-bold">{{ month.tue }}</td>
+                                                <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">TUESDAY</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-normal">2020</td>
+                                            </tr>
+                                        </table>
                                     </div>
                                     <img class="img-fluid" src="/static/images/big/img2.jpg" alt="">
                                     <div class="card-body">
@@ -59,8 +102,16 @@
                             <div class="col-md-6 col-lg-3">
                                 <div class="card">
                                     <div class="card-header bg-white">
-                                        <h5 class="card-title">Card title</h5>
-                                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.wed }}</h2></td>
+                                                <td class="font-weight-semi-bold">{{ month.wed }}</td>
+                                                <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">WEDNESDAY</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-normal">2020</td>
+                                            </tr>
+                                        </table>
                                     </div>
                                     <img class="img-fluid" src="/static/images/big/img3.jpg" alt="">
                                     <div class="card-body">
@@ -76,8 +127,91 @@
                             <div class="col-md-6 col-lg-3">
                                 <div class="card">
                                     <div class="card-header bg-white">
-                                        <h5 class="card-title">Card title</h5>
-                                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.thu }}</h2></td>
+                                                <td class="font-weight-semi-bold">{{ month.thu }}</td>
+                                                <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">THURSDAY</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-normal">2020</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <img class="img-fluid" src="/static/images/big/img4.jpg" alt="">
+                                    <div class="card-body">
+                                        <p class="card-text">This is a wider card with supporting text and below as a natural lead-in to the additional content. This content is a little bit longer.</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <p class="card-text d-inline"><small class="text-muted">Last updated 3 mins ago</small>
+                                        </p><a href="#" class="card-link float-right"><small>Card link</small></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Col -->
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card">
+                                    <div class="card-header bg-white">
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.fri }}</h2></td>
+                                                <td class="font-weight-semi-bold">{{ month.fri }}</td>
+                                                <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">FRIDAY</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-normal">2020</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <img class="img-fluid" src="/static/images/big/img4.jpg" alt="">
+                                    <div class="card-body">
+                                        <p class="card-text">This is a wider card with supporting text and below as a natural lead-in to the additional content. This content is a little bit longer.</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <p class="card-text d-inline"><small class="text-muted">Last updated 3 mins ago</small>
+                                        </p><a href="#" class="card-link float-right"><small>Card link</small></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Col -->
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card">
+                                    <div class="card-header bg-white">
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.sat }}</h2></td>
+                                                <td class="font-weight-semi-bold">{{ month.sat }}</td>
+                                                <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">SATURDAY</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-normal">2020</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <img class="img-fluid" src="/static/images/big/img4.jpg" alt="">
+                                    <div class="card-body">
+                                        <p class="card-text">This is a wider card with supporting text and below as a natural lead-in to the additional content. This content is a little bit longer.</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <p class="card-text d-inline"><small class="text-muted">Last updated 3 mins ago</small>
+                                        </p><a href="#" class="card-link float-right"><small>Card link</small></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Col -->
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card">
+                                    <div class="card-header bg-white">
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.sun }}</h2></td>
+                                                <td class="font-weight-semi-bold">{{ month.sun }}</td>
+                                                <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">SUNDAY</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-normal">2020</td>
+                                            </tr>
+                                        </table>
                                     </div>
                                     <img class="img-fluid" src="/static/images/big/img4.jpg" alt="">
                                     <div class="card-body">
