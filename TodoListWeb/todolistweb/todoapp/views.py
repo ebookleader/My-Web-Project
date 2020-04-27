@@ -1,6 +1,6 @@
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .forms import UserSignUpForm, ResendEmailForm
@@ -206,6 +206,7 @@ def create_todo(request):
     else:
         try:
             form = TodoForm(request.POST)
+            print(form)
             new_todo = form.save(commit=False)
             new_todo.user = request.user
             new_todo.save()
@@ -213,8 +214,6 @@ def create_todo(request):
         except ValueError:
             return render(request, 'todo/createTodo.html', {'form': TodoForm(), 'error':'Value Error. Try again.'})
 
-
-@login_required
 def create_monday_todo(request):
     week = get7Date()
     month = get7dayMonth()
@@ -234,7 +233,7 @@ def create_monday_todo(request):
             new_todo.save()
             return redirect('index')
         except ValueError:
-            return redirect('index')
+            return redirect('create_monday_todo')
 
 @login_required
 def current_todo(request):

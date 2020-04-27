@@ -42,18 +42,18 @@
                                         <form method="POST" action="{% url 'create_monday_todo' %}">
                                             {% csrf_token %}
                                             <div class="form-group">
-                                                <input type="text" class="form-control input-default" placeholder="Title" name="'title">
+                                                <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
                                             </div>
                                             <div class="form-group">
-                                                <textarea class="form-control h-150px input-default" rows="6" placeholder="memo" name="memo"></textarea>
+                                                <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input input-default" id="important" name="important">
+                                                <input type="checkbox" class="form-check-input" id="important" name="important">
                                                 <label class="form-check-label" for="important">important</label>
                                             </div>
                                             <div class="general-button ml-4">
-                                                <a class="btn mb-1 btn-flat btn-dark text-white" href="{% url 'index' %}">Cancel</a>
-                                                <button type="submit" class="btn mb-1 btn-flat btn-secondary text-white">Add Todo</button>
+                                                <a class="btn mb-1 btn-dark text-white" href="{% url 'index' %}">Cancel</a>
+                                                <button type="submit" class="btn mb-1 btn-secondary text-white">Add Todo</button>
                                             </div>
                                         </form>
                                     </div>

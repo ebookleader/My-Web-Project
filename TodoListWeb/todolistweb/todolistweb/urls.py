@@ -46,7 +46,7 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
-    # abouttodo
+    # crud_todo
     path('create_todo/', views.create_todo, name='create_todo'),
     path('create_monday_todo/', views.create_monday_todo, name='create_monday_todo'),
     path('current_todo/', views.current_todo, name='current_todo'),
