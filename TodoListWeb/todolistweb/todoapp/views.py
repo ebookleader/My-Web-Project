@@ -36,6 +36,32 @@ def get7dayMonth():
         month[dayofweek[i]] = (current_datetime + datetime.timedelta(days=-day + i)).strftime("%B")
     return month
 
+def month_converter(month):
+    months = ['January', 'February', 'March', 'April', 'May', 'Jun', 'July', 'August', 'September', 'October', 'November', 'December']
+    return months.index(month) + 1
+
+def get_all_week_todo(request):
+    week = get7Date()
+    month = get7dayMonth()
+    all_week_todo = []
+
+    mon_todo = Todo.objects.filter(user=request.user, date_completed__isnull=True, schedule_date__day=week['mon'], schedule_date__month=month_converter(month['mon']))
+    tue_todo = Todo.objects.filter(user=request.user, date_completed__isnull=True, schedule_date__day=week['tue'], schedule_date__month=month_converter(month['tue']))
+    wed_todo = Todo.objects.filter(user=request.user, date_completed__isnull=True, schedule_date__day=week['wed'], schedule_date__month=month_converter(month['wed']))
+    thu_todo = Todo.objects.filter(user=request.user, date_completed__isnull=True, schedule_date__day=week['thu'], schedule_date__month=month_converter(month['thu']))
+    fri_todo = Todo.objects.filter(user=request.user, date_completed__isnull=True, schedule_date__day=week['fri'], schedule_date__month=month_converter(month['fri']))
+    sat_todo = Todo.objects.filter(user=request.user, date_completed__isnull=True, schedule_date__day=week['sat'], schedule_date__month=month_converter(month['sat']))
+    sun_todo = Todo.objects.filter(user=request.user, date_completed__isnull=True, schedule_date__day=week['sun'], schedule_date__month=month_converter(month['sun']))
+
+    all_week_todo.append(mon_todo)
+    all_week_todo.append(tue_todo)
+    all_week_todo.append(wed_todo)
+    all_week_todo.append(thu_todo)
+    all_week_todo.append(fri_todo)
+    all_week_todo.append(sat_todo)
+    all_week_todo.append(sun_todo)
+    return all_week_todo
+
 # Create your views here.
 def index(request):
     return render(request, 'todoapp/index.html')
@@ -44,7 +70,8 @@ def index(request):
 def bootindex(request):
     week = get7Date()
     month = get7dayMonth()
-    todo_list = Todo.objects.filter(user=request.user, date_completed__isnull=True)
+    # todo_list = Todo.objects.filter(user=request.user, date_completed__isnull=True, schedule_date__day=week['mon'], schedule_date__month=month_converter(month['mon']))
+    todo_list = get_all_week_todo(request)
     return render(request, 'bootstrapTemplate/ui-cards.html',
                   {
                     'week':week,
@@ -204,22 +231,182 @@ def create_monday_todo(request):
     week = get7Date()
     month = get7dayMonth()
     if request.method == 'GET':
+        todo_list = get_all_week_todo(request)
         return render(request, 'bootstrapTemplate/ui-cards.html',
                       {
                           'week': week,
                           'month': month,
-                          'add_monday_todo_form': 'yes'
+                          'add_monday_todo_form': 'yes',
+                          'todo_list':todo_list,
                       }
                       )
     else:
         try:
+            now = datetime.datetime.now()
             form = TodoForm(request.POST)
             new_todo = form.save(commit=False)
+            new_todo.schedule_date = datetime.datetime(now.year, month_converter(month['mon']), week['mon'])
             new_todo.user = request.user
             new_todo.save()
             return redirect('index')
         except ValueError:
             return redirect('create_monday_todo')
+
+@login_required
+def create_tuesday_todo(request):
+    week = get7Date()
+    month = get7dayMonth()
+    if request.method == 'GET':
+        todo_list = get_all_week_todo(request)
+        return render(request, 'bootstrapTemplate/ui-cards.html',
+                      {
+                          'week': week,
+                          'month': month,
+                          'add_tuesday_todo_form': 'yes',
+                          'todo_list': todo_list,
+                      }
+                      )
+    else:
+        try:
+            now = datetime.datetime.now()
+            form = TodoForm(request.POST)
+            new_todo = form.save(commit=False)
+            new_todo.schedule_date = datetime.datetime(now.year, month_converter(month['tue']), week['tue'])
+            new_todo.user = request.user
+            new_todo.save()
+            return redirect('index')
+        except ValueError:
+            return redirect('create_tuesday_todo')
+
+@login_required
+def create_wednesday_todo(request):
+    week = get7Date()
+    month = get7dayMonth()
+    if request.method == 'GET':
+        todo_list = get_all_week_todo(request)
+        return render(request, 'bootstrapTemplate/ui-cards.html',
+                      {
+                          'week': week,
+                          'month': month,
+                          'add_wednesday_todo_form': 'yes',
+                          'todo_list': todo_list,
+                      }
+                      )
+    else:
+        try:
+            now = datetime.datetime.now()
+            form = TodoForm(request.POST)
+            new_todo = form.save(commit=False)
+            new_todo.schedule_date = datetime.datetime(now.year, month_converter(month['wed']), week['wed'])
+            new_todo.user = request.user
+            new_todo.save()
+            return redirect('index')
+        except ValueError:
+            return redirect('create_wednesday_todo')
+
+@login_required
+def create_thursday_todo(request):
+    week = get7Date()
+    month = get7dayMonth()
+    if request.method == 'GET':
+        todo_list = get_all_week_todo(request)
+        return render(request, 'bootstrapTemplate/ui-cards.html',
+                      {
+                          'week': week,
+                          'month': month,
+                          'add_thursday_todo_form': 'yes',
+                          'todo_list': todo_list,
+                      }
+                      )
+    else:
+        try:
+            now = datetime.datetime.now()
+            form = TodoForm(request.POST)
+            new_todo = form.save(commit=False)
+            new_todo.schedule_date = datetime.datetime(now.year, month_converter(month['thu']), week['thu'])
+            new_todo.user = request.user
+            new_todo.save()
+            return redirect('index')
+        except ValueError:
+            return redirect('create_thursday_todo')
+
+@login_required
+def create_friday_todo(request):
+    week = get7Date()
+    month = get7dayMonth()
+    if request.method == 'GET':
+        todo_list = get_all_week_todo(request)
+        return render(request, 'bootstrapTemplate/ui-cards.html',
+                      {
+                          'week': week,
+                          'month': month,
+                          'add_friday_todo_form': 'yes',
+                          'todo_list': todo_list,
+                      }
+                      )
+    else:
+        try:
+            now = datetime.datetime.now()
+            form = TodoForm(request.POST)
+            new_todo = form.save(commit=False)
+            new_todo.schedule_date = datetime.datetime(now.year, month_converter(month['fri']), week['fri'])
+            new_todo.user = request.user
+            new_todo.save()
+            return redirect('index')
+        except ValueError:
+            return redirect('create_friday_todo')
+
+@login_required
+def create_saturday_todo(request):
+    week = get7Date()
+    month = get7dayMonth()
+    if request.method == 'GET':
+        todo_list = get_all_week_todo(request)
+        return render(request, 'bootstrapTemplate/ui-cards.html',
+                      {
+                          'week': week,
+                          'month': month,
+                          'add_saturday_todo_form': 'yes',
+                          'todo_list': todo_list,
+                      }
+                      )
+    else:
+        try:
+            now = datetime.datetime.now()
+            form = TodoForm(request.POST)
+            new_todo = form.save(commit=False)
+            new_todo.schedule_date = datetime.datetime(now.year, month_converter(month['sat']), week['sat'])
+            new_todo.user = request.user
+            new_todo.save()
+            return redirect('index')
+        except ValueError:
+            return redirect('create_saturday_todo')
+
+@login_required
+def create_sunday_todo(request):
+    week = get7Date()
+    month = get7dayMonth()
+    if request.method == 'GET':
+        todo_list = get_all_week_todo(request)
+        return render(request, 'bootstrapTemplate/ui-cards.html',
+                      {
+                          'week': week,
+                          'month': month,
+                          'add_sunday_todo_form': 'yes',
+                          'todo_list': todo_list,
+                      }
+                      )
+    else:
+        try:
+            now = datetime.datetime.now()
+            form = TodoForm(request.POST)
+            new_todo = form.save(commit=False)
+            new_todo.schedule_date = datetime.datetime(now.year, month_converter(month['sun']), week['sun'])
+            new_todo.user = request.user
+            new_todo.save()
+            return redirect('index')
+        except ValueError:
+            return redirect('create_sunday_todo')
 
 @login_required
 def current_todo(request):
