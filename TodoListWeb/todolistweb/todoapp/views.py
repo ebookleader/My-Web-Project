@@ -408,10 +408,6 @@ def create_sunday_todo(request):
         except ValueError:
             return redirect('create_sunday_todo')
 
-@login_required
-def current_todo(request):
-    todo_list = Todo.objects.filter(user=request.user, date_completed__isnull=True)
-    return render(request, 'todo/currentTodo.html', {'todo_list':todo_list})
 
 @login_required
 def completed_todo(request):
@@ -421,9 +417,11 @@ def completed_todo(request):
 @login_required
 def todo_detail(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    print(todo)
     if request.method == 'GET':
+        print('get')
         form = TodoForm(instance=todo)
-        return render(request, 'todo/todoDetail.html', {'todo':todo, 'form':form})
+        return render(request, 'bootstrapTemplate/ui-cards.html', {'todo':todo, 'form':form, 'todo_detail':'yes'})
     else:
         try:
             form = TodoForm(request.POST, instance=todo)

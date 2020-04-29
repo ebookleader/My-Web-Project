@@ -1,392 +1,616 @@
 {% extends 'bootstrapTemplate/base.html' %}
 {% block content %}
-        <!--**********************************
-            Content body start
-        ***********************************-->
-        <div class="content-body">
+<!--**********************************
+    Content body start
+***********************************-->
+<div class="content-body">
 
-            <div class="row page-titles mx-0">
-                <div class="col p-md-0">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
-                    </ol>
-                </div>
-            </div>
-            <!-- row -->
+    <div class="row page-titles mx-0">
+        <div class="col p-md-0">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+            </ol>
+        </div>
+    </div>
+    <!-- row -->
 
-            <div class="container-fluid">
-                <!-- End Row -->
+    <div class="container-fluid">
+        <!-- End Row -->
+        <div class="row">
+            <div class="col-12 m-b-30">
+                <h4 class="d-inline">Weekly Schedule</h4>
+                <p class="text-muted">Your weekly todo</p>
+
                 <div class="row">
-                    <div class="col-12 m-b-30">
-                        <h4 class="d-inline">Weekly Schedule</h4>
-                        <p class="text-muted">Your weekly todo</p>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <table>
+                                    <tr>
+                                        <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.mon }}</h2></td>
+                                        <td class="font-weight-semi-bold">{{ month.mon }}</td>
+                                        <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">MONDAY</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-normal">2020</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            {% if add_monday_todo_form %}
+                            <div class="card-body">
+                                <form method="POST" action="{% url 'create_monday_todo' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
+                                    </div>
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" class="form-check-input" id="important" name="important">
+                                        <label class="form-check-label" for="important">important</label>
+                                    </div>
+                                    <div class="general-button ml-4">
+                                        <a class="btn mb-1 btn-dark text-white" href="{% url 'index' %}">Cancel</a>
+                                        <button type="submit" class="btn mb-1 btn-secondary text-white">Add Todo</button>
+                                    </div>
+                                </form>
+                            </div>
+                            {% else %}
+                            <div class="card-body" style="overflow-y: scroll; height: 280px;">
+                                {% for todo in todo_list.0 %}
+                                <p class="card-text mb-4">{{ todo.title }}<i class="fa fa-square-o float-right"></i></p>
+                                {% endfor %}
+                            </div>
+                            <div class="card-footer">
+                                <div class="bootstrap-modal">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary" data-toggle="modal" data-target="#basicModal">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="basicModal" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Add Todo</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                                                    </button>
+                                                </div>
 
-                        <div class="row">
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card">
-                                    <div class="card-header bg-white">
-                                        <table>
-                                            <tr>
-                                                <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.mon }}</h2></td>
-                                                <td class="font-weight-semi-bold">{{ month.mon }}</td>
-                                                <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">MONDAY</h5></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="font-weight-normal">2020</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    {% if add_monday_todo_form %}
-                                    <div class="card-body">
-                                        <form method="POST" action="{% url 'create_monday_todo' %}">
-                                            {% csrf_token %}
-                                            <div class="form-group">
-                                                <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
+                                                <form method="POST" action="{% url 'create_tuesday_todo' %}">
+                                                    {% csrf_token %}
+                                                    <div class="modal-body ml-4 mr-4 mt-3">
+                                                        <div class=" mt-2">
+                                                            <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
+                                                        </div>
+                                                        <div class="form-group mt-3">
+                                                            <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
+                                                        </div>
+                                                        <div class="form-group form-check mt-4">
+                                                            <input type="checkbox" class="form-check-input" id="important" name="important">
+                                                            <label class="form-check-label" for="important">important</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </form>
                                             </div>
-                                            <div class="form-group">
-                                                <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
-                                            </div>
-                                            <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input" id="important" name="important">
-                                                <label class="form-check-label" for="important">important</label>
-                                            </div>
-                                            <div class="general-button ml-4">
-                                                <a class="btn mb-1 btn-dark text-white" href="{% url 'index' %}">Cancel</a>
-                                                <button type="submit" class="btn mb-1 btn-secondary text-white">Add Todo</button>
-                                            </div>
-                                        </form>
+                                        </div>
                                     </div>
-                                    {% else %}
-                                    <div class="card-body" style="overflow-y: scroll; height: 280px;">
-                                            {% for todo in todo_list.0 %}
-                                            <p class="card-text mb-4">{{ todo.title }}<i class="fa fa-square-o float-right"></i></p>
-                                            {% endfor %}
-                                    </div>
-                                    <div class="card-footer">
-                                        <form action="{% url 'create_monday_todo' %}" method="GET">
-                                            <button type="submit" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary">
-                                                Add Todo <span class="btn-icon-right"><i class="fa fa-plus"></i></span>
-                                            </button>
-                                        </form>
-                                    </div>
-                                    {% endif %}
                                 </div>
                             </div>
-                            <!-- End Col -->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card">
-                                    <div class="card-header bg-white">
-                                        <table>
-                                            <tr>
-                                                <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.tue }}</h2></td>
-                                                <td class="font-weight-semi-bold">{{ month.tue }}</td>
-                                                <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">TUESDAY</h5></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="font-weight-normal">2020</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    {% if add_tuesday_todo_form %}
-                                    <div class="card-body">
-                                        <form method="POST" action="{% url 'create_tuesday_todo' %}">
-                                            {% csrf_token %}
-                                            <div class="form-group">
-                                                <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
-                                            </div>
-                                            <div class="form-group">
-                                                <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
-                                            </div>
-                                            <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input" id="important" name="important">
-                                                <label class="form-check-label" for="important">important</label>
-                                            </div>
-                                            <div class="general-button ml-4">
-                                                <a class="btn mb-1 btn-dark text-white" href="{% url 'index' %}">Cancel</a>
-                                                <button type="submit" class="btn mb-1 btn-secondary text-white">Add Todo</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    {% else %}
-                                    <div class="card-body" style="overflow-y: scroll; height: 280px;">
-                                            {% for todo in todo_list.1 %}
-                                            <p class="card-text mb-4">{{ todo.title }}<i class="fa fa-square-o float-right"></i></p>
-                                            {% endfor %}
-                                    </div>
-                                    <div class="card-footer">
-                                        <form action="{% url 'create_tuesday_todo' %}" method="GET">
-                                            <button type="submit" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary">
-                                                Add Todo <span class="btn-icon-right"><i class="fa fa-plus"></i></span>
-                                            </button>
-                                        </form>
-                                    </div>
-                                    {% endif %}
-                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- End Col -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <table>
+                                    <tr>
+                                        <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.tue }}</h2></td>
+                                        <td class="font-weight-semi-bold">{{ month.tue }}</td>
+                                        <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">TUESDAY</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-normal">2020</td>
+                                    </tr>
+                                </table>
                             </div>
-                            <!-- End Col -->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card">
-                                    <div class="card-header bg-white">
-                                        <table>
-                                            <tr>
-                                                <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.wed }}</h2></td>
-                                                <td class="font-weight-semi-bold">{{ month.wed }}</td>
-                                                <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">WEDNESDAY</h5></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="font-weight-normal">2020</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    {% if add_wednesday_todo_form %}
-                                    <div class="card-body">
-                                        <form method="POST" action="{% url 'create_wednesday_todo' %}">
-                                            {% csrf_token %}
-                                            <div class="form-group">
-                                                <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
-                                            </div>
-                                            <div class="form-group">
-                                                <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
-                                            </div>
-                                            <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input" id="important" name="important">
-                                                <label class="form-check-label" for="important">important</label>
-                                            </div>
-                                            <div class="general-button ml-4">
-                                                <a class="btn mb-1 btn-dark text-white" href="{% url 'index' %}">Cancel</a>
-                                                <button type="submit" class="btn mb-1 btn-secondary text-white">Add Todo</button>
-                                            </div>
-                                        </form>
+
+                            <div class="card-body" style="overflow-y: scroll; height: 280px;">
+                                {% if todo_detail %}
+                                <form method="POST" action="{% url 'todo_detail' %}">
+                                    {% csrf_token %}
+                                    {% for field in form %}
+                                    {% if field.field.is_checkbox %}
+                                    <div class="form-group form-check">
+                                        {{ field }}
+                                        {{ field.label_tag }}
                                     </div>
                                     {% else %}
-                                    <div class="card-body" style="overflow-y: scroll; height: 280px;">
-                                            {% for todo in todo_list.2 %}
-                                            <p class="card-text mb-4">{{ todo.title }}<i class="fa fa-square-o float-right"></i></p>
-                                            {% endfor %}
-                                    </div>
-                                    <div class="card-footer">
-                                        <form action="{% url 'create_wednesday_todo' %}" method="GET">
-                                            <button type="submit" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary">
-                                                Add Todo <span class="btn-icon-right"><i class="fa fa-plus"></i></span>
-                                            </button>
-                                        </form>
+                                    <div class="form-group">
+                                        {{ field.label_tag }}<br>
+                                        {{ field }}
                                     </div>
                                     {% endif %}
+                                    {% endfor %}
+                                    <div class="general-button ml-4">
+                                        <a class="btn mb-1 btn-dark text-white" href="{% url 'index' %}">Cancel</a>
+                                        <button type="submit" class="btn mb-1 btn-secondary text-white">Add Todo</button>
+                                    </div>
+                                </form>
+                                {% else %}
+                                {% for todo in todo_list.1 %}
+                                <div class="card-content mb-3">
+                                    <a href="{% url 'todo_detail' todo.id %}"><span class="btn-icon-left"><i class="fa fa-square-o"></i></span>{{ todo.title }}</a>
                                 </div>
+                                {% endfor %}
+                                {% endif %}
                             </div>
-                            <!-- End Col -->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card">
-                                    <div class="card-header bg-white">
-                                        <table>
-                                            <tr>
-                                                <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.thu }}</h2></td>
-                                                <td class="font-weight-semi-bold">{{ month.thu }}</td>
-                                                <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">THURSDAY</h5></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="font-weight-normal">2020</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    {% if add_thursday_todo_form %}
-                                    <div class="card-body">
-                                        <form method="POST" action="{% url 'create_thursday_todo' %}">
-                                            {% csrf_token %}
-                                            <div class="form-group">
-                                                <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
+
+                            <div class="card-footer">
+                                <div class="bootstrap-modal">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary" data-toggle="modal" data-target="#basicModal">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="basicModal" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Add Todo</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                                                    </button>
+                                                </div>
+
+                                                <form method="POST" action="{% url 'create_tuesday_todo' %}">
+                                                    {% csrf_token %}
+                                                    <div class="modal-body ml-4 mr-4 mt-3">
+                                                        <div class=" mt-2">
+                                                            <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
+                                                        </div>
+                                                        <div class="form-group mt-3">
+                                                            <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
+                                                        </div>
+                                                        <div class="form-group form-check mt-4">
+                                                            <input type="checkbox" class="form-check-input" id="important" name="important">
+                                                            <label class="form-check-label" for="important">important</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </form>
+
+
                                             </div>
-                                            <div class="form-group">
-                                                <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
-                                            </div>
-                                            <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input" id="important" name="important">
-                                                <label class="form-check-label" for="important">important</label>
-                                            </div>
-                                            <div class="general-button ml-4">
-                                                <a class="btn mb-1 btn-dark text-white" href="{% url 'index' %}">Cancel</a>
-                                                <button type="submit" class="btn mb-1 btn-secondary text-white">Add Todo</button>
-                                            </div>
-                                        </form>
+                                        </div>
                                     </div>
-                                    {% else %}
-                                    <div class="card-body" style="overflow-y: scroll; height: 280px;">
-                                            {% for todo in todo_list.3 %}
-                                            <p class="card-text mb-4">{{ todo.title }}<i class="fa fa-square-o float-right"></i></p>
-                                            {% endfor %}
-                                    </div>
-                                    <div class="card-footer">
-                                        <form action="{% url 'create_thursday_todo' %}" method="GET">
-                                            <button type="submit" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary">
-                                                Add Todo <span class="btn-icon-right"><i class="fa fa-plus"></i></span>
-                                            </button>
-                                        </form>
-                                    </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <!-- End Col -->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card">
-                                    <div class="card-header bg-white">
-                                        <table>
-                                            <tr>
-                                                <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.fri }}</h2></td>
-                                                <td class="font-weight-semi-bold">{{ month.fri }}</td>
-                                                <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">FRIDAY</h5></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="font-weight-normal">2020</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    {% if add_friday_todo_form %}
-                                    <div class="card-body">
-                                        <form method="POST" action="{% url 'create_friday_todo' %}">
-                                            {% csrf_token %}
-                                            <div class="form-group">
-                                                <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
-                                            </div>
-                                            <div class="form-group">
-                                                <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
-                                            </div>
-                                            <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input" id="important" name="important">
-                                                <label class="form-check-label" for="important">important</label>
-                                            </div>
-                                            <div class="general-button ml-4">
-                                                <a class="btn mb-1 btn-dark text-white" href="{% url 'index' %}">Cancel</a>
-                                                <button type="submit" class="btn mb-1 btn-secondary text-white">Add Todo</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    {% else %}
-                                    <div class="card-body" style="overflow-y: scroll; height: 280px;">
-                                            {% for todo in todo_list.4 %}
-                                            <p class="card-text mb-4">{{ todo.title }}<i class="fa fa-square-o float-right"></i></p>
-                                            {% endfor %}
-                                    </div>
-                                    <div class="card-footer">
-                                        <form action="{% url 'create_friday_todo' %}" method="GET">
-                                            <button type="submit" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary">
-                                                Add Todo <span class="btn-icon-right"><i class="fa fa-plus"></i></span>
-                                            </button>
-                                        </form>
-                                    </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <!-- End Col -->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card">
-                                    <div class="card-header bg-white">
-                                        <table>
-                                            <tr>
-                                                <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.sat }}</h2></td>
-                                                <td class="font-weight-semi-bold">{{ month.sat }}</td>
-                                                <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">SATURDAY</h5></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="font-weight-normal">2020</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    {% if add_saturday_todo_form %}
-                                    <div class="card-body">
-                                        <form method="POST" action="{% url 'create_saturday_todo' %}">
-                                            {% csrf_token %}
-                                            <div class="form-group">
-                                                <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
-                                            </div>
-                                            <div class="form-group">
-                                                <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
-                                            </div>
-                                            <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input" id="important" name="important">
-                                                <label class="form-check-label" for="important">important</label>
-                                            </div>
-                                            <div class="general-button ml-4">
-                                                <a class="btn mb-1 btn-dark text-white" href="{% url 'index' %}">Cancel</a>
-                                                <button type="submit" class="btn mb-1 btn-secondary text-white">Add Todo</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    {% else %}
-                                    <div class="card-body" style="overflow-y: scroll; height: 280px;">
-                                            {% for todo in todo_list.5 %}
-                                            <p class="card-text mb-4">{{ todo.title }}<i class="fa fa-square-o float-right"></i></p>
-                                            {% endfor %}
-                                    </div>
-                                    <div class="card-footer">
-                                        <form action="{% url 'create_saturday_todo' %}" method="GET">
-                                            <button type="submit" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary">
-                                                Add Todo <span class="btn-icon-right"><i class="fa fa-plus"></i></span>
-                                            </button>
-                                        </form>
-                                    </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <!-- End Col -->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card">
-                                    <div class="card-header bg-white">
-                                        <table>
-                                            <tr>
-                                                <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.sun }}</h2></td>
-                                                <td class="font-weight-semi-bold">{{ month.sun }}</td>
-                                                <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">SUNDAY</h5></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="font-weight-normal">2020</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    {% if add_sunday_todo_form %}
-                                    <div class="card-body">
-                                        <form method="POST" action="{% url 'create_sunday_todo' %}">
-                                            {% csrf_token %}
-                                            <div class="form-group">
-                                                <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
-                                            </div>
-                                            <div class="form-group">
-                                                <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
-                                            </div>
-                                            <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input" id="important" name="important">
-                                                <label class="form-check-label" for="important">important</label>
-                                            </div>
-                                            <div class="general-button ml-4">
-                                                <a class="btn mb-1 btn-dark text-white" href="{% url 'index' %}">Cancel</a>
-                                                <button type="submit" class="btn mb-1 btn-secondary text-white">Add Todo</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    {% else %}
-                                    <div class="card-body" style="overflow-y: scroll; height: 280px;">
-                                            {% for todo in todo_list.6 %}
-                                            <p class="card-text mb-4">{{ todo.title }}<i class="fa fa-square-o float-right"></i></p>
-                                            {% endfor %}
-                                    </div>
-                                    <div class="card-footer">
-                                        <form action="{% url 'create_sunday_todo' %}" method="GET">
-                                            <button type="submit" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary">
-                                                Add Todo <span class="btn-icon-right"><i class="fa fa-plus"></i></span>
-                                            </button>
-                                        </form>
-                                    </div>
-                                    {% endif %}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <!-- End Col -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <table>
+                                    <tr>
+                                        <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.wed }}</h2></td>
+                                        <td class="font-weight-semi-bold">{{ month.wed }}</td>
+                                        <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">WEDNESDAY</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-normal">2020</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            {% if add_wednesday_todo_form %}
+                            <div class="card-body">
+                                <form method="POST" action="{% url 'create_wednesday_todo' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
+                                    </div>
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" class="form-check-input" id="important" name="important">
+                                        <label class="form-check-label" for="important">important</label>
+                                    </div>
+                                    <div class="general-button ml-4">
+                                        <a class="btn mb-1 btn-dark text-white" href="{% url 'index' %}">Cancel</a>
+                                        <button type="submit" class="btn mb-1 btn-secondary text-white">Add Todo</button>
+                                    </div>
+                                </form>
+                            </div>
+                            {% else %}
+                            <div class="card-body" style="overflow-y: scroll; height: 280px;">
+                                {% for todo in todo_list.2 %}
+                                <p class="card-text mb-4">{{ todo.title }}<i class="fa fa-square-o float-right"></i></p>
+                                {% endfor %}
+                            </div>
+                            <div class="card-footer">
+                                <div class="bootstrap-modal">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary" data-toggle="modal" data-target="#basicModal">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="basicModal" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Add Todo</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                                                    </button>
+                                                </div>
 
+                                                <form method="POST" action="{% url 'create_tuesday_todo' %}">
+                                                    {% csrf_token %}
+                                                    <div class="modal-body ml-4 mr-4 mt-3">
+                                                        <div class=" mt-2">
+                                                            <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
+                                                        </div>
+                                                        <div class="form-group mt-3">
+                                                            <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
+                                                        </div>
+                                                        <div class="form-group form-check mt-4">
+                                                            <input type="checkbox" class="form-check-input" id="important" name="important">
+                                                            <label class="form-check-label" for="important">important</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- End Col -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <table>
+                                    <tr>
+                                        <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.thu }}</h2></td>
+                                        <td class="font-weight-semi-bold">{{ month.thu }}</td>
+                                        <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">THURSDAY</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-normal">2020</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            {% if add_thursday_todo_form %}
+                            <div class="card-body">
+                                <form method="POST" action="{% url 'create_thursday_todo' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
+                                    </div>
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" class="form-check-input" id="important" name="important">
+                                        <label class="form-check-label" for="important">important</label>
+                                    </div>
+                                    <div class="general-button ml-4">
+                                        <a class="btn mb-1 btn-dark text-white" href="{% url 'index' %}">Cancel</a>
+                                        <button type="submit" class="btn mb-1 btn-secondary text-white">Add Todo</button>
+                                    </div>
+                                </form>
+                            </div>
+                            {% else %}
+                            <div class="card-body" style="overflow-y: scroll; height: 280px;">
+                                {% for todo in todo_list.3 %}
+                                <p class="card-text mb-4">{{ todo.title }}<i class="fa fa-square-o float-right"></i></p>
+                                {% endfor %}
+                            </div>
+                            <div class="card-footer">
+                                <div class="bootstrap-modal">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary" data-toggle="modal" data-target="#basicModal">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="basicModal" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Add Todo</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                                                    </button>
+                                                </div>
+
+                                                <form method="POST" action="{% url 'create_tuesday_todo' %}">
+                                                    {% csrf_token %}
+                                                    <div class="modal-body ml-4 mr-4 mt-3">
+                                                        <div class=" mt-2">
+                                                            <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
+                                                        </div>
+                                                        <div class="form-group mt-3">
+                                                            <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
+                                                        </div>
+                                                        <div class="form-group form-check mt-4">
+                                                            <input type="checkbox" class="form-check-input" id="important" name="important">
+                                                            <label class="form-check-label" for="important">important</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- End Col -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <table>
+                                    <tr>
+                                        <td rowspan="2" class="card-title text-center pr-3"><h2>{{ week.fri }}</h2></td>
+                                        <td class="font-weight-semi-bold">{{ month.fri }}</td>
+                                        <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">FRIDAY</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-normal">2020</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            {% if add_friday_todo_form %}
+                            <div class="card-body">
+                                <form method="POST" action="{% url 'create_friday_todo' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
+                                    </div>
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" class="form-check-input" id="important" name="important">
+                                        <label class="form-check-label" for="important">important</label>
+                                    </div>
+                                    <div class="general-button ml-4">
+                                        <a class="btn mb-1 btn-dark text-white" href="{% url 'index' %}">Cancel</a>
+                                        <button type="submit" class="btn mb-1 btn-secondary text-white">Add Todo</button>
+                                    </div>
+                                </form>
+                            </div>
+                            {% else %}
+                            <div class="card-body" style="overflow-y: scroll; height: 280px;">
+                                {% for todo in todo_list.4 %}
+                                <p class="card-text mb-4">{{ todo.title }}<i class="fa fa-square-o float-right"></i></p>
+                                {% endfor %}
+                            </div>
+                            <div class="card-footer">
+                                <div class="bootstrap-modal">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary" data-toggle="modal" data-target="#basicModal">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="basicModal" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Add Todo</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                                                    </button>
+                                                </div>
+
+                                                <form method="POST" action="{% url 'create_tuesday_todo' %}">
+                                                    {% csrf_token %}
+                                                    <div class="modal-body ml-4 mr-4 mt-3">
+                                                        <div class=" mt-2">
+                                                            <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
+                                                        </div>
+                                                        <div class="form-group mt-3">
+                                                            <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
+                                                        </div>
+                                                        <div class="form-group form-check mt-4">
+                                                            <input type="checkbox" class="form-check-input" id="important" name="important">
+                                                            <label class="form-check-label" for="important">important</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- End Col -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <table>
+                                    <tr>
+                                        <td rowspan="2" class="card-title text-center pr-3"><h2 class="text-info">{{ week.sat }}</h2></td>
+                                        <td class="font-weight-semi-bold">{{ month.sat }}</td>
+                                        <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">SATURDAY</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-normal">2020</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            {% if add_saturday_todo_form %}
+                            <div class="card-body">
+                                <form method="POST" action="{% url 'create_saturday_todo' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
+                                    </div>
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" class="form-check-input" id="important" name="important">
+                                        <label class="form-check-label" for="important">important</label>
+                                    </div>
+                                    <div class="general-button ml-4">
+                                        <a class="btn mb-1 btn-dark text-white" href="{% url 'index' %}">Cancel</a>
+                                        <button type="submit" class="btn mb-1 btn-secondary text-white">Add Todo</button>
+                                    </div>
+                                </form>
+                            </div>
+                            {% else %}
+                            <div class="card-body" style="overflow-y: scroll; height: 280px;">
+                                {% for todo in todo_list.5 %}
+                                <p class="card-text mb-4">{{ todo.title }}<i class="fa fa-square-o float-right"></i></p>
+                                {% endfor %}
+                            </div>
+                            <div class="card-footer">
+                                <div class="bootstrap-modal">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary" data-toggle="modal" data-target="#basicModal">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="basicModal" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Add Todo</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                                                    </button>
+                                                </div>
+
+                                                <form method="POST" action="{% url 'create_tuesday_todo' %}">
+                                                    {% csrf_token %}
+                                                    <div class="modal-body ml-4 mr-4 mt-3">
+                                                        <div class=" mt-2">
+                                                            <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
+                                                        </div>
+                                                        <div class="form-group mt-3">
+                                                            <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
+                                                        </div>
+                                                        <div class="form-group form-check mt-4">
+                                                            <input type="checkbox" class="form-check-input" id="important" name="important">
+                                                            <label class="form-check-label" for="important">important</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- End Col -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <table>
+                                    <tr>
+                                        <td rowspan="2" class="card-title text-center pr-3"><h2 class="text-danger">{{ week.sun }}</h2></td>
+                                        <td class="font-weight-semi-bold">{{ month.sun }}</td>
+                                        <td rowspan="2" class="font-weight-semi-bold text-right w-100"><h5 class="text-muted">SUNDAY</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-normal">2020</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            {% if add_sunday_todo_form %}
+                            <div class="card-body">
+                                <form method="POST" action="{% url 'create_sunday_todo' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
+                                    </div>
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" class="form-check-input" id="important" name="important">
+                                        <label class="form-check-label" for="important">important</label>
+                                    </div>
+                                    <div class="general-button ml-4">
+                                        <a class="btn mb-1 btn-dark text-white" href="{% url 'index' %}">Cancel</a>
+                                        <button type="submit" class="btn mb-1 btn-secondary text-white">Add Todo</button>
+                                    </div>
+                                </form>
+                            </div>
+                            {% else %}
+                            <div class="card-body" style="overflow-y: scroll; height: 280px;">
+                                {% for todo in todo_list.6 %}
+                                <p class="card-text mb-4">{{ todo.title }}<i class="fa fa-square-o float-right"></i></p>
+                                {% endfor %}
+                            </div>
+                            <div class="card-footer">
+                                <div class="bootstrap-modal">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary" data-toggle="modal" data-target="#basicModal">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="basicModal" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Add Todo</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                                                    </button>
+                                                </div>
+
+                                                <form method="POST" action="{% url 'create_tuesday_todo' %}">
+                                                    {% csrf_token %}
+                                                    <div class="modal-body ml-4 mr-4 mt-3">
+                                                        <div class=" mt-2">
+                                                            <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
+                                                        </div>
+                                                        <div class="form-group mt-3">
+                                                            <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
+                                                        </div>
+                                                        <div class="form-group form-check mt-4">
+                                                            <input type="checkbox" class="form-check-input" id="important" name="important">
+                                                            <label class="form-check-label" for="important">important</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- #/ container -->
         </div>
-        <!--**********************************
-            Content body end
-        ***********************************-->
+
+    </div>
+    <!-- #/ container -->
+</div>
+<!--**********************************
+    Content body end
+***********************************-->
 {% endblock %}

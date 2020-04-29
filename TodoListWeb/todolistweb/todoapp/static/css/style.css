@@ -14760,3 +14760,28 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 
 
 /*# sourceMappingURL=style.css.map */
+
+
+details {
+  user-select: none;
+}
+
+details[open] summary svg {
+  transform: rotate(-90deg);
+}
+
+summary {
+  cursor: pointer;
+}
+
+svg {
+  transition: all 0.3s;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+:focus {
+  outline: none;
+}
