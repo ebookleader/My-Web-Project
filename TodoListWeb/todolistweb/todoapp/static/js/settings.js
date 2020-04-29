@@ -259,3 +259,4 @@ quixSettings.prototype.manageResponsiveSidebar = function() {
         body.attr("data-sidebar-style", "overlay");
     }
 }
+

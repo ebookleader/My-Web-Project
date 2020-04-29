@@ -47,13 +47,7 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
     # crud_todo
-    path('create_monday_todo/', views.create_monday_todo, name='create_monday_todo'),
-    path('create_tuesday_todo/', views.create_tuesday_todo, name='create_tuesday_todo'),
-    path('create_wednesday_todo/', views.create_wednesday_todo, name='create_wednesday_todo'),
-    path('create_thursday_todo/', views.create_thursday_todo, name='create_thursday_todo'),
-    path('create_friday_todo/', views.create_friday_todo, name='create_friday_todo'),
-    path('create_saturday_todo/', views.create_saturday_todo, name='create_saturday_todo'),
-    path('create_sunday_todo/', views.create_sunday_todo, name='create_sunday_todo'),
+    path('create_todo/<slug:day>', views.create_todo, name='create_todo'),
 
     path('todo/<int:todo_pk>', views.todo_detail, name='todo_detail'),
     path('completed_todo/', views.completed_todo, name='completed_todo'),

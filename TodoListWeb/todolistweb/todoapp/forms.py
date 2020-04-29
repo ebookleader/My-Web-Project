@@ -47,6 +47,8 @@ class TodoForm(ModelForm):
         self.label_suffix = ""
         self.fields['title'].widget.attrs['class'] = 'form-control'
         self.fields['memo'].widget.attrs['class'] = 'form-control'
+        self.fields['memo'].widget.attrs['rows'] = 2
+        self.fields['memo'].widget.attrs['columns'] = 2
         self.fields['important'].widget.attrs['class'] = 'form-check-input'
 
     setattr(Field, 'is_checkbox', lambda self:isinstance(self.widget, forms.CheckboxInput))
