@@ -41,7 +41,7 @@
                                 </table>
                             </div>
 
-                            <div class="card-body" style="overflow-y: scroll; height: 280px;">
+                            <div class="w-100 pl-3 pr-3 pt-3" style="overflow-y: auto; height: 280px;">
                                 {% if day == week.mon %}
                                 <form method="POST" action="{% url 'todo_detail' todo.id %}">
                                     {% csrf_token %}
@@ -61,11 +61,26 @@
                                     <button type="submit" class="btn btn-primary">Cancel</button>
                                 </form>
                                 {% else %}
-                                {% for todo in todo_list.0 %}
-                                <div class="card-content mb-3">
-                                    <a href="{% url 'todo_detail' todo.id %}"><span class="btn-icon-left"><i class="fa fa-square-o"></i></span>{{ todo.title }}</a>
-                                </div>
-                                {% endfor %}
+
+
+                                <table class="table">
+                                    <tbody>
+                                    {% for todo in todo_list.0 %}
+                                    <tr>
+                                        <td class="pl-4 pr-0"><a href="{% url 'todo_detail' todo.id %}">{{ todo.title }}</a></td>
+                                        <td><button type="submit" id="delete_todo" name="{{ todo.id }}"><i class="fa fa-close color-danger"></i></button></td>
+                                    </tr>
+                                    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+                                        <script>
+                                            $("#delete_todo").click(function(){
+                                                var pk = $(this).attr('name')
+                                                alert(pk);
+                                            })
+                                        </script>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+
                                 {% endif %}
                             </div>
                             <div class="card-footer">
