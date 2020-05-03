@@ -120,12 +120,7 @@
                                 </table>
                             </div>
                             <div class="card-footer">
-                                <p>
-                                    <button type="button" class="btn btn-primary js-create-todo">
-                                        <span class="glyphicon glyphicon-plus"></span>
-                                        New book
-                                    </button>
-                                </p>
+                                <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary js-create-todo">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
                             </div>
                         </div>
                         <div class="modal fade" id="modal-todo">
@@ -190,7 +185,7 @@
                                 </table>
                             </div>
 
-                            <div class="card-body" style="overflow-y: scroll; height: 280px;">
+                            <div class="card-body" style="overflow-y: auto; height: 280px;">
                                 {% if day == week.tue %}
                                 <form method="POST" action="{% url 'todo_detail' todo.id %}">
                                     {% csrf_token %}
@@ -274,7 +269,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="card-body" style="overflow-y: scroll; height: 280px;">
+                            <div class="card-body" style="overflow-y: auto; height: 280px;">
                                 {% if day == week.wed %}
                                 <form method="POST" action="{% url 'todo_detail' todo.id %}">
                                     {% csrf_token %}
@@ -357,7 +352,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="card-body" style="overflow-y: scroll; height: 280px;">
+                            <div class="card-body" style="overflow-y: auto; height: 280px;">
                                 {% if day == week.thu %}
                                 <form method="POST" action="{% url 'todo_detail' todo.id %}">
                                     {% csrf_token %}
@@ -438,7 +433,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="card-body" style="overflow-y: scroll; height: 280px;">
+                            <div class="card-body" style="overflow-y: auto; height: 280px;">
                                 {% if day == week.fri %}
                                 <form method="POST" action="{% url 'todo_detail' todo.id %}">
                                     {% csrf_token %}
@@ -519,7 +514,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="card-body" style="overflow-y: scroll; height: 280px;">
+                            <div class="card-body" style="overflow-y: auto; height: 280px;">
                                 {% if day == week.sat %}
                                 <form method="POST" action="{% url 'todo_detail' todo.id %}">
                                     {% csrf_token %}
@@ -600,7 +595,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="card-body" style="overflow-y: scroll; height: 280px;">
+                            <div class="card-body" style="overflow-y: auto; height: 280px;">
                                 {% if day == week.sun %}
                                 <form method="POST" action="{% url 'todo_detail' todo.id %}">
                                     {% csrf_token %}
