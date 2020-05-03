@@ -256,7 +256,6 @@ def todo_create(request, day):
             data['html_todo_list'] = render_to_string('todo/partial_todo_list.html', {
                 'todo_list': todo_list
             })
-            print('form.is_valid 지나감')
         else:
             data['form_is_valid'] = False
     else:
@@ -276,7 +275,6 @@ def completed_todo(request):
 
 @login_required
 def todo_detail(request, todo_pk):
-    print('called')
     week = get7Date()
     month = get7dayMonth()
     todo_list = get_all_week_todo(request)
