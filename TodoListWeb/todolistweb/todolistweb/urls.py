@@ -54,5 +54,6 @@ urlpatterns = [
     path('todo/<int:todo_pk>/delete', views.delete_todo, name='delete_todo'),
     path('todo/<int:todo_pk>/complete', views.complete_todo, name='complete_todo'),
 
+    path('todo/create/<slug:day>', views.todo_create, name='todo_create'),
 
 ]

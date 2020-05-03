@@ -1,5 +1,6 @@
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -225,10 +226,8 @@ def password_change(request):
 
 #################
 
-# TodoApp
 @login_required
 def create_todo(request, day):
-    print(day)
     week = get7Date()
     month = get7dayMonth()
     now = datetime.datetime.now()
@@ -239,8 +238,36 @@ def create_todo(request, day):
     new_todo.save()
     return redirect('index')
 
+def todo_create(request, day):
+    week = get7Date()
+    month = get7dayMonth()
+    now = datetime.datetime.now()
+    data = dict()
 
+    if request.method == 'POST':
+        form = TodoForm(request.POST)
+        if form.is_valid():
+            new_todo = form.save(commit=False)
+            new_todo.schedule_date = datetime.datetime(now.year, month_converter(month[day]), week[day])
+            new_todo.user = request.user
+            new_todo.save()
+            data['form_is_valid'] = True
+            todo_list = get_all_week_todo(request)
+            data['html_todo_list'] = render_to_string('todo/partial_todo_list.html', {
+                'todo_list': todo_list
+            })
+            print('form.is_valid 지나감')
+        else:
+            data['form_is_valid'] = False
+    else:
+        form = TodoForm()
 
+    context = {'form': form}
+    data['html_form'] = render_to_string('todo/partial_todo_create.html',
+                                         context,
+                                         request=request
+                                         )
+    return JsonResponse(data)
 
 @login_required
 def completed_todo(request):
@@ -249,6 +276,7 @@ def completed_todo(request):
 
 @login_required
 def todo_detail(request, todo_pk):
+    print('called')
     week = get7Date()
     month = get7dayMonth()
     todo_list = get_all_week_todo(request)
@@ -270,7 +298,6 @@ def todo_detail(request, todo_pk):
             return redirect('index')
         except ValueError:
             return redirect('index')
-
 
 @login_required
 def delete_todo(request, todo_pk):

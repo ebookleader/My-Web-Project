@@ -1,4 +1,9 @@
 {% extends 'bootstrapTemplate/base.html' %}
+{% load static %}
+{% block javascript %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="{% static 'js/todo.js' %}"></script>
+{% endblock %}
 {% block content %}
 <!--**********************************
     Content body start
@@ -41,88 +46,131 @@
                                 </table>
                             </div>
 
+                            <!--                            <div class="w-100 pl-3 pr-3 pt-3" style="overflow-y: auto; height: 280px;">-->
+                            <!--                                {% if day == week.mon %}-->
+                            <!--                                <form method="POST" action="{% url 'todo_detail' todo.id %}">-->
+                            <!--                                    {% csrf_token %}-->
+                            <!--                                    {% for field in form %}-->
+                            <!--                                    {% if field.field.is_checkbox %}-->
+                            <!--                                    <div class="form-group form-check">-->
+                            <!--                                        {{ field }}-->
+                            <!--                                        {{ field.label_tag }}-->
+                            <!--                                    </div>-->
+                            <!--                                    {% else %}-->
+                            <!--                                    <div class="form-group">-->
+                            <!--                                        {{ field }}-->
+                            <!--                                    </div>-->
+                            <!--                                    {% endif %}-->
+                            <!--                                    {% endfor %}-->
+                            <!--                                    <a href="{% url 'index' %}" class="btn btn-primary">Save</a>-->
+                            <!--                                    <button type="submit" class="btn btn-primary">Cancel</button>-->
+                            <!--                                </form>-->
+                            <!--                                {% else %}-->
+                            <!--                                {% for todo in todo_list.0 %}-->
+                            <!--                                <div class="card-content mb-3">-->
+                            <!--                                    <a href="{% url 'todo_detail' todo.id %}"><span class="btn-icon-left"><i class="fa fa-square-o"></i></span>{{ todo.title }}</a>-->
+                            <!--                                </div>-->
+                            <!--                                {% endfor %}-->
+                            <!--                                {% endif %}-->
+                            <!--                            </div>-->
+                            <!--                            <div class="card-footer">-->
+                            <!--                                <div class="bootstrap-modal">-->
+                            <!--                                    &lt;!&ndash; Button trigger modal &ndash;&gt;-->
+                            <!--                                    <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary" data-toggle="modal" data-target="#basicModal1">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>-->
+                            <!--                                    &lt;!&ndash; Modal &ndash;&gt;-->
+                            <!--                                    <div class="modal fade" id="basicModal1" style="display: none;" aria-hidden="true">-->
+                            <!--                                        <div class="modal-dialog" role="document">-->
+                            <!--                                            <div class="modal-content">-->
+                            <!--                                                <div class="modal-header">-->
+                            <!--                                                    <h5 class="modal-title">Add Todo</h5>-->
+                            <!--                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>-->
+                            <!--                                                    </button>-->
+                            <!--                                                </div>-->
+
+                            <!--                                                <form method="POST" action="{% url 'create_todo' day='mon' %}">-->
+                            <!--                                                    {% csrf_token %}-->
+                            <!--                                                    <div class="modal-body ml-4 mr-4 mt-3">-->
+                            <!--                                                        <div class=" mt-2">-->
+                            <!--                                                            <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">-->
+                            <!--                                                        </div>-->
+                            <!--                                                        <div class="form-group mt-3">-->
+                            <!--                                                            <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>-->
+                            <!--                                                        </div>-->
+                            <!--                                                        <div class="form-group form-check mt-4">-->
+                            <!--                                                            <input type="checkbox" class="form-check-input" id="important" name="important">-->
+                            <!--                                                            <label class="form-check-label" for="important">important</label>-->
+                            <!--                                                        </div>-->
+                            <!--                                                    </div>-->
+                            <!--                                                    <div class="modal-footer">-->
+                            <!--                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                            <!--                                                        <button type="submit" class="btn btn-primary">Submit</button>-->
+                            <!--                                                    </div>-->
+                            <!--                                                </form>-->
+                            <!--                                            </div>-->
+                            <!--                                        </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+
                             <div class="w-100 pl-3 pr-3 pt-3" style="overflow-y: auto; height: 280px;">
-                                {% if day == week.mon %}
-                                <form method="POST" action="{% url 'todo_detail' todo.id %}">
-                                    {% csrf_token %}
-                                    {% for field in form %}
-                                    {% if field.field.is_checkbox %}
-                                    <div class="form-group form-check">
-                                        {{ field }}
-                                        {{ field.label_tag }}
-                                    </div>
-                                    {% else %}
-                                    <div class="form-group">
-                                        {{ field }}
-                                    </div>
-                                    {% endif %}
-                                    {% endfor %}
-                                    <a href="{% url 'index' %}" class="btn btn-primary">Save</a>
-                                    <button type="submit" class="btn btn-primary">Cancel</button>
-                                </form>
-                                {% else %}
-
-
-                                <table class="table">
+                                <table class="table" id="todo-table">
                                     <tbody>
-                                    {% for todo in todo_list.0 %}
-                                    <tr>
-                                        <td class="pl-4 pr-0"><a href="{% url 'todo_detail' todo.id %}">{{ todo.title }}</a></td>
-                                        <td><button type="submit" id="delete_todo" name="{{ todo.id }}"><i class="fa fa-close color-danger"></i></button></td>
-                                    </tr>
-                                    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
-                                        <script>
-                                            $("#delete_todo").click(function(){
-                                                var pk = $(this).attr('name')
-                                                alert(pk);
-                                            })
-                                        </script>
-                                    {% endfor %}
+                                    {% include 'todo/partial_todo_list.html' %}
                                     </tbody>
                                 </table>
-
-                                {% endif %}
                             </div>
                             <div class="card-footer">
-                                <div class="bootstrap-modal">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary" data-toggle="modal" data-target="#basicModal1">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="basicModal1" style="display: none;" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Add Todo</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                                    </button>
-                                                </div>
+                                <p>
+                                    <button type="button" class="btn btn-primary js-create-todo">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                        New book
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="modal-todo">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-                                                <form method="POST" action="{% url 'create_todo' day='mon' %}">
-                                                    {% csrf_token %}
-                                                    <div class="modal-body ml-4 mr-4 mt-3">
-                                                        <div class=" mt-2">
-                                                            <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
-                                                        </div>
-                                                        <div class="form-group mt-3">
-                                                            <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
-                                                        </div>
-                                                        <div class="form-group form-check mt-4">
-                                                            <input type="checkbox" class="form-check-input" id="important" name="important">
-                                                            <label class="form-check-label" for="important">important</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
-
                         </div>
+                        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+                        <script type="text/javascript">
+                            $(".js-create-todo").click(function () {
+                                $.ajax({
+                                    url: "{% url 'todo_create' day='mon' %}",
+                                    type: 'get',
+                                    dataType: 'json',
+                                    beforeSend: function () {
+                                        $("#modal-todo").modal("show");
+                                    },
+                                    success: function (data) {
+                                        $("#modal-todo .modal-content").html(data.html_form);
+                                    }
+                                });
+                            });
+                            $("#modal-todo").on("submit", ".js-todo-create-form", function () {
+                                var form = $(this);
+                                $.ajax({
+                                    url: form.attr("action"),
+                                    data: form.serialize(),
+                                    type: form.attr("method"),
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        if (data.form_is_valid) {
+                                            $("#todo-table tbody").html(data.html_todo_list);
+                                            $("#modal-todo").modal("hide");
+                                        }
+                                        else {
+                                            alert('data is not valid')
+                                            $("#modal-todo .modal-content").html(data.html_form);
+                                        }
+                                    }
+                                });
+                                return false;
+                            });
+                        </script>
                     </div>
                     <!-- End Col -->
 
@@ -625,6 +673,7 @@
     </div>
     <!-- #/ container -->
 </div>
+
 <!--**********************************
     Content body end
 ***********************************-->
