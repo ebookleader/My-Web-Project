@@ -1,0 +1,9 @@
+{% for todo in todo_list.3 %}
+<tr>
+    <td>{{ todo.title }}</td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="7" class="text-center bg-warning">No Schedule</td>
+</tr>
+{% endfor %}

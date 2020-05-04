@@ -1,6 +1,19 @@
 {% load widget_tweaks %}
-
+{% if day == "mon" %}
 <form method="post" action="{% url 'todo_create' day='mon' %}" class="js-todo-create-form">
+{% elif day == 'tue' %}
+<form method="post" action="{% url 'todo_create' day='tue' %}" class="js-todo-create-form">
+{% elif day == 'wed' %}
+<form method="post" action="{% url 'todo_create' day='wed' %}" class="js-todo-create-form">
+{% elif day == 'thu' %}
+<form method="post" action="{% url 'todo_create' day='thu' %}" class="js-todo-create-form">
+{% elif day == 'fri' %}
+<form method="post" action="{% url 'todo_create' day='fri' %}" class="js-todo-create-form">
+{% elif day == 'sat' %}
+<form method="post" action="{% url 'todo_create' day='sat' %}" class="js-todo-create-form">
+{% elif day == 'sun' %}
+<form method="post" action="{% url 'todo_create' day='sun' %}" class="js-todo-create-form">
+{% endif %}
   {% csrf_token %}
   <div class="modal-header">
     <h5 class="modal-title">Add Todo</h5>
@@ -8,15 +21,6 @@
     </button>
   </div>
   <div class="modal-body">
-    <!--    {% for field in form %}-->
-    <!--    <div class="form-group{% if field.errors %} has-error{% endif %}">-->
-    <!--      <label for="{{ field.id_for_label }}">{{ field.label }}</label>-->
-    <!--      {% render_field field class="form-control" %}-->
-    <!--      {% for error in field.errors %}-->
-    <!--      <p class="help-block">{{ error }}</p>-->
-    <!--      {% endfor %}-->
-    <!--    </div>-->
-    <!--    {% endfor %}-->
     <div class="modal-body ml-4 mr-4 mt-1 mb-0">
       <div class=" mt-2">
         <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">

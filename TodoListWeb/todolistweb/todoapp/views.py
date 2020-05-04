@@ -242,6 +242,22 @@ def todo_create(request, day):
     week = get7Date()
     month = get7dayMonth()
     now = datetime.datetime.now()
+
+    if day == 'mon':
+        render_list_url = 'todo/monday_todo_list.html'
+    elif day == 'tue':
+        render_list_url = 'todo/tuesday_todo_list.html'
+    elif day == 'wed':
+        render_list_url = 'todo/wednesday_todo_list.html'
+    elif day == 'thu':
+        render_list_url = 'todo/thursday_todo_list.html'
+    elif day == 'fri':
+        render_list_url = 'todo/friday_todo_list.html'
+    elif day == 'sat':
+        render_list_url = 'todo/saturday_todo_list.html'
+    elif day == 'sun':
+        render_list_url = 'todo/sunday_todo_list.html'
+
     data = dict()
 
     if request.method == 'POST':
@@ -253,7 +269,7 @@ def todo_create(request, day):
             new_todo.save()
             data['form_is_valid'] = True
             todo_list = get_all_week_todo(request)
-            data['html_todo_list'] = render_to_string('todo/partial_todo_list.html', {
+            data['html_todo_list'] = render_to_string(render_list_url, {
                 'todo_list': todo_list
             })
         else:
@@ -261,10 +277,11 @@ def todo_create(request, day):
     else:
         form = TodoForm()
 
-    context = {'form': form}
+    context = {'form': form, 'day':day}
     data['html_form'] = render_to_string('todo/partial_todo_create.html',
                                          context,
-                                         request=request
+                                         request=request,
+
                                          )
     return JsonResponse(data)
 
