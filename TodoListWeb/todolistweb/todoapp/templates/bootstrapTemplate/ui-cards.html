@@ -190,72 +190,24 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="card-body" style="overflow-y: auto; height: 280px;">
-                                {% if day == week.fri %}
-                                <form method="POST" action="{% url 'todo_detail' todo.id %}">
-                                    {% csrf_token %}
-                                    {% for field in form %}
-                                    {% if field.field.is_checkbox %}
-                                    <div class="form-group form-check">
-                                        {{ field }}
-                                        {{ field.label_tag }}
-                                    </div>
-                                    {% else %}
-                                    <div class="form-group">
-                                        {{ field }}
-                                    </div>
-                                    {% endif %}
-                                    {% endfor %}
-                                    <button type="submit" class="btn btn-primary">Save change</button>
-                                </form>
-                                {% else %}
-                                {% for todo in todo_list.4 %}
-                                <div class="card-content mb-3">
-                                    <a href="{% url 'todo_detail' todo.id %}"><span class="btn-icon-left"><i class="fa fa-square-o"></i></span>{{ todo.title }}</a>
-                                </div>
-                                {% endfor %}
-                                {% endif %}
+                           <div class="card-body w-100 pl-3 pr-3 pt-3" style="overflow-y: auto; height: 280px;">
+                                <table class="table" id="todo-table-fri">
+                                    <tbody>
+                                    {% include 'todo/friday_todo_list.html' %}
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="card-footer">
-                                <div class="bootstrap-modal">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary" data-toggle="modal" data-target="#basicModal5">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="basicModal5" style="display: none;" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Add Todo</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                                    </button>
-                                                </div>
+                                <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary js-create-todo-fri">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="modal-todo-fri">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-                                                <form method="POST" action="{% url 'create_todo' day='fri' %}">
-                                                    {% csrf_token %}
-                                                    <div class="modal-body ml-4 mr-4 mt-3">
-                                                        <div class=" mt-2">
-                                                            <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
-                                                        </div>
-                                                        <div class="form-group mt-3">
-                                                            <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
-                                                        </div>
-                                                        <div class="form-group form-check mt-4">
-                                                            <input type="checkbox" class="form-check-input" id="important" name="important">
-                                                            <label class="form-check-label" for="important">important</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     <!-- End FRIDAY -->
 
                     <!-- ********* SATURDAY ********* -->
@@ -273,72 +225,24 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="card-body" style="overflow-y: auto; height: 280px;">
-                                {% if day == week.sat %}
-                                <form method="POST" action="{% url 'todo_detail' todo.id %}">
-                                    {% csrf_token %}
-                                    {% for field in form %}
-                                    {% if field.field.is_checkbox %}
-                                    <div class="form-group form-check">
-                                        {{ field }}
-                                        {{ field.label_tag }}
-                                    </div>
-                                    {% else %}
-                                    <div class="form-group">
-                                        {{ field }}
-                                    </div>
-                                    {% endif %}
-                                    {% endfor %}
-                                    <button type="submit" class="btn btn-primary">Save change</button>
-                                </form>
-                                {% else %}
-                                {% for todo in todo_list.5 %}
-                                <div class="card-content mb-3">
-                                    <a href="{% url 'todo_detail' todo.id %}"><span class="btn-icon-left"><i class="fa fa-square-o"></i></span>{{ todo.title }}</a>
-                                </div>
-                                {% endfor %}
-                                {% endif %}
+                            <div class="card-body w-100 pl-3 pr-3 pt-3" style="overflow-y: auto; height: 280px;">
+                                <table class="table" id="todo-table-sat">
+                                    <tbody>
+                                    {% include 'todo/saturday_todo_list.html' %}
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="card-footer">
-                                <div class="bootstrap-modal">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary" data-toggle="modal" data-target="#basicModal6">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="basicModal6" style="display: none;" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Add Todo</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                                    </button>
-                                                </div>
+                                <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary js-create-todo-sat">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="modal-todo-sat">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-                                                <form method="POST" action="{% url 'create_todo' day='sat' %}">
-                                                    {% csrf_token %}
-                                                    <div class="modal-body ml-4 mr-4 mt-3">
-                                                        <div class=" mt-2">
-                                                            <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
-                                                        </div>
-                                                        <div class="form-group mt-3">
-                                                            <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
-                                                        </div>
-                                                        <div class="form-group form-check mt-4">
-                                                            <input type="checkbox" class="form-check-input" id="important" name="important">
-                                                            <label class="form-check-label" for="important">important</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     <!-- End SATURDAY -->
 
                     <!-- ********* SUNDAY ********* -->
@@ -357,72 +261,24 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="card-body" style="overflow-y: auto; height: 280px;">
-                                {% if day == week.sun %}
-                                <form method="POST" action="{% url 'todo_detail' todo.id %}">
-                                    {% csrf_token %}
-                                    {% for field in form %}
-                                    {% if field.field.is_checkbox %}
-                                    <div class="form-group form-check">
-                                        {{ field }}
-                                        {{ field.label_tag }}
-                                    </div>
-                                    {% else %}
-                                    <div class="form-group">
-                                        {{ field }}
-                                    </div>
-                                    {% endif %}
-                                    {% endfor %}
-                                    <button type="submit" class="btn btn-primary">Save change</button>
-                                </form>
-                                {% else %}
-                                {% for todo in todo_list.6 %}
-                                <div class="card-content mb-3">
-                                    <a href="{% url 'todo_detail' todo.id %}"><span class="btn-icon-left"><i class="fa fa-square-o"></i></span>{{ todo.title }}</a>
-                                </div>
-                                {% endfor %}
-                                {% endif %}
+                                <div class="card-body w-100 pl-3 pr-3 pt-3" style="overflow-y: auto; height: 280px;">
+                                <table class="table" id="todo-table-sun">
+                                    <tbody>
+                                    {% include 'todo/sunday_todo_list.html' %}
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="card-footer">
-                                <div class="bootstrap-modal">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary" data-toggle="modal" data-target="#basicModal7">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="basicModal7" style="display: none;" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Add Todo</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                                    </button>
-                                                </div>
+                                <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary js-create-todo-sun">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="modal-todo-sun">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-                                                <form method="POST" action="{% url 'create_todo' day='sun' %}">
-                                                    {% csrf_token %}
-                                                    <div class="modal-body ml-4 mr-4 mt-3">
-                                                        <div class=" mt-2">
-                                                            <input type="text" class="form-control input-default" id="title" name="title" placeholder="Title">
-                                                        </div>
-                                                        <div class="form-group mt-3">
-                                                            <textarea class="form-control" id="memo" rows="6" name="memo"placeholder="memo"></textarea>
-                                                        </div>
-                                                        <div class="form-group form-check mt-4">
-                                                            <input type="checkbox" class="form-check-input" id="important" name="important">
-                                                            <label class="form-check-label" for="important">important</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     <!-- end SUNDAY -->
                 </div>
             </div>
@@ -584,6 +440,117 @@
                 else {
                     alert('data is not valid')
                     $("#modal-todo-thu .modal-content").html(data.html_form);
+                }
+            }
+        });
+        return false;
+    });
+
+     // 금요일
+     $(".js-create-todo-fri").click(function () {
+        $.ajax({
+            url: "{% url 'todo_create' day='fri' %}",
+            type: 'get',
+            dataType: 'json',
+            beforeSend: function () {
+                $("#modal-todo-fri").modal("show");
+            },
+            success: function (data) {
+                $("#modal-todo-fri .modal-content").html(data.html_form);
+            }
+        });
+    });
+    $("#modal-todo-fri").on("submit", ".js-todo-create-form", function () {
+
+        var form = $(this);
+
+        $.ajax({
+            url: form.attr("action"),
+            data: form.serialize(),
+            type: form.attr("method"),
+            dataType: 'json',
+            success: function (data) {
+                if (data.form_is_valid) {
+                    $("#todo-table-fri tbody").html(data.html_todo_list);
+                    $("#modal-todo-fri").modal("hide");
+                }
+                else {
+                    alert('data is not valid')
+                    $("#modal-todo-fri .modal-content").html(data.html_form);
+                }
+            }
+        });
+        return false;
+    });
+
+    // 토요일
+     $(".js-create-todo-sat").click(function () {
+        $.ajax({
+            url: "{% url 'todo_create' day='sat' %}",
+            type: 'get',
+            dataType: 'json',
+            beforeSend: function () {
+                $("#modal-todo-sat").modal("show");
+            },
+            success: function (data) {
+                $("#modal-todo-sat .modal-content").html(data.html_form);
+            }
+        });
+    });
+    $("#modal-todo-sat").on("submit", ".js-todo-create-form", function () {
+
+        var form = $(this);
+
+        $.ajax({
+            url: form.attr("action"),
+            data: form.serialize(),
+            type: form.attr("method"),
+            dataType: 'json',
+            success: function (data) {
+                if (data.form_is_valid) {
+                    $("#todo-table-sat tbody").html(data.html_todo_list);
+                    $("#modal-todo-sat").modal("hide");
+                }
+                else {
+                    alert('data is not valid')
+                    $("#modal-todo-sat .modal-content").html(data.html_form);
+                }
+            }
+        });
+        return false;
+    });
+
+    // 일요일
+     $(".js-create-todo-sun").click(function () {
+        $.ajax({
+            url: "{% url 'todo_create' day='sun' %}",
+            type: 'get',
+            dataType: 'json',
+            beforeSend: function () {
+                $("#modal-todo-sun").modal("show");
+            },
+            success: function (data) {
+                $("#modal-todo-sun .modal-content").html(data.html_form);
+            }
+        });
+    });
+    $("#modal-todo-sun").on("submit", ".js-todo-create-form", function () {
+
+        var form = $(this);
+
+        $.ajax({
+            url: form.attr("action"),
+            data: form.serialize(),
+            type: form.attr("method"),
+            dataType: 'json',
+            success: function (data) {
+                if (data.form_is_valid) {
+                    $("#todo-table-sun tbody").html(data.html_todo_list);
+                    $("#modal-todo-sun").modal("hide");
+                }
+                else {
+                    alert('data is not valid')
+                    $("#modal-todo-sun .modal-content").html(data.html_form);
                 }
             }
         });
