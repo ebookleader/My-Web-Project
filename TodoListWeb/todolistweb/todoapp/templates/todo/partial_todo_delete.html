@@ -1,0 +1,29 @@
+{% if day == "mon" %}
+<form method="post" action="{% url 'todo_delete' todo_pk=todo.id day='mon' %}" class="js-todo-delete-form">
+{% elif day == 'tue' %}
+<form method="post" action="{% url 'todo_delete' todo_pk=todo.id day='tue' %}" class="js-todo-delete-form">
+{% elif day == 'wed' %}
+<form method="post" action="{% url 'todo_delete' todo_pk=todo.id day='wed' %}" class="js-todo-delete-form">
+{% elif day == 'thu' %}
+<form method="post" action="{% url 'todo_delete' todo_pk=todo.id day='thu' %}" class="js-todo-delete-form">
+{% elif day == 'fri' %}
+<form method="post" action="{% url 'todo_delete' todo_pk=todo.id day='fri' %}" class="js-todo-delete-form">
+{% elif day == 'sat' %}
+<form method="post" action="{% url 'todo_delete' todo_pk=todo.id day='sat' %}" class="js-todo-delete-form">
+{% elif day == 'sun' %}
+<form method="post" action="{% url 'todo_delete' todo_pk=todo.id day='sun' %}" class="js-todo-delete-form">
+{% endif %}
+  {% csrf_token %}
+  <div class="modal-header">
+    <h5 class="modal-title">Delete Todo</h5>
+    <button type="button" class="close" data-dismiss="modal"><span>×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p class="lead text-center mt-3">Are you really sure you want to delete it?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-danger">Delete todo</button>
+  </div>
+</form>

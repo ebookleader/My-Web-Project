@@ -1,5 +1,4 @@
 """todolistweb URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
 Examples:
@@ -51,9 +50,9 @@ urlpatterns = [
 
     path('todo/<int:todo_pk>', views.todo_detail, name='todo_detail'),
     path('completed_todo/', views.completed_todo, name='completed_todo'),
-    path('todo/<int:todo_pk>/delete', views.delete_todo, name='delete_todo'),
+    # path('todo/<int:todo_pk>/delete', views.delete_todo, name='delete_todo'),
     path('todo/<int:todo_pk>/complete', views.complete_todo, name='complete_todo'),
 
     path('todo/create/<slug:day>', views.todo_create, name='todo_create'),
-
+    path('todo/<int:todo_pk>/<slug:day>/delete', views.todo_delete, name='todo_delete'),
 ]

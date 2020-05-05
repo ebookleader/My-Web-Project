@@ -51,7 +51,7 @@
                                 </table>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary js-create-todo-mon" data-id="mon">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                                <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary js-create-todo-mon" data-id="mon" data-url="{% url 'todo_create' day='mon' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
                             </div>
                         </div>
                         <div class="modal fade" id="modal-todo-mon">
@@ -173,6 +173,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                     <!-- End THURSDAY -->
 
                     <!-- ********* FRIDAY ********* -->
@@ -208,6 +209,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                     <!-- End FRIDAY -->
 
                     <!-- ********* SATURDAY ********* -->
@@ -243,6 +245,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                     <!-- End SATURDAY -->
 
                     <!-- ********* SUNDAY ********* -->
@@ -279,6 +282,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                     <!-- end SUNDAY -->
                 </div>
             </div>
@@ -298,41 +302,44 @@
 ***********************************-->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
-    // 월요일
-    $(".js-create-todo-mon").click(function () {
-        $.ajax({
-            url: "{% url 'todo_create' day='mon' %}",
-            type: 'get',
-            dataType: 'json',
-            beforeSend: function () {
-                $("#modal-todo-mon").modal("show");
-            },
-            success: function (data) {
-                $("#modal-todo-mon .modal-content").html(data.html_form);
-            }
-        });
-    });
-    $("#modal-todo-mon").on("submit", ".js-todo-create-form", function () {
-
-        var form = $(this);
-
-        $.ajax({
-            url: form.attr("action"),
-            data: form.serialize(),
-            type: form.attr("method"),
-            dataType: 'json',
-            success: function (data) {
-                if (data.form_is_valid) {
-                    $("#todo-table-mon tbody").html(data.html_todo_list);
-                    $("#modal-todo-mon").modal("hide");
-                }
-                else {
-                    alert('data is not valid')
+    $(function() {
+        var loadForm_mon = function () {
+            var btn = $(this);
+            $.ajax({
+                url: btn.attr("data-url"),
+                type: 'get',
+                dataType: 'json',
+                beforeSend: function () {
+                    $("#modal-todo-mon").modal("show");
+                },
+                success: function (data) {
                     $("#modal-todo-mon .modal-content").html(data.html_form);
                 }
-            }
-        });
-        return false;
+            });
+        };
+        var saveForm_mon = function () {
+            var form = $(this);
+            $.ajax({
+                url: form.attr("action"),
+                data: form.serialize(),
+                type: form.attr("method"),
+                dataType: 'json',
+                success: function (data) {
+                    if (data.form_is_valid) {
+                        $("#todo-table-mon tbody").html(data.html_todo_list);
+                        $("#modal-todo-mon").modal("hide");
+                    }
+                    else {
+                        $("#modal-todo-mon .modal-content").html(data.html_form);
+                    }
+                }
+            });
+            return false;
+        };
+        $(".js-create-todo-mon").click(loadForm_mon);
+        $("#modal-todo-mon").on("submit", ".js-todo-create-form", saveForm_mon);
+        $("#todo-table-mon").on("click", ".js-delete-todo", loadForm_mon);
+        $("#modal-todo-mon").on("submit", ".js-todo-delete-form", saveForm_mon);
     });
 
     // 화요일

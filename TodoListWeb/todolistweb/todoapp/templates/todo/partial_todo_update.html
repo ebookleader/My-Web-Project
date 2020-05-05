@@ -1,0 +1,43 @@
+{% load widget_tweaks %}
+{% if day == "mon" %}
+<form method="post" action="{% url 'todo_update' day='mon' pk=form.instance.pk %}" class="js-todo-update-form">
+{% elif day == 'tue' %}
+<form method="post" action="{% url 'todo_update' day='tue' pk=todo.pk %}" class="js-todo-update-form">
+{% elif day == 'wed' %}
+<form method="post" action="{% url 'todo_update' day='wed' pk=todo.pk %}" class="js-todo-update-form">
+{% elif day == 'thu' %}
+<form method="post" action="{% url 'todo_update' day='thu' pk=todo.pk %}" class="js-todo-update-form">
+{% elif day == 'fri' %}
+<form method="post" action="{% url 'todo_update' day='fri' pk=todo.pk %}" class="js-todo-update-form">
+{% elif day == 'sat' %}
+<form method="post" action="{% url 'todo_update' day='sat' pk=todo.pk %}" class="js-todo-update-form">
+{% elif day == 'sun' %}
+<form method="post" action="{% url 'todo_update' day='sun' pk=todo.pk %}" class="js-todo-update-form">
+{% endif %}
+    {% csrf_token %}
+    <div class="modal-header">
+        <h5 class="modal-title">Todo 수정</h5>
+        <button type="button" class="close" data-dismiss="modal"><span>×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        {% for field in form %}
+        {% if field.field.is_checkbox %}
+        <div class="form-group form-check">
+            {{ field }}
+            {{ field.label_tag }}
+        </div>
+        {% else %}
+        <div class="form-group">
+            {{ field.label_tag }}<br>
+            {{ field }}
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">수정 완료</button>
+    </div>
+</form>

@@ -1933,8 +1933,8 @@ fieldset:disabled a.btn {
 
 .btn-light {
   color: #212529;
-  background-color: #f8f9fa;
-  border-color: #f8f9fa; }
+  background-color: #ffffff;
+  border-color: #ffffff; }
   .btn-light:hover {
     color: #212529;
     background-color: #e2e6ea;
@@ -11154,9 +11154,9 @@ table.dataTable thead .sorting::after {
     border-color: #1a56ff; }
 
 .btn-light:active, .btn-light:focus, .btn-light:hover {
-  background: #919191;
-  color: #fff;
-  border-color: #919191; }
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff; }
 
 .btn-dark:active, .btn-dark:focus, .btn-dark:hover {
   background: #2f3137;
@@ -14760,4 +14760,5 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 
 
 /*# sourceMappingURL=style.css.map */
+
 

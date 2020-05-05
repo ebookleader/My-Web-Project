@@ -315,6 +315,37 @@ def todo_detail(request, todo_pk):
             return redirect('index')
 
 @login_required
+def todo_delete(request, todo_pk, day):
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    data = dict()
+
+    if day == 'mon':
+        render_list_url = 'todo/monday_todo_list.html'
+    elif day == 'tue':
+        render_list_url = 'todo/tuesday_todo_list.html'
+    elif day == 'wed':
+        render_list_url = 'todo/wednesday_todo_list.html'
+    elif day == 'thu':
+        render_list_url = 'todo/thursday_todo_list.html'
+    elif day == 'fri':
+        render_list_url = 'todo/friday_todo_list.html'
+    elif day == 'sat':
+        render_list_url = 'todo/saturday_todo_list.html'
+    elif day == 'sun':
+        render_list_url = 'todo/sunday_todo_list.html'
+
+    if request.method == 'POST':
+        todo.delete()
+        data['form_is_valid'] = True
+        todo_list = get_all_week_todo(request)
+        data['html_todo_list'] = render_to_string(render_list_url, {'todo_list' : todo_list})
+    else:
+        context = {'todo' : todo, 'day' : day}
+        data['html_form'] = render_to_string('todo/partial_todo_delete.html', context, request=request)
+
+    return JsonResponse(data)
+
+@login_required
 def delete_todo(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'POST':
