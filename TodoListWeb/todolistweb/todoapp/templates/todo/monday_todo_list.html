@@ -1,7 +1,7 @@
 {% for todo in todo_list.0 %}
 <tr>
     <td>{{ todo.title }}</td>
-    <td>
+    <td style="width:10%;">
       <button type="button"
               class="btn mb-1 btn-light btn-sm js-delete-todo"
               data-url="{% url 'todo_delete' todo_pk=todo.id day='mon' %}">
