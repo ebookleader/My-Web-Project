@@ -12,5 +12,5 @@ class TodoAdmin(admin.ModelAdmin):
         return obj.created.strftime("%Y %b %d, %p %I:%M")
 
     readonly_fields = ['created_date']
-    list_display = ['user', 'title', 'important', 'schedule_date', 'created_date', 'date_completed']
+    list_display = ['user', 'title', 'important', 'schedule_date', 'created_date', 'is_completed', 'date_completed']
     list_display_links = ['title']
