@@ -577,6 +577,22 @@
         $("#todo-table-sun").on("click", ".js-delete-todo", loadForm_sun);
         $("#modal-todo-sun").on("submit", ".js-todo-delete-form", saveForm_sun);
     });
+
+
+    $(".complete").click(function(){
+            pk = $(this).attr("data-id");
+            $.ajax({
+                type:"POST",
+                url: $(this).attr("data-url"),
+                data: {'csrfmiddlewaretoken':'{{ csrf_token }}'},
+                dataType: "json",
+                success: function(data){
+                    $("#todo-table-mon tbody").html(data.html_todo_list);
+                    // window.location.href = "{% url 'index' %}"
+                }
+            });
+    });
+
 </script>
 <!--**********************************
      javascript end

@@ -46,13 +46,13 @@ def get_all_week_todo(request):
     month = get7dayMonth()
     all_week_todo = []
 
-    mon_todo = Todo.objects.filter(user=request.user, date_completed__isnull=True, schedule_date__day=week['mon'], schedule_date__month=month_converter(month['mon']))
-    tue_todo = Todo.objects.filter(user=request.user, date_completed__isnull=True, schedule_date__day=week['tue'], schedule_date__month=month_converter(month['tue']))
-    wed_todo = Todo.objects.filter(user=request.user, date_completed__isnull=True, schedule_date__day=week['wed'], schedule_date__month=month_converter(month['wed']))
-    thu_todo = Todo.objects.filter(user=request.user, date_completed__isnull=True, schedule_date__day=week['thu'], schedule_date__month=month_converter(month['thu']))
-    fri_todo = Todo.objects.filter(user=request.user, date_completed__isnull=True, schedule_date__day=week['fri'], schedule_date__month=month_converter(month['fri']))
-    sat_todo = Todo.objects.filter(user=request.user, date_completed__isnull=True, schedule_date__day=week['sat'], schedule_date__month=month_converter(month['sat']))
-    sun_todo = Todo.objects.filter(user=request.user, date_completed__isnull=True, schedule_date__day=week['sun'], schedule_date__month=month_converter(month['sun']))
+    mon_todo = Todo.objects.filter(user=request.user, schedule_date__day=week['mon'], schedule_date__month=month_converter(month['mon']))
+    tue_todo = Todo.objects.filter(user=request.user, schedule_date__day=week['tue'], schedule_date__month=month_converter(month['tue']))
+    wed_todo = Todo.objects.filter(user=request.user, schedule_date__day=week['wed'], schedule_date__month=month_converter(month['wed']))
+    thu_todo = Todo.objects.filter(user=request.user, schedule_date__day=week['thu'], schedule_date__month=month_converter(month['thu']))
+    fri_todo = Todo.objects.filter(user=request.user, schedule_date__day=week['fri'], schedule_date__month=month_converter(month['fri']))
+    sat_todo = Todo.objects.filter(user=request.user, schedule_date__day=week['sat'], schedule_date__month=month_converter(month['sat']))
+    sun_todo = Todo.objects.filter(user=request.user, schedule_date__day=week['sun'], schedule_date__month=month_converter(month['sun']))
 
     all_week_todo.append(mon_todo)
     all_week_todo.append(tue_todo)
@@ -62,6 +62,24 @@ def get_all_week_todo(request):
     all_week_todo.append(sat_todo)
     all_week_todo.append(sun_todo)
     return all_week_todo
+
+def get_render_list_url(day):
+    render_list_url =""
+    if day == 'mon':
+        render_list_url = 'todo/monday_todo_list.html'
+    elif day == 'tue':
+        render_list_url = 'todo/tuesday_todo_list.html'
+    elif day == 'wed':
+        render_list_url = 'todo/wednesday_todo_list.html'
+    elif day == 'thu':
+        render_list_url = 'todo/thursday_todo_list.html'
+    elif day == 'fri':
+        render_list_url = 'todo/friday_todo_list.html'
+    elif day == 'sat':
+        render_list_url = 'todo/saturday_todo_list.html'
+    elif day == 'sun':
+        render_list_url = 'todo/sunday_todo_list.html'
+    return render_list_url
 
 # Create your views here.
 def index(request):
@@ -243,20 +261,7 @@ def todo_create(request, day):
     month = get7dayMonth()
     now = datetime.datetime.now()
 
-    if day == 'mon':
-        render_list_url = 'todo/monday_todo_list.html'
-    elif day == 'tue':
-        render_list_url = 'todo/tuesday_todo_list.html'
-    elif day == 'wed':
-        render_list_url = 'todo/wednesday_todo_list.html'
-    elif day == 'thu':
-        render_list_url = 'todo/thursday_todo_list.html'
-    elif day == 'fri':
-        render_list_url = 'todo/friday_todo_list.html'
-    elif day == 'sat':
-        render_list_url = 'todo/saturday_todo_list.html'
-    elif day == 'sun':
-        render_list_url = 'todo/sunday_todo_list.html'
+    render_list_url = get_render_list_url(day)
 
     data = dict()
 
@@ -284,6 +289,24 @@ def todo_create(request, day):
 
                                          )
     return JsonResponse(data)
+
+@login_required
+def complete_todo(request, todo_pk, day):
+    render_list_url = get_render_list_url(day)
+    data = dict()
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    if request.method == 'POST':
+        print('post called')
+        todo.date_completed = timezone.now()
+        todo.is_completed = not todo.is_completed
+        todo.save()
+        todo_list = get_all_week_todo(request)
+        data['html_todo_list'] = render_to_string(render_list_url, {
+            'todo_list': todo_list
+        })
+        return JsonResponse(data)
+    else:
+        print('get called')
 
 @login_required
 def completed_todo(request):
@@ -319,20 +342,7 @@ def todo_delete(request, todo_pk, day):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     data = dict()
 
-    if day == 'mon':
-        render_list_url = 'todo/monday_todo_list.html'
-    elif day == 'tue':
-        render_list_url = 'todo/tuesday_todo_list.html'
-    elif day == 'wed':
-        render_list_url = 'todo/wednesday_todo_list.html'
-    elif day == 'thu':
-        render_list_url = 'todo/thursday_todo_list.html'
-    elif day == 'fri':
-        render_list_url = 'todo/friday_todo_list.html'
-    elif day == 'sat':
-        render_list_url = 'todo/saturday_todo_list.html'
-    elif day == 'sun':
-        render_list_url = 'todo/sunday_todo_list.html'
+    render_list_url = get_render_list_url(day)
 
     if request.method == 'POST':
         todo.delete()
@@ -352,10 +362,3 @@ def delete_todo(request, todo_pk):
         todo.delete()
         return redirect('current_todo')
 
-@login_required
-def complete_todo(request, todo_pk):
-    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
-    if request.method == 'POST':
-        todo.date_completed = timezone.now()
-        todo.save()
-        return redirect('current_todo')

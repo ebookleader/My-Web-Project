@@ -1,6 +1,9 @@
 {% for todo in todo_list.0 %}
 <tr>
-    <td>{{ todo.title }}</td>
+    <td>
+        <p {% if todo.is_completed %}style="text-decoration: line-through"{% endif %}>
+            <input class="mr-3 complete" type="checkbox" name="complete" {% if todo.is_completed %}checked="checked"{% endif %} data-id="{{ todo.pk }}" data-url="{% url 'complete_todo' todo_pk=todo.id day='mon' %}">{{ todo.title }}</p>
+    </td>
     <td style="width:10%;">
       <button type="button"
               class="btn mb-1 btn-light btn-sm js-delete-todo"
