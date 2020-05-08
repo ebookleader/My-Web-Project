@@ -1,8 +1,25 @@
+<!--<div id="accordion-two" class="accordion">-->
+<!--    <div class="card">-->
+<!--        <div class="card-header">-->
+<!--            <h5 class="mb-0" data-toggle="collapse" data-target="#collapseOne1" aria-expanded="true" aria-controls="collapseOne1"><i class="fa" aria-hidden="true"></i>Completed todo</h5>-->
+<!--        </div>-->
+<!--        <div id="collapseOne1" class="collapse show" data-parent="#accordion-two" style="">-->
+<!--            <div class="card-body">-->
+
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--</div>-->
 {% for todo in todo_list.0 %}
 <tr>
+    <td class="pt-0" style="width:10%;">
+        <input class="complete" type="checkbox" name="complete" {% if todo.is_completed %}checked="checked"{% endif %} data-id="{{ todo.pk }}" data-url="{% url 'complete_todo' todo_pk=todo.id day='mon' %}">
+    </td>
     <td>
         <p {% if todo.is_completed %}style="text-decoration: line-through"{% endif %}>
-            <input class="mr-3 complete" type="checkbox" name="complete" {% if todo.is_completed %}checked="checked"{% endif %} data-id="{{ todo.pk }}" data-url="{% url 'complete_todo' todo_pk=todo.id day='mon' %}">{{ todo.title }}</p>
+            {{ todo.title }}
+        </p>
     </td>
     <td style="width:10%;">
       <button type="button"

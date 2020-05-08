@@ -42,8 +42,13 @@
                                     </tr>
                                 </table>
                             </div>
-
-                            <div class="w-100 pl-3 pr-1 pt-1 card-body" style="overflow-y: auto; height: 280px;">
+                            <style>
+                                .todo-table::-webkit-scrollbar {
+                                    /*width: 10px;*/
+                                    display:none;
+                                }
+                            </style>
+                            <div class="w-100 pl-3 pr-1 pt-1 card-body todo-table" style="overflow-y: auto; height: 280px;">
                                 <table class="table" id="todo-table-mon">
                                     <tbody>
                                     {% include 'todo/monday_todo_list.html' %}
