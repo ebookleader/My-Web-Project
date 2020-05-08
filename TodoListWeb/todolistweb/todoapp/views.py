@@ -296,17 +296,17 @@ def complete_todo(request, todo_pk, day):
     data = dict()
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'POST':
-        print('post called')
-        todo.date_completed = timezone.now()
+        if todo.is_completed:
+            todo.date_completed = None
+        else:
+            todo.date_completed = timezone.now()
         todo.is_completed = not todo.is_completed
         todo.save()
         todo_list = get_all_week_todo(request)
         data['html_todo_list'] = render_to_string(render_list_url, {
             'todo_list': todo_list
         })
-        return JsonResponse(data)
-    else:
-        print('get called')
+    return JsonResponse(data)
 
 @login_required
 def completed_todo(request):

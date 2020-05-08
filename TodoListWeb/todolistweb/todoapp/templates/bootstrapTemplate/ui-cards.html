@@ -50,8 +50,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="card-footer">
-                                <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary js-create-todo-mon" data-id="mon" data-url="{% url 'todo_create' day='mon' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                            <div class="card-footer text-center">
+                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-mon" data-id="mon" data-url="{% url 'todo_create' day='mon' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
                             </div>
                         </div>
                         <div class="modal fade" id="modal-todo-mon">
@@ -88,8 +88,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="card-footer">
-                                <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary js-create-todo-tue" data-url="{% url 'todo_create' day='tue' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                            <div class="card-footer text-center">
+                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-tue" data-url="{% url 'todo_create' day='tue' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
                             </div>
                         </div>
                         <div class="modal fade" id="modal-todo-tue">
@@ -125,8 +125,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="card-footer">
-                                <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary js-create-todo-wed"  data-url="{% url 'todo_create' day='wed' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                            <div class="card-footer text-center">
+                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-wed"  data-url="{% url 'todo_create' day='wed' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
                             </div>
                         </div>
                         <div class="modal fade" id="modal-todo-wed">
@@ -162,8 +162,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="card-footer">
-                                <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary js-create-todo-thu" data-url="{% url 'todo_create' day='thu' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                            <div class="card-footer text-center">
+                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-thu" data-url="{% url 'todo_create' day='thu' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
                             </div>
                         </div>
                         <div class="modal fade" id="modal-todo-thu">
@@ -198,8 +198,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="card-footer">
-                                <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary js-create-todo-fri" data-url="{% url 'todo_create' day='fri' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                            <div class="card-footer text-center">
+                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-fri" data-url="{% url 'todo_create' day='fri' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
                             </div>
                         </div>
                         <div class="modal fade" id="modal-todo-fri">
@@ -234,8 +234,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="card-footer">
-                                <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary js-create-todo-sat" data-url="{% url 'todo_create' day='sat' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                            <div class="card-footer text-center">
+                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-sat" data-url="{% url 'todo_create' day='sat' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
                             </div>
                         </div>
                         <div class="modal fade" id="modal-todo-sat">
@@ -271,8 +271,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="card-footer">
-                                <button type="button" class="btn mb-1 ml-5 btn-rounded btn-outline-secondary js-create-todo-sun" data-url="{% url 'todo_create' day='sun' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                            <div class="card-footer text-center">
+                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-sun" data-url="{% url 'todo_create' day='sun' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
                             </div>
                         </div>
                         <div class="modal fade" id="modal-todo-sun">
@@ -587,8 +587,8 @@
                 data: {'csrfmiddlewaretoken':'{{ csrf_token }}'},
                 dataType: "json",
                 success: function(data){
-                    $("#todo-table-mon tbody").html(data.html_todo_list);
-                    // window.location.href = "{% url 'index' %}"
+                    // $("#todo-table-mon tbody").html(data.html_todo_list);
+                    window.location.href = "{% url 'index' %}"
                 }
             });
     });
