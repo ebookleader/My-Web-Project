@@ -25,6 +25,12 @@
                 <p class="text-muted">Your weekly todo</p>
 
                 <div class="row">
+                    <style>
+                        .todo-table::-webkit-scrollbar {
+                            /*width: 10px;*/
+                            display:none;
+                        }
+                    </style>
 
                     <!-- *********MONDAY********* -->
 
@@ -42,12 +48,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <style>
-                                .todo-table::-webkit-scrollbar {
-                                    /*width: 10px;*/
-                                    display:none;
-                                }
-                            </style>
+
                             <div class="w-100 pl-3 pr-1 pt-1 card-body todo-table" style="overflow-y: auto; height: 280px;">
                                 <table class="table" id="todo-table-mon">
                                     <tbody>
@@ -86,7 +87,7 @@
                                 </table>
                             </div>
 
-                            <div class="w-100 pl-3 pr-1 pt-1 card-body" style="overflow-y: auto; height: 280px;">
+                            <div class="w-100 pl-3 pr-1 pt-1 card-body todo-table" style="overflow-y: auto; height: 280px;">
                                 <table class="table" id="todo-table-tue">
                                     <tbody>
                                     {% include 'todo/tuesday_todo_list.html' %}
@@ -94,7 +95,7 @@
                                 </table>
                             </div>
                             <div class="card-footer text-center">
-                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-tue" data-url="{% url 'todo_create' day='tue' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-tue" data-id="tue" data-url="{% url 'todo_create' day='tue' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
                             </div>
                         </div>
                         <div class="modal fade" id="modal-todo-tue">
@@ -123,7 +124,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="w-100 pl-3 pr-1 pt-1" style="overflow-y: auto; height: 280px;">
+                            <div class="w-100 pl-3 pr-1 pt-1 card-body todo-table" style="overflow-y: auto; height: 280px;">
                                 <table class="table" id="todo-table-wed">
                                     <tbody>
                                     {% include 'todo/wednesday_todo_list.html' %}
@@ -131,7 +132,7 @@
                                 </table>
                             </div>
                             <div class="card-footer text-center">
-                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-wed"  data-url="{% url 'todo_create' day='wed' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-wed" data-id="wed" data-url="{% url 'todo_create' day='wed' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
                             </div>
                         </div>
                         <div class="modal fade" id="modal-todo-wed">
@@ -160,7 +161,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="w-100 pl-3 pr-1 pt-1" style="overflow-y: auto; height: 280px;">
+                            <div class="w-100 pl-3 pr-1 pt-1 card-body todo-table" style="overflow-y: auto; height: 280px;">
                                 <table class="table" id="todo-table-thu">
                                     <tbody>
                                     {% include 'todo/thursday_todo_list.html' %}
@@ -168,7 +169,7 @@
                                 </table>
                             </div>
                             <div class="card-footer text-center">
-                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-thu" data-url="{% url 'todo_create' day='thu' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-thu" data-id="thu" data-url="{% url 'todo_create' day='thu' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
                             </div>
                         </div>
                         <div class="modal fade" id="modal-todo-thu">
@@ -196,7 +197,7 @@
                                     </tr>
                                 </table>
                             </div>
-                           <div class="card-body w-100 pl-3 pr-1 pt-1" style="overflow-y: auto; height: 280px;">
+                           <div class="w-100 pl-3 pr-1 pt-1 card-body todo-table" style="overflow-y: auto; height: 280px;">
                                 <table class="table" id="todo-table-fri">
                                     <tbody>
                                     {% include 'todo/friday_todo_list.html' %}
@@ -204,7 +205,7 @@
                                 </table>
                             </div>
                             <div class="card-footer text-center">
-                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-fri" data-url="{% url 'todo_create' day='fri' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-fri" data-id="fri" data-url="{% url 'todo_create' day='fri' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
                             </div>
                         </div>
                         <div class="modal fade" id="modal-todo-fri">
@@ -232,7 +233,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="card-body w-100 pl-3 pr-1 pt-1" style="overflow-y: auto; height: 280px;">
+                            <div class="w-100 pl-3 pr-1 pt-1 card-body todo-table" style="overflow-y: auto; height: 280px;">
                                 <table class="table" id="todo-table-sat">
                                     <tbody>
                                     {% include 'todo/saturday_todo_list.html' %}
@@ -240,7 +241,7 @@
                                 </table>
                             </div>
                             <div class="card-footer text-center">
-                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-sat" data-url="{% url 'todo_create' day='sat' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-sat" data-id="sat" data-url="{% url 'todo_create' day='sat' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
                             </div>
                         </div>
                         <div class="modal fade" id="modal-todo-sat">
@@ -269,7 +270,7 @@
                                     </tr>
                                 </table>
                             </div>
-                                <div class="card-body w-100 pl-3 pr-1 pt-1" style="overflow-y: auto; height: 280px;">
+                                <div class="w-100 pl-3 pr-1 pt-1 card-body todo-table" style="overflow-y: auto; height: 280px;">
                                 <table class="table" id="todo-table-sun">
                                     <tbody>
                                     {% include 'todo/sunday_todo_list.html' %}
@@ -277,7 +278,7 @@
                                 </table>
                             </div>
                             <div class="card-footer text-center">
-                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-sun" data-url="{% url 'todo_create' day='sun' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                                <button type="button" class="btn mb-1 btn-rounded btn-outline-secondary js-create-todo-sun" data-id="sun" data-url="{% url 'todo_create' day='sun' %}">Add Todo<span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
                             </div>
                         </div>
                         <div class="modal fade" id="modal-todo-sun">
@@ -318,8 +319,6 @@
                 data: {'csrfmiddlewaretoken':'{{ csrf_token }}'},
                 dataType: "json",
                 success: function(data){
-                    // // $("#todo-table-mon tbody").html(data.html_todo_list);
-                    // window.location.href = "{% url 'index' %}"
                     if (data.completed){
                         $(this).attr('checked', true);
                         $('#todo-title-'+pk).css('text-decoration','line-through')
@@ -364,6 +363,8 @@
                 }
             });
     })
+
+    //월요일todo-add
      $("#modal-todo-mon").on("submit", ".js-todo-create-form", function(){
          var form = $(this);
             $.ajax({
@@ -373,10 +374,8 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.form_is_valid) {
-                        // $("#todo-table-mon tbody").html(data.html_todo_list);
                         $("#modal-todo-mon").modal("hide");
                         $("#todo-table-mon tbody").append(data.added_todo)
-                        // window.location.replace("{% url 'index' %}")
                     }
                     else {
                         $("#modal-todo-mon .modal-content").html(data.html_form);
@@ -386,51 +385,9 @@
             return false;
      });
 
-    $(function() {
-
-        //월요일
-        // var loadForm_mon = function () {
-        //     var btn = $(this);
-        //     $.ajax({
-        //         url: btn.attr("data-url"),
-        //         type: 'get',
-        //         dataType: 'json',
-        //         beforeSend: function () {
-        //             $("#modal-todo-mon").modal("show");
-        //         },
-        //         success: function (data) {
-        //             $("#modal-todo-mon .modal-content").html(data.html_form);
-        //         }
-        //     });
-        // };
-        // var saveForm_mon = function () {
-        //     var form = $(this);
-        //     $.ajax({
-        //         url: form.attr("action"),
-        //         data: form.serialize(),
-        //         type: form.attr("method"),
-        //         dataType: 'json',
-        //         success: function (data) {
-        //             if (data.form_is_valid) {
-        //                 // $("#todo-table-mon tbody").html(data.html_todo_list);
-        //                 // $("#modal-todo-mon").modal("hide");
-        //                 window.location.replace("{% url 'index' %}")
-        //             }
-        //             else {
-        //                 $("#modal-todo-mon .modal-content").html(data.html_form);
-        //             }
-        //         }
-        //     });
-        //     return false;
-        // };
-        // $(".js-create-todo-mon").click(loadForm_mon);
-        // $("#modal-todo-mon").on("submit", ".js-todo-create-form", saveForm_mon);
-        // $("#todo-table-mon").on("click", ".js-delete-todo", loadForm_mon);
-        // $("#modal-todo-mon").on("submit", ".js-todo-delete-form", saveForm_mon);
-
-        //화요일
-        var loadForm_tue = function () {
-            var btn = $(this);
+    //화요일todo-modal오픈
+    $(".js-create-todo-tue").click(function(){
+        var btn = $(this);
             $.ajax({
                 url: btn.attr("data-url"),
                 type: 'get',
@@ -442,9 +399,11 @@
                     $("#modal-todo-tue .modal-content").html(data.html_form);
                 }
             });
-        };
-        var saveForm_tue = function () {
-            var form = $(this);
+    })
+
+    //화요일todo-add
+     $("#modal-todo-tue").on("submit", ".js-todo-create-form", function(){
+         var form = $(this);
             $.ajax({
                 url: form.attr("action"),
                 data: form.serialize(),
@@ -452,8 +411,8 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.form_is_valid) {
-                        $("#todo-table-tue tbody").html(data.html_todo_list);
                         $("#modal-todo-tue").modal("hide");
+                        $("#todo-table-tue tbody").append(data.added_todo)
                     }
                     else {
                         $("#modal-todo-tue .modal-content").html(data.html_form);
@@ -461,15 +420,11 @@
                 }
             });
             return false;
-        };
-        $(".js-create-todo-tue").click(loadForm_tue);
-        $("#modal-todo-tue").on("submit", ".js-todo-create-form", saveForm_tue);
-        $("#todo-table-tue").on("click", ".js-delete-todo", loadForm_tue);
-        $("#modal-todo-tue").on("submit", ".js-todo-delete-form", saveForm_tue);
+     });
 
-        //수요일
-        var loadForm_wed = function () {
-            var btn = $(this);
+    //수요일todo-modal오픈
+    $(".js-create-todo-wed").click(function(){
+        var btn = $(this);
             $.ajax({
                 url: btn.attr("data-url"),
                 type: 'get',
@@ -481,9 +436,11 @@
                     $("#modal-todo-wed .modal-content").html(data.html_form);
                 }
             });
-        };
-        var saveForm_wed = function () {
-            var form = $(this);
+    })
+
+    //수요일todo-add
+     $("#modal-todo-wed").on("submit", ".js-todo-create-form", function(){
+         var form = $(this);
             $.ajax({
                 url: form.attr("action"),
                 data: form.serialize(),
@@ -491,8 +448,8 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.form_is_valid) {
-                        $("#todo-table-wed tbody").html(data.html_todo_list);
                         $("#modal-todo-wed").modal("hide");
+                        $("#todo-table-wed tbody").append(data.added_todo)
                     }
                     else {
                         $("#modal-todo-wed .modal-content").html(data.html_form);
@@ -500,15 +457,11 @@
                 }
             });
             return false;
-        };
-        $(".js-create-todo-wed").click(loadForm_wed);
-        $("#modal-todo-wed").on("submit", ".js-todo-create-form", saveForm_wed);
-        $("#todo-table-wed").on("click", ".js-delete-todo", loadForm_wed);
-        $("#modal-todo-wed").on("submit", ".js-todo-delete-form", saveForm_wed);
+     });
 
-        //목요일
-        var loadForm_thu = function () {
-            var btn = $(this);
+    //목요일todo-modal오픈
+    $(".js-create-todo-thu").click(function(){
+        var btn = $(this);
             $.ajax({
                 url: btn.attr("data-url"),
                 type: 'get',
@@ -520,9 +473,11 @@
                     $("#modal-todo-thu .modal-content").html(data.html_form);
                 }
             });
-        };
-        var saveForm_thu = function () {
-            var form = $(this);
+    })
+
+    //목요일todo-add
+     $("#modal-todo-thu").on("submit", ".js-todo-create-form", function(){
+         var form = $(this);
             $.ajax({
                 url: form.attr("action"),
                 data: form.serialize(),
@@ -530,8 +485,8 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.form_is_valid) {
-                        $("#todo-table-thu tbody").html(data.html_todo_list);
                         $("#modal-todo-thu").modal("hide");
+                        $("#todo-table-thu tbody").append(data.added_todo)
                     }
                     else {
                         $("#modal-todo-thu .modal-content").html(data.html_form);
@@ -539,15 +494,11 @@
                 }
             });
             return false;
-        };
-        $(".js-create-todo-thu").click(loadForm_thu);
-        $("#modal-todo-thu").on("submit", ".js-todo-create-form", saveForm_thu);
-        $("#todo-table-thu").on("click", ".js-delete-todo", loadForm_thu);
-        $("#modal-todo-thu").on("submit", ".js-todo-delete-form", saveForm_thu);
+     });
 
-        //금요일
-        var loadForm_fri = function () {
-            var btn = $(this);
+    //금요일todo-modal오픈
+    $(".js-create-todo-fri").click(function(){
+        var btn = $(this);
             $.ajax({
                 url: btn.attr("data-url"),
                 type: 'get',
@@ -559,9 +510,11 @@
                     $("#modal-todo-fri .modal-content").html(data.html_form);
                 }
             });
-        };
-        var saveForm_fri = function () {
-            var form = $(this);
+    })
+
+    //금요일todo-add
+     $("#modal-todo-fri").on("submit", ".js-todo-create-form", function(){
+         var form = $(this);
             $.ajax({
                 url: form.attr("action"),
                 data: form.serialize(),
@@ -569,8 +522,8 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.form_is_valid) {
-                        $("#todo-table-fri tbody").html(data.html_todo_list);
                         $("#modal-todo-fri").modal("hide");
+                        $("#todo-table-fri tbody").append(data.added_todo)
                     }
                     else {
                         $("#modal-todo-fri .modal-content").html(data.html_form);
@@ -578,15 +531,11 @@
                 }
             });
             return false;
-        };
-        $(".js-create-todo-fri").click(loadForm_fri);
-        $("#modal-todo-fri").on("submit", ".js-todo-create-form", saveForm_fri);
-        $("#todo-table-fri").on("click", ".js-delete-todo", loadForm_fri);
-        $("#modal-todo-fri").on("submit", ".js-todo-delete-form", saveForm_fri);
+     });
 
-        //토요일
-        var loadForm_sat = function () {
-            var btn = $(this);
+    //토요일todo-modal오픈
+    $(".js-create-todo-sat").click(function(){
+        var btn = $(this);
             $.ajax({
                 url: btn.attr("data-url"),
                 type: 'get',
@@ -598,9 +547,11 @@
                     $("#modal-todo-sat .modal-content").html(data.html_form);
                 }
             });
-        };
-        var saveForm_sat = function () {
-            var form = $(this);
+    })
+
+    //토요일todo-add
+     $("#modal-todo-sat").on("submit", ".js-todo-create-form", function(){
+         var form = $(this);
             $.ajax({
                 url: form.attr("action"),
                 data: form.serialize(),
@@ -608,8 +559,8 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.form_is_valid) {
-                        $("#todo-table-sat tbody").html(data.html_todo_list);
                         $("#modal-todo-sat").modal("hide");
+                        $("#todo-table-sat tbody").append(data.added_todo)
                     }
                     else {
                         $("#modal-todo-sat .modal-content").html(data.html_form);
@@ -617,15 +568,11 @@
                 }
             });
             return false;
-        };
-        $(".js-create-todo-sat").click(loadForm_sat);
-        $("#modal-todo-sat").on("submit", ".js-todo-create-form", saveForm_sat);
-        $("#todo-table-sat").on("click", ".js-delete-todo", loadForm_sat);
-        $("#modal-todo-sat").on("submit", ".js-todo-delete-form", saveForm_sat);
+     });
 
-        //일요일
-        var loadForm_sun = function () {
-            var btn = $(this);
+    //일요일todo-modal오픈
+    $(".js-create-todo-sun").click(function(){
+        var btn = $(this);
             $.ajax({
                 url: btn.attr("data-url"),
                 type: 'get',
@@ -637,9 +584,11 @@
                     $("#modal-todo-sun .modal-content").html(data.html_form);
                 }
             });
-        };
-        var saveForm_sun = function () {
-            var form = $(this);
+    })
+
+    //일요일todo-add
+     $("#modal-todo-sun").on("submit", ".js-todo-create-form", function(){
+         var form = $(this);
             $.ajax({
                 url: form.attr("action"),
                 data: form.serialize(),
@@ -647,8 +596,8 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.form_is_valid) {
-                        $("#todo-table-sun tbody").html(data.html_todo_list);
                         $("#modal-todo-sun").modal("hide");
+                        $("#todo-table-sun tbody").append(data.added_todo)
                     }
                     else {
                         $("#modal-todo-sun .modal-content").html(data.html_form);
@@ -656,36 +605,7 @@
                 }
             });
             return false;
-        };
-        $(".js-create-todo-sun").click(loadForm_sun);
-        $("#modal-todo-sun").on("submit", ".js-todo-create-form", saveForm_sun);
-        $("#todo-table-sun").on("click", ".js-delete-todo", loadForm_sun);
-        $("#modal-todo-sun").on("submit", ".js-todo-delete-form", saveForm_sun);
-    });
-
-
-    $(".complete").click(function(){
-            pk = $(this).attr("data-id");
-            $.ajax({
-                type:"POST",
-                url: $(this).attr("data-url"),
-                data: {'csrfmiddlewaretoken':'{{ csrf_token }}'},
-                dataType: "json",
-                success: function(data){
-                    // // $("#todo-table-mon tbody").html(data.html_todo_list);
-                    // window.location.href = "{% url 'index' %}"
-                    if (data.completed){
-                        $(this).attr('checked', true);
-                        $('#todo-title-'+pk).css('text-decoration','line-through')
-                    }
-                    else{
-                        $(this).attr('checked', false);
-                        $('#todo-title-'+pk).css('text-decoration','none')
-                    }
-
-                }
-            });
-    });
+     });
 
 </script>
 <!--**********************************

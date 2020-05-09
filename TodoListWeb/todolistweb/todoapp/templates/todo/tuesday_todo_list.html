@@ -1,16 +1,19 @@
 {% for todo in todo_list.1 %}
-<tr>
-    <td>{{ todo.title }}</td>
-    <td style="width:10%;">
-        <button type="button"
+<tr id="todo-tr-{{ todo.id }}">
+    <td class="pt-0" style="width:10%;">
+        <input class="complete-todo" type="checkbox" name="complete" {% if todo.is_completed %}checked="checked"{% endif %} data-id="{{ todo.id }}" data-url="{% url 'complete_todo' todo_pk=todo.id %}">
+    </td>
+    <td>
+        <p id="todo-title-{{ todo.id }}" {% if todo.is_completed %}style="text-decoration: line-through"{% endif %}>
+            {{ todo.title }}
+        </p>
+    </td>
+    <td style="width:10%;" id="delete-button">
+      <button type="button"
               class="btn mb-1 btn-light btn-sm js-delete-todo"
-              data-url="{% url 'todo_delete' todo_pk=todo.id day='tue' %}">
+              data-url="{% url 'todo_delete' todo_pk=todo.id %}" data-id="{{ todo.id }}">
         <i class="fa fa-times" aria-hidden="true"></i>
       </button>
     </td>
-</tr>
-{% empty %}
-<tr>
-    <td colspan="7" class="text-center bg-warning">No Schedule</td>
 </tr>
 {% endfor %}

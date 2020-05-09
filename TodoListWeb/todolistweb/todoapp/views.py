@@ -245,23 +245,10 @@ def password_change(request):
 #################
 
 @login_required
-def create_todo(request, day):
-    week = get7Date()
-    month = get7dayMonth()
-    now = datetime.datetime.now()
-    form = TodoForm(request.POST)
-    new_todo = form.save(commit=False)
-    new_todo.schedule_date = datetime.datetime(now.year, month_converter(month[day]), week[day])
-    new_todo.user = request.user
-    new_todo.save()
-    return redirect('index')
-
 def todo_create(request, day):
     week = get7Date()
     month = get7dayMonth()
     now = datetime.datetime.now()
-
-    render_list_url = get_render_list_url(day)
 
     data = dict()
 
@@ -269,47 +256,26 @@ def todo_create(request, day):
         form = TodoForm(request.POST)
         if form.is_valid():
             new_todo = form.save(commit=False)
-
             new_todo.schedule_date = datetime.datetime(now.year, month_converter(month[day]), week[day])
             new_todo.user = request.user
             new_todo.save()
 
             data['form_is_valid'] = True
-            todo_list = get_all_week_todo(request)
             data['added_todo'] = render_to_string('todo/add_one_todo.html', {'todo':new_todo})
-            # data['html_todo_list'] = render_to_string(render_list_url, {
-            #     'todo_list': todo_list
-            # })
         else:
             data['form_is_valid'] = False
     else:
         form = TodoForm()
 
     context = {'form': form, 'day':day}
-    data['html_form'] = render_to_string('todo/partial_todo_create.html',
-                                         context,
-                                         request=request,
-
-                                         )
+    data['html_form'] = render_to_string('todo/partial_todo_create.html', context, request=request, )
     return JsonResponse(data)
 
 @login_required
-def complete_todo(request, todo_pk, day):
-    render_list_url = get_render_list_url(day)
+def complete_todo(request, todo_pk):
     data = dict()
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
-    # if request.method == 'POST':
-    #     if todo.is_completed:
-    #         todo.date_completed = None
-    #     else:
-    #         todo.date_completed = timezone.now()
-    #     todo.is_completed = not todo.is_completed
-    #     todo.save()
-    #     todo_list = get_all_week_todo(request)
-    #     data['html_todo_list'] = render_to_string(render_list_url, {
-    #         'todo_list': todo_list
-    #     })
-    # return JsonResponse(data)
+
     if request.method == 'POST':
         if todo.is_completed:
             todo.date_completed = None
@@ -327,56 +293,13 @@ def completed_todo(request):
     return render(request, 'todo/completedTodo.html',{'todo_list':todo_list})
 
 @login_required
-def todo_detail(request, todo_pk):
-    week = get7Date()
-    month = get7dayMonth()
-    todo_list = get_all_week_todo(request)
-    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
-    if request.method == 'GET':
-        form = TodoForm(instance=todo)
-        return render(request, 'bootstrapTemplate/ui-cards.html', {
-            'todo':todo,
-            'form':form,
-            'day': todo.schedule_date.day,
-            'week': week,
-            'month': month,
-            'todo_list': todo_list,
-        })
-    else:
-        try:
-            form = TodoForm(request.POST, instance=todo)
-            form.save()
-            return redirect('index')
-        except ValueError:
-            return redirect('index')
-
-@login_required
-def todo_delete(request, todo_pk, day):
+def todo_delete(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     data = dict()
 
-    # render_list_url = get_render_list_url(day)
-    #
-    # if request.method == 'POST':
-    #     todo.delete()
-    #     data['form_is_valid'] = True
-    #     todo_list = get_all_week_todo(request)
-    #     data['html_todo_list'] = render_to_string(render_list_url, {'todo_list' : todo_list})
-    # else:
-    #     context = {'todo' : todo, 'day' : day}
-    #     data['html_form'] = render_to_string('todo/partial_todo_delete.html', context, request=request)
-    #
-    # return JsonResponse(data)
     if request.method == 'POST':
         todo.delete()
         data['delete_success'] = True
 
     return JsonResponse(data)
-
-@login_required
-def delete_todo(request, todo_pk):
-    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
-    if request.method == 'POST':
-        todo.delete()
-        return redirect('current_todo')
 
