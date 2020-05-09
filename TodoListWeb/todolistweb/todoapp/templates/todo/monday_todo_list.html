@@ -12,12 +12,12 @@
 
 <!--</div>-->
 {% for todo in todo_list.0 %}
-<tr>
+<tr id="todo-tr-{{ todo.id }}">
     <td class="pt-0" style="width:10%;">
-        <input class="complete" type="checkbox" name="complete" {% if todo.is_completed %}checked="checked"{% endif %} data-id="{{ todo.pk }}" data-url="{% url 'complete_todo' todo_pk=todo.id day='mon' %}">
+        <input class="complete" type="checkbox" name="complete" {% if todo.is_completed %}checked="checked"{% endif %} data-id="{{ todo.id }}" data-url="{% url 'complete_todo' todo_pk=todo.id day='mon' %}">
     </td>
     <td>
-        <p {% if todo.is_completed %}style="text-decoration: line-through"{% endif %}>
+        <p id="todo-title-{{ todo.id }}" {% if todo.is_completed %}style="text-decoration: line-through"{% endif %}>
             {{ todo.title }}
         </p>
     </td>
