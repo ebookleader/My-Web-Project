@@ -273,7 +273,7 @@ def todo_create(request, day):
             new_todo.schedule_date = datetime.datetime(now.year, month_converter(month[day]), week[day])
             new_todo.user = request.user
             new_todo.save()
-            print(new_todo)
+
             data['form_is_valid'] = True
             todo_list = get_all_week_todo(request)
             data['added_todo'] = render_to_string('todo/add_one_todo.html', {'todo':new_todo})
@@ -312,11 +312,9 @@ def complete_todo(request, todo_pk, day):
     # return JsonResponse(data)
     if request.method == 'POST':
         if todo.is_completed:
-            print('완료->미완료')
             todo.date_completed = None
             data['completed'] = False
         else:
-            print('미완료->완료')
             todo.date_completed = timezone.now()
             data['completed'] = True
         todo.is_completed = not todo.is_completed

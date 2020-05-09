@@ -309,7 +309,7 @@
 <script type="text/javascript">
 
     // todo완료
-    $(".complete-todo").click(function(){
+    $("body").delegate('.complete-todo','click',function(){
 
             pk = $(this).attr("data-id");
             $.ajax({
@@ -334,7 +334,7 @@
     });
 
     // todo삭제
-    $(".js-delete-todo").click(function(){
+    $("body").delegate('.js-delete-todo','click',function(){
         pk = $(this).attr("data-id");
         $.ajax({
             type:"POST",
@@ -349,6 +349,7 @@
         });
     });
 
+    //월요일todo-modal오픈
     $(".js-create-todo-mon").click(function(){
         var btn = $(this);
             $.ajax({
