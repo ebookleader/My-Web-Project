@@ -307,11 +307,50 @@
 ***********************************-->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
-    $(function() {
 
-        //월요일
-        var loadForm_mon = function () {
-            var btn = $(this);
+    // todo완료
+    $(".complete-todo").click(function(){
+
+            pk = $(this).attr("data-id");
+            $.ajax({
+                type:"POST",
+                url: $(this).attr("data-url"),
+                data: {'csrfmiddlewaretoken':'{{ csrf_token }}'},
+                dataType: "json",
+                success: function(data){
+                    // // $("#todo-table-mon tbody").html(data.html_todo_list);
+                    // window.location.href = "{% url 'index' %}"
+                    if (data.completed){
+                        $(this).attr('checked', true);
+                        $('#todo-title-'+pk).css('text-decoration','line-through')
+                    }
+                    else{
+                        $(this).attr('checked', false);
+                        $('#todo-title-'+pk).css('text-decoration','none')
+                    }
+
+                }
+            });
+    });
+
+    // todo삭제
+    $(".js-delete-todo").click(function(){
+        pk = $(this).attr("data-id");
+        $.ajax({
+            type:"POST",
+            url: $(this).attr("data-url"),
+            data: {'csrfmiddlewaretoken':'{{ csrf_token }}'},
+            dataType: "json",
+            success: function(data){
+                if(data.delete_success){
+                    $('#todo-tr-'+pk).remove();
+                }
+            }
+        });
+    });
+
+    $(".js-create-todo-mon").click(function(){
+        var btn = $(this);
             $.ajax({
                 url: btn.attr("data-url"),
                 type: 'get',
@@ -323,9 +362,9 @@
                     $("#modal-todo-mon .modal-content").html(data.html_form);
                 }
             });
-        };
-        var saveForm_mon = function () {
-            var form = $(this);
+    })
+     $("#modal-todo-mon").on("submit", ".js-todo-create-form", function(){
+         var form = $(this);
             $.ajax({
                 url: form.attr("action"),
                 data: form.serialize(),
@@ -334,8 +373,9 @@
                 success: function (data) {
                     if (data.form_is_valid) {
                         // $("#todo-table-mon tbody").html(data.html_todo_list);
-                        // $("#modal-todo-mon").modal("hide");
-                        window.location.replace("{% url 'index' %}")
+                        $("#modal-todo-mon").modal("hide");
+                        $("#todo-table-mon tbody").append(data.added_todo)
+                        // window.location.replace("{% url 'index' %}")
                     }
                     else {
                         $("#modal-todo-mon .modal-content").html(data.html_form);
@@ -343,11 +383,49 @@
                 }
             });
             return false;
-        };
-        $(".js-create-todo-mon").click(loadForm_mon);
-        $("#modal-todo-mon").on("submit", ".js-todo-create-form", saveForm_mon);
-        $("#todo-table-mon").on("click", ".js-delete-todo", loadForm_mon);
-        $("#modal-todo-mon").on("submit", ".js-todo-delete-form", saveForm_mon);
+     });
+
+    $(function() {
+
+        //월요일
+        // var loadForm_mon = function () {
+        //     var btn = $(this);
+        //     $.ajax({
+        //         url: btn.attr("data-url"),
+        //         type: 'get',
+        //         dataType: 'json',
+        //         beforeSend: function () {
+        //             $("#modal-todo-mon").modal("show");
+        //         },
+        //         success: function (data) {
+        //             $("#modal-todo-mon .modal-content").html(data.html_form);
+        //         }
+        //     });
+        // };
+        // var saveForm_mon = function () {
+        //     var form = $(this);
+        //     $.ajax({
+        //         url: form.attr("action"),
+        //         data: form.serialize(),
+        //         type: form.attr("method"),
+        //         dataType: 'json',
+        //         success: function (data) {
+        //             if (data.form_is_valid) {
+        //                 // $("#todo-table-mon tbody").html(data.html_todo_list);
+        //                 // $("#modal-todo-mon").modal("hide");
+        //                 window.location.replace("{% url 'index' %}")
+        //             }
+        //             else {
+        //                 $("#modal-todo-mon .modal-content").html(data.html_form);
+        //             }
+        //         }
+        //     });
+        //     return false;
+        // };
+        // $(".js-create-todo-mon").click(loadForm_mon);
+        // $("#modal-todo-mon").on("submit", ".js-todo-create-form", saveForm_mon);
+        // $("#todo-table-mon").on("click", ".js-delete-todo", loadForm_mon);
+        // $("#modal-todo-mon").on("submit", ".js-todo-delete-form", saveForm_mon);
 
         //화요일
         var loadForm_tue = function () {

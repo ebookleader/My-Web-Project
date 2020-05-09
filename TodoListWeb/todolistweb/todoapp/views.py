@@ -269,14 +269,17 @@ def todo_create(request, day):
         form = TodoForm(request.POST)
         if form.is_valid():
             new_todo = form.save(commit=False)
+
             new_todo.schedule_date = datetime.datetime(now.year, month_converter(month[day]), week[day])
             new_todo.user = request.user
             new_todo.save()
+            print(new_todo)
             data['form_is_valid'] = True
             todo_list = get_all_week_todo(request)
-            data['html_todo_list'] = render_to_string(render_list_url, {
-                'todo_list': todo_list
-            })
+            data['added_todo'] = render_to_string('todo/add_one_todo.html', {'todo':new_todo})
+            # data['html_todo_list'] = render_to_string(render_list_url, {
+            #     'todo_list': todo_list
+            # })
         else:
             data['form_is_valid'] = False
     else:
@@ -354,16 +357,21 @@ def todo_delete(request, todo_pk, day):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     data = dict()
 
-    render_list_url = get_render_list_url(day)
-
+    # render_list_url = get_render_list_url(day)
+    #
+    # if request.method == 'POST':
+    #     todo.delete()
+    #     data['form_is_valid'] = True
+    #     todo_list = get_all_week_todo(request)
+    #     data['html_todo_list'] = render_to_string(render_list_url, {'todo_list' : todo_list})
+    # else:
+    #     context = {'todo' : todo, 'day' : day}
+    #     data['html_form'] = render_to_string('todo/partial_todo_delete.html', context, request=request)
+    #
+    # return JsonResponse(data)
     if request.method == 'POST':
         todo.delete()
-        data['form_is_valid'] = True
-        todo_list = get_all_week_todo(request)
-        data['html_todo_list'] = render_to_string(render_list_url, {'todo_list' : todo_list})
-    else:
-        context = {'todo' : todo, 'day' : day}
-        data['html_form'] = render_to_string('todo/partial_todo_delete.html', context, request=request)
+        data['delete_success'] = True
 
     return JsonResponse(data)
 
