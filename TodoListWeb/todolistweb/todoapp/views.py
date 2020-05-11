@@ -102,8 +102,8 @@ def bootindex(request):
                       }
                       )
     else:
-        print('no session')
-        return render('')
+        return render(request, '')
+
 
 ##### Signup #####
 def signupuser(request):
@@ -186,25 +186,28 @@ def activate_account(request, uidb64, token):
 
 ##### Login & Logout #####
 def loginuser(request):
-    form = AuthenticationForm()
-
-    ### css start
-    form.fields['username'].widget.attrs['class'] = 'form-control'
-    form.fields['username'].widget.attrs['placeholder'] = 'Username'
-    form.fields['password'].widget.attrs['class'] = 'form-control'
-    form.fields['password'].widget.attrs['placeholder'] = 'Password'
-    ### css end
-
-    if request.method == 'GET':
-        return render(request, 'registration/page-login.html', {'form':form})
+    if request.session.get('user'):
+        return redirect('home')
     else:
-        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-        if user is None:
-            return render(request, 'registration/page-login.html', {'form': form, 'error':'The account does not exist or the password does not match. <br>please check your account again.'})
+        form = AuthenticationForm()
+
+        ### css start
+        form.fields['username'].widget.attrs['class'] = 'form-control'
+        form.fields['username'].widget.attrs['placeholder'] = 'Username'
+        form.fields['password'].widget.attrs['class'] = 'form-control'
+        form.fields['password'].widget.attrs['placeholder'] = 'Password'
+        ### css end
+
+        if request.method == 'GET':
+            return render(request, 'registration/page-login.html', {'form':form, 'session_expired':'yes'})
         else:
-            request.session['user'] = user.id
-            login(request, user)
-            return redirect('index')
+            user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
+            if user is None:
+                return render(request, 'registration/page-login.html', {'form': form, 'error':'The account does not exist or the password does not match. <br>please check your account again.'})
+            else:
+                request.session['user'] = user.id
+                login(request, user)
+                return redirect('index')
 
 @login_required
 def logoutuser(request):
