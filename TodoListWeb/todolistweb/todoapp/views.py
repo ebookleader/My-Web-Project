@@ -1,7 +1,7 @@
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
+from django.shortcuts import  render, redirect, get_object_or_404
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .forms import UserSignUpForm, ResendEmailForm
@@ -15,6 +15,7 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
 from .forms import TodoForm
 from .models import Todo
+from django.template import RequestContext
 import datetime
 
 def get7Date():
@@ -104,6 +105,27 @@ def bootindex(request):
     else:
         return render(request, '')
 
+
+#### errorpage ####
+def error_400(request, exception):
+    data = {}
+    return render(request, 'errorpage/page-error-400.html', data)
+
+def error_403(request, exception):
+    data = {}
+    return render(request, 'errorpage/page-error-403.html', data)
+
+def error_404(request, exception):
+    data = {}
+    return render(request, 'errorpage/page-error-404.html', data)
+
+def error_500(request, exception):
+    data = {}
+    return render(request, 'errorpage/page-error-500.html', data)
+
+def error_503(request, exception):
+    data = {}
+    return render(request, 'errorpage/page-error-503.html', data)
 
 ##### Signup #####
 def signupuser(request):

@@ -17,6 +17,12 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from todoapp import views
 
+handler400 = 'todoapp.views.error_400'
+handler403 = 'todoapp.views.error_403'
+handler404 = 'todoapp.views.error_404'
+# handler500 = 'todoapp.views.error_500' #후에 수정
+handler503 = 'todoapp.views.error_503'
+
 urlpatterns = [
 
     # admin
