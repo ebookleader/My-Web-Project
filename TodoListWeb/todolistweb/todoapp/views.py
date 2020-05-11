@@ -83,21 +83,27 @@ def get_render_list_url(day):
 
 # Create your views here.
 def index(request):
-    return render(request, 'todoapp/index.html')
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        return redirect('loginuser')
 
 @login_required()
 def bootindex(request):
-    week = get7Date()
-    month = get7dayMonth()
-    # todo_list = Todo.objects.filter(user=request.user, date_completed__isnull=True, schedule_date__day=week['mon'], schedule_date__month=month_converter(month['mon']))
-    todo_list = get_all_week_todo(request)
-    return render(request, 'bootstrapTemplate/ui-cards.html',
-                  {
-                    'week':week,
-                    'month':month,
-                    'todo_list':todo_list
-                  }
-                  )
+    if request.session.get('user'):
+        week = get7Date()
+        month = get7dayMonth()
+        todo_list = get_all_week_todo(request)
+        return render(request, 'bootstrapTemplate/ui-cards.html',
+                      {
+                        'week':week,
+                        'month':month,
+                        'todo_list':todo_list
+                      }
+                      )
+    else:
+        print('no session')
+        return render('')
 
 ##### Signup #####
 def signupuser(request):
@@ -181,10 +187,14 @@ def activate_account(request, uidb64, token):
 ##### Login & Logout #####
 def loginuser(request):
     form = AuthenticationForm()
+
+    ### css start
     form.fields['username'].widget.attrs['class'] = 'form-control'
     form.fields['username'].widget.attrs['placeholder'] = 'Username'
     form.fields['password'].widget.attrs['class'] = 'form-control'
     form.fields['password'].widget.attrs['placeholder'] = 'Password'
+    ### css end
+
     if request.method == 'GET':
         return render(request, 'registration/page-login.html', {'form':form})
     else:
@@ -192,22 +202,22 @@ def loginuser(request):
         if user is None:
             return render(request, 'registration/page-login.html', {'form': form, 'error':'The account does not exist or the password does not match. <br>please check your account again.'})
         else:
+            request.session['user'] = user.id
             login(request, user)
             return redirect('index')
 
 @login_required
 def logoutuser(request):
-    # if request.method == 'POST':
-    #     logout(request)
-    #     return redirect('index')
     logout(request)
     return redirect('index')
 
 
 ##### mypage #####
+@login_required
 def mypage(request):
     return render(request, 'todoapp/mypage.html')
 
+@login_required
 def lock_screen(request):
     if request.method == 'GET':
         return render(request, 'bootstrapTemplate/page-lock.html')
@@ -219,7 +229,7 @@ def lock_screen(request):
         else:
             return render(request, 'bootstrapTemplate/page-lock.html', {'error':'Password does not match.'})
 
-
+@login_required
 def password_change(request):
     if request.method == 'GET':
         return render(request, 'todoapp/password_change_form.html')
@@ -242,7 +252,7 @@ def password_change(request):
         return render(request, 'todoapp/password_change_form.html', {'error':error})
 
 
-#################
+################################
 
 @login_required
 def todo_create(request, day):

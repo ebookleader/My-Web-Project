@@ -23,9 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
 
     # 처음 페이지 방문시 바로 로그인 창으로 이동
-    path('', views.loginuser, name='loginuser'),
-    # 디버깅용 인덱스페이지 (후에삭제)
-    path('index/', views.bootindex, name='index'),
+    path('', views.index, name='index'),
+    path('starto/', views.bootindex, name='home'),
 
     # signup
     path('signup/', include('todoapp.urls')),
@@ -37,7 +36,8 @@ urlpatterns = [
     path('lock_screen/', views.lock_screen, name='lock_screen'),
 
     # login & logout
-    path('logout/', views.logoutuser, name='logoutuser'),
+    path('loginuser/', views.loginuser, name='loginuser'),
+    path('logoutuser/', views.logoutuser, name='logoutuser'),
 
     # reset password
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),

@@ -129,3 +129,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIR = [os.path.join(BASE_DIR, 'static')]
 
 PASSWORD_RESET_TIMEOUT_DAYS = 1
+
+LOGIN_URL = '/loginuser/'
+
+SESSION_COOKIE_AGE = 60 * 30  #30분
+SESSION_SAVE_EVERY_REQUEST = False
