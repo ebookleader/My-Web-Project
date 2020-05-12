@@ -4,9 +4,12 @@
         <input class="complete-todo" type="checkbox" name="complete" {% if todo.is_completed %}checked="checked"{% endif %} data-id="{{ todo.id }}" data-url="{% url 'complete_todo' todo_pk=todo.id %}">
     </td>
     <td>
-        <p class="font-weight-bold" id="todo-title-{{ todo.id }}" {% if todo.is_completed %}style="text-decoration: line-through"{% endif %}>
+        <p class="font-weight-semi-bold" id="todo-title-{{ todo.id }}" {% if todo.is_completed %}style="text-decoration: line-through"{% endif %}>
+            {% if todo.important %}
+            <i class="fa fa-xs fa-star text-danger pr-2" aria-hidden="true"></i>
+            {% endif %}
             {{ todo.title }}
-        </p class="font-weight-bold">
+        </p>
     </td>
     <td style="width:10%;" id="delete-button">
       <button type="button"

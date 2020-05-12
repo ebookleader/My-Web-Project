@@ -218,7 +218,7 @@
                                         <li>
                                             <a href="{% url 'lock_screen' %}"><i class="icon-lock"></i> <span>Lock Screen</span></a>
                                         </li>
-                                        <li><a href="{% url 'loginuser' %}"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                        <li><a href="{% url 'logoutuser' %}"><i class="icon-key"></i> <span>Logout</span></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -242,9 +242,9 @@
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
                         </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./index.html">Home 1</a></li>
-                            <!-- <li><a href="./index-2.html">Home 2</a></li> -->
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="{% url 'home' %}">Weekly Schedule</a></li>
+                            <li><a href="">Monthly Schedule</a></li>
                         </ul>
                     </li>
                     <li class="nav-label">Apps</li>
@@ -254,8 +254,8 @@
                             <i class="icon-screen-tablet menu-icon"></i><span class="nav-text">Apps</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="./app-profile.html">Profile</a></li>
-                            <li><a href="./app-calender.html">Calender</a></li>
+                            <li><a href="">MyPage</a></li>
+                            <li><a href="{% url 'lock_screen' %}">Lock Screen</a></li>
                         </ul>
                     </li>
 
@@ -263,6 +263,10 @@
                         <a href="widgets.html" aria-expanded="false">
                             <i class="icon-badge menu-icon"></i><span class="nav-text">Widget</span>
                         </a>
+                        <ul aria-expanded="false">
+                            <li><a href="">How to use</a></li>
+                            <li><a href="">Contact us</a></li>
+                        </ul>
                     </li>
 
                 </ul>

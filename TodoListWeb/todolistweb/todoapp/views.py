@@ -1,7 +1,7 @@
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import  render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect, reverse
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .forms import UserSignUpForm, ResendEmailForm
@@ -242,10 +242,17 @@ def logoutuser(request):
 def mypage(request):
     return render(request, 'todoapp/mypage.html')
 
+def gotolockscreen(request):
+    return render(request, 'bootstrapTemplate/page-lock.html')
+
 @login_required
 def lock_screen(request):
     if request.method == 'GET':
-        return render(request, 'bootstrapTemplate/page-lock.html')
+        print(request.session.get('user'))
+        logout(request)
+        print(request.session.get('user'))
+        return HttpResponseRedirect(reverse('gotolockscreen'))
+        # return render(request, 'bootstrapTemplate/page-lock.html')
     else:
         user = request.user
         input_password = request.POST.get('password')

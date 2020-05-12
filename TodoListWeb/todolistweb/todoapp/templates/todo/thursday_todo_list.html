@@ -5,6 +5,9 @@
     </td>
     <td>
         <p id="todo-title-{{ todo.id }}" {% if todo.is_completed %}style="text-decoration: line-through"{% endif %}>
+            {% if todo.important %}
+            <i class="fa fa-xs fa-star text-danger pr-2" aria-hidden="true"></i>
+            {% endif %}
             {{ todo.title }}
         </p>
     </td>

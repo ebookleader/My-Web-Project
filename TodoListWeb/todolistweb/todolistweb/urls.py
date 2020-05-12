@@ -39,6 +39,7 @@ urlpatterns = [
     # mypage
     path('mypage/', views.mypage, name='mypage'),
     path('password_change/', views.password_change, name='password_change'),
+    path('gotoLock/', views.gotolockscreen, name='gotolockscreen'),
     path('lock_screen/', views.lock_screen, name='lock_screen'),
 
     # login & logout
