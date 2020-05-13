@@ -256,6 +256,7 @@ def lock_screen(request):
     else:
         user = request.user
         input_password = request.POST.get('password')
+        print(request.session.get('user'))
         if user.check_password(input_password):
             return redirect('index')
         else:
