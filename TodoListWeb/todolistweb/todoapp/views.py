@@ -240,23 +240,31 @@ def logoutuser(request):
 ##### mypage #####
 @login_required
 def mypage(request):
-    return render(request, 'todoapp/mypage.html')
+    return render(request, 'bootstrapTemplate/app-profile.html')
 
-def gotolockscreen(request):
-    return render(request, 'bootstrapTemplate/page-lock.html')
+@login_required
+def modify_mypage(request):
+    return render(request, 'bootstrapTemplate/modify-mypage.html')
+
+@login_required
+def before_modify_user(request):
+    if request.method == 'GET':
+        return render(request, 'bootstrapTemplate/before-modify.html')
+    else:
+        user = request.user
+        input_password = request.POST.get('password')
+        if user.check_password(input_password):
+            return redirect('modify_mypage')
+        else:
+            return render(request, 'bootstrapTemplate/before-modify.html', {'error':'비밀번호가 일치하지 않습니다.'})
 
 @login_required
 def lock_screen(request):
     if request.method == 'GET':
-        print(request.session.get('user'))
-        logout(request)
-        print(request.session.get('user'))
-        return HttpResponseRedirect(reverse('gotolockscreen'))
-        # return render(request, 'bootstrapTemplate/page-lock.html')
+        return render(request, 'bootstrapTemplate/page-lock.html')
     else:
         user = request.user
         input_password = request.POST.get('password')
-        print(request.session.get('user'))
         if user.check_password(input_password):
             return redirect('index')
         else:
