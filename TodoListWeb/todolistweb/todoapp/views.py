@@ -285,12 +285,31 @@ def lock_screen(request):
             return render(request, 'bootstrapTemplate/page-lock.html', {'error':'Password does not match.'})
 
 @login_required
-def before_delete_user(request):
-    return render(request, 'bootstrapTemplate/delete-user.html')
+def delete_user(request):
+    if request.method == 'GET':
+        return render(request, 'bootstrapTemplate/delete-user.html')
+    else:
+        user = request.user
+        input_password = request.POST.get('password')
+        if user.check_password(input_password):
+            return redirect('delete_user_confirm')
+        else:
+            return render(request, 'bootstrapTemplate/delete-user.html',{'error':'비밀번호가 일치하지 않습니다.'})
 
 @login_required
-def delete_user(request):
-    pass
+def delete_user_confirm(request):
+    if request.method == 'GET':
+        return render(request, 'bootstrapTemplate/delete-user-confirm.html')
+    else:
+        user = request.user
+        confirm_str = request.POST.get('confirm_str')
+        if confirm_str == (user.username+"삭제"):
+            logout(request)
+            user.delete()
+            return render(request, 'bootstrapTemplate/delete-complete.html')
+        else:
+            return render(request, 'bootstrapTemplate/delete-user-confirm.html', {'message':'입력 문자가 일치하지 않습니다.'})
+
 
 ################################
 

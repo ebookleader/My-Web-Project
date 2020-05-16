@@ -42,6 +42,7 @@ urlpatterns = [
     path('before_modify', views.before_modify_user, name='before_modify_user'),
     path('modify_mypage', views.modify_mypage, name='modify_mypage'),
     path('delete_user', views.delete_user, name='delete_user'),
+    path('delete_user_confirm', views.delete_user_confirm, name='delete_user_confirm'),
 
     # login & logout
     path('loginuser/', views.loginuser, name='loginuser'),

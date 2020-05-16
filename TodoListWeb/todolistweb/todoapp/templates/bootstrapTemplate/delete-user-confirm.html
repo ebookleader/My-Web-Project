@@ -1,0 +1,69 @@
+{% extends 'bootstrapTemplate/base.html' %}
+{% load static %}
+
+{% block content %}
+<!--**********************************
+    Content body start
+***********************************-->
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+<div class="content-body" style="font-family: 'Do Hyeon', sans-serif; font-size: large">
+
+    <div class="row page-titles mx-0">
+        <div class="col p-md-0">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+            </ol>
+        </div>
+    </div>
+    <!-- row -->
+
+    <div class="container-fluid">
+        <div class="">
+            <div class="">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media align-items-center">
+                            <div class="media-body">
+
+                                <div class="card-body" >
+                                    <div class="basic-form" style="margin-left: 0%">
+                                        <form action="{% url 'delete_user_confirm' %}" method="POST">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <h5 class="display-5 mt-3 mb-4">회원 탈퇴 확인</h5>
+                                            </div>
+                                            <div class="">
+                                                <div class="alert alert-secondary" >
+                                                    <p class="mt-2">계정 삭제를 위한 마지막 작업입니다.</p>
+                                                    <p>아래 입력칸에 '계정 아이디'삭제 문자열을 입력한뒤 탈퇴 버튼을 눌러주시면 성공적으로 계정이 삭제됩니다.</p>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-9">
+                                                        <input type="text" name='confirm_str' class="form-control form-control-lg input-default" placeholder="ex) user1삭제 (띄어쓰기 없음)">
+                                                        <p class="text-danger mt-3 ml-1">{{message}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="btn-group-lg mt-4 float-right">
+                                                    <button type="submit" class="btn btn-dark pl-4 pr-4 pt-2 pb-2">탈퇴</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #/ container -->
+</div>
+<!--**********************************
+    Content body end
+***********************************-->
+
+{% endblock %}
