@@ -15,7 +15,7 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
 from .forms import TodoForm
 from .models import Todo
-from django.template import RequestContext
+from django.contrib import messages
 import datetime
 
 def get7Date():
@@ -103,7 +103,7 @@ def bootindex(request):
                       }
                       )
     else:
-        return render(request, '')
+        return redirect('loginuser')
 
 
 #### errorpage ####
@@ -244,7 +244,21 @@ def mypage(request):
 
 @login_required
 def modify_mypage(request):
-    return render(request, 'bootstrapTemplate/modify-mypage.html')
+    if request.method == 'GET':
+        return render(request, 'bootstrapTemplate/modify-mypage.html')
+    else:
+        new_password = request.POST.get('password_1')
+        new_password_confirm = request.POST.get('password_2')
+        if new_password != new_password_confirm:
+            return render(request, 'bootstrapTemplate/modify-mypage.html')
+        else:
+            user = request.user
+            user.set_password(new_password)
+            user.save()
+            logout(request)
+            messages.add_message(request, messages.SUCCESS, '비밀번호가 성공적으로 변경되었습니다. 다시 로그인해주세요.')
+            return redirect('loginuser')
+
 
 @login_required
 def before_modify_user(request):
@@ -271,27 +285,12 @@ def lock_screen(request):
             return render(request, 'bootstrapTemplate/page-lock.html', {'error':'Password does not match.'})
 
 @login_required
-def password_change(request):
-    if request.method == 'GET':
-        return render(request, 'todoapp/password_change_form.html')
-    else:
-        current_password = request.POST.get('origin_password')
-        user = request.user
-        error = ''
-        if check_password(current_password, user.password):
-            new_password = request.POST.get('new_password')
-            confirm_password = request.POST.get('confirm_password')
-            if new_password == confirm_password:
-                user.set_password(new_password)
-                user.save()
-                login(request, user)
-                return render(request, 'todoapp/index.html')
-            else:
-                error = 'new password & confirm password did not match'
-        else:
-            error = 'current password did not match'
-        return render(request, 'todoapp/password_change_form.html', {'error':error})
+def before_delete_user(request):
+    return render(request, 'bootstrapTemplate/delete-user.html')
 
+@login_required
+def delete_user(request):
+    pass
 
 ################################
 

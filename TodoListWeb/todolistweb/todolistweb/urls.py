@@ -38,10 +38,10 @@ urlpatterns = [
 
     # mypage
     path('mypage/', views.mypage, name='mypage'),
-    path('password_change/', views.password_change, name='password_change'),
     path('lock_screen/', views.lock_screen, name='lock_screen'),
     path('before_modify', views.before_modify_user, name='before_modify_user'),
     path('modify_mypage', views.modify_mypage, name='modify_mypage'),
+    path('delete_user', views.delete_user, name='delete_user'),
 
     # login & logout
     path('loginuser/', views.loginuser, name='loginuser'),

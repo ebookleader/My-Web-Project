@@ -29,27 +29,39 @@
 
                                 <div class="card-body">
                                     <div class="basic-form">
-                                        <form action="" method="POST">
+                                        <form action="{% url 'modify_mypage' %}" method="POST" name="changePassForm">
                                             {% csrf_token %}
                                             <div class="row">
                                                 <h5 class="display-5 mt-3 mb-4">회원정보 수정</h5>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">username</label>
+                                                <label class="col-sm-3 col-form-label">Username</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" readonly="readonly" class="form-control-plaintext" value="{{ user.username }}">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Password</label>
+                                                <label class="col-sm-3 col-form-label">Email</label>
                                                 <div class="col-sm-9">
-                                                    <input type="password" class="form-control" placeholder="Password" name="password" required>
-                                                    <p class="text-danger mt-3">{{ error }}</p>
+                                                    <input type="text" readonly="readonly" class="form-control-plaintext" value="{{ user.email }}">
                                                 </div>
-
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">New Password</label>
+                                                <div class="col-sm-9">
+                                                    <input type="password" class="form-control pwd" id="password_1" placeholder="New Password" name="password_1" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">New Password Confirm</label>
+                                                <div class="col-sm-9">
+                                                    <input type="password" class="form-control pwd" id="password_2" placeholder="New Password Confirm" name="password_2" required>
+                                                    <p class="text-danger mt-2" id="alert-false" style="display: none">비밀번호가 일치하지 않습니다.</p>
+                                                    <p class="text-gray mt-2" id="alert-success" style="display: none">비밀번호가 일치합니다.</p>
+                                                </div>
                                             </div>
                                             <div class="float-md-right btn-group-lg mt-3">
-                                                <button type="submit" class="btn btn-dark pl-4 pr-4 pt-2 pb-2">Next</button>
+                                                <button type="submit" class="btn btn-dark pl-4 pr-4 pt-2 pb-2" id="pwd-change" onclick="pwdCheck()">Save</button>
                                             </div>
                                         </form>
                                     </div>
@@ -64,6 +76,22 @@
     </div>
     <!-- #/ container -->
 </div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+    function pwdCheck(){
+        var form = document.changePassForm;
+        var pwd1 = $("#password_1").val();
+        var pwd2 = $("#password_2").val();
+
+        if(pwd1 != pwd2){
+            alert("비밀번호가 일치하지 않습니다. 다시 입력해주세요.")
+        }
+        else{
+            form.submit();
+        }
+    }
+</script>
 <!--**********************************
     Content body end
 ***********************************-->

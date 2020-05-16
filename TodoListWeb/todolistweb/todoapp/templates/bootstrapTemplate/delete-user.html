@@ -1,0 +1,66 @@
+{% extends 'bootstrapTemplate/base.html' %}
+{% load static %}
+
+{% block content %}
+<!--**********************************
+    Content body start
+***********************************-->
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+<div class="content-body" style="font-family: 'Do Hyeon', sans-serif; font-size: large">
+
+    <div class="row page-titles mx-0">
+        <div class="col p-md-0">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+            </ol>
+        </div>
+    </div>
+    <!-- row -->
+
+    <div class="container-fluid">
+        <div class="">
+            <div class="">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media align-items-center">
+                            <div class="media-body">
+
+                                <div class="card-body">
+                                    <div class="basic-form">
+                                        <form action="" method="POST">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <h5 class="display-5 mt-3 mb-4">회원 탈퇴</h5>
+                                            </div>
+                                            <div class="alert alert-danger font-weight-light">회원 탈퇴 시 개인정보 뿐만 아니라 기록된 일정들 또한 모두 삭제되어 복구할 수 없으므로 신중하게 결정해주시기 바랍니다.</div>
+                                            <div class="form-group row mt-4">
+                                                <label class="col-sm-3 col-form-label">Password</label>
+                                                <div class="col-sm-9">
+                                                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                                    <p class="text-danger mt-3">{{ error }}</p>
+                                                </div>
+
+                                            </div>
+                                            <div class="float-md-right btn-group-lg mt-3">
+                                                <button type="submit" class="btn btn-dark pl-4 pr-4 pt-2 pb-2">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #/ container -->
+</div>
+<!--**********************************
+    Content body end
+***********************************-->
+
+{% endblock %}

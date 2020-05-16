@@ -25,6 +25,12 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="media align-items-center">
+                            {% if messages %}
+                            {% for message in messages %}
+                            {{message.tags}}
+                            {{message.message}}
+                            {% endfor %}
+                            {% endif %}
                             <div class="media-body">
                                 <div class="jumbotron ml-4 mr-4 mt-3 mb-5">
                                     <h1 class="display-5 mb-4">My Page</h1>
@@ -54,7 +60,7 @@
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <h5 class="card-title">회원 탈퇴</h5>
-                                        <p class="card-text"></p><a href="#" class="btn btn-primary">Click</a>
+                                        <p class="card-text"></p><a href="{% url 'delete_user' %}" class="btn btn-primary">Click</a>
                                     </div>
                                 </div>
                             </div>
@@ -62,18 +68,12 @@
                     </div>
                 </div>
             </div>
-            <!--                    <div class="col-lg-8 col-xl-9">-->
 
-            <!--                        <div class="card">-->
-            <!--                            <div class="card-body">-->
-
-            <!--                        </div>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
         </div>
     </div>
     <!-- #/ container -->
 </div>
+
 <!--**********************************
     Content body end
 ***********************************-->
