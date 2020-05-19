@@ -372,3 +372,7 @@ def todo_delete(request, todo_pk):
 
     return JsonResponse(data)
 
+@login_required
+def monthly_calendar(request):
+    return render(request, 'bootstrapTemplate/monthly-calendar.html')
+

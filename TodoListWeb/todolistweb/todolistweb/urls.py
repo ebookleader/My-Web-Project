@@ -59,4 +59,7 @@ urlpatterns = [
     path('completed_todo/', views.completed_todo, name='completed_todo'),
     path('todo/<int:todo_pk>/complete', views.complete_todo, name='complete_todo'),
     path('todo/<int:todo_pk>/delete', views.todo_delete, name='todo_delete'),
+
+    # monthly
+    path('monthlyCalendar/', views.monthly_calendar, name='monthly_calendar'),
 ]
